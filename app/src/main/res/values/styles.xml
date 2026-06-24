@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- ════════════════════════════════════════ -->
+    <!-- TEXT APPEARANCES                         -->
+    <!-- ════════════════════════════════════════ -->
+
+    <style name="TextAppearance.Tarkana.Display" parent="TextAppearance.Material3.DisplaySmall">
+        <item name="android:textSize">@dimen/text_display</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">sans-serif-black</item>
+        <item name="android:textColor">@color/color_text_primary</item>
+    </style>
+
+    <style name="TextAppearance.Tarkana.Headline" parent="TextAppearance.Material3.HeadlineSmall">
+        <item name="android:textSize">@dimen/text_headline</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">sans-serif-black</item>
+        <item name="android:textColor">@color/color_text_primary</item>
+    </style>
+
+    <style name="TextAppearance.Tarkana.Title" parent="TextAppearance.Material3.TitleMedium">
+        <item name="android:textSize">@dimen/text_title</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">sans-serif-black</item>
+        <item name="android:textColor">@color/color_text_primary</item>
+    </style>
+
+    <style name="TextAppearance.Tarkana.Subtitle" parent="TextAppearance.Material3.TitleSmall">
+        <item name="android:textSize">@dimen/text_subtitle</item>
+        <item name="android:textColor">@color/color_text_primary</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="TextAppearance.Tarkana.Body" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:textSize">@dimen/text_body</item>
+        <item name="android:textColor">@color/color_text_primary</item>
+    </style>
+
+    <style name="TextAppearance.Tarkana.Caption" parent="TextAppearance.Material3.BodySmall">
+        <item name="android:textSize">@dimen/text_caption</item>
+        <item name="android:textColor">@color/color_text_secondary</item>
+    </style>
+
+    <style name="TextAppearance.Tarkana.Label" parent="TextAppearance.Material3.LabelSmall">
+        <item name="android:textSize">@dimen/text_label</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/color_text_secondary</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:letterSpacing">0.08</item>
+    </style>
+
+    <!-- ════════════════════════════════════════ -->
+    <!-- BUTTONS                                  -->
+    <!-- ════════════════════════════════════════ -->
+
+    <style name="TarkanaButton" parent="Widget.Material3.Button">
+        <item name="android:minHeight">@dimen/button_height</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">sans-serif-black</item>
+        <item name="android:textSize">@dimen/text_body</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:letterSpacing">0.04</item>
+        <item name="android:paddingLeft">@dimen/spacing_xl</item>
+        <item name="android:paddingRight">@dimen/spacing_xl</item>
+        <item name="cornerRadius">0dp</item>
+    </style>
+
+    <style name="TarkanaButton.Primary">
+        <item name="android:background">@drawable/bg_button_primary</item>
+        <item name="android:textColor">@color/color_text_primary</item>
+        <item name="backgroundTint">@null</item>
+    </style>
+
+    <style name="TarkanaButton.Secondary">
+        <item name="android:background">@drawable/bg_button_secondary</item>
+        <item name="android:textColor">@color/color_text_primary</item>
+        <item name="backgroundTint">@null</item>
+    </style>
+
+    <style name="TarkanaButton.Outline">
+        <item name="android:background">@drawable/bg_button_outline</item>
+        <item name="android:textColor">@color/color_text_primary</item>
+        <item name="backgroundTint">@null</item>
+    </style>
+
+    <style name="TarkanaButton.Text" parent="Widget.Material3.Button.TextButton">
+        <item name="android:textColor">@color/color_text_primary</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/text_body</item>
+        <item name="backgroundTint">@color/color_transparent</item>
+    </style>
+
+    <!-- ════════════════════════════════════════ -->
+    <!-- CARDS                                    -->
+    <!-- ════════════════════════════════════════ -->
+
+    <style name="TarkanaCard">
+        <item name="android:background">@drawable/bg_card_white</item>
+        <item name="android:padding">@dimen/spacing_base</item>
+    </style>
+
+    <style name="TarkanaCard.Yellow">
+        <item name="android:background">@drawable/bg_card_yellow</item>
+    </style>
+
+    <style name="TarkanaCard.Cream">
+        <item name="android:background">@drawable/bg_border_black_cream</item>
+    </style>
+
+    <style name="TarkanaCard.Green">
+        <item name="android:background">@drawable/bg_card_green</item>
+    </style>
+
+    <!-- ════════════════════════════════════════ -->
+    <!-- CHIPS                                    -->
+    <!-- ════════════════════════════════════════ -->
+
+    <style name="TarkanaChip">
+        <item name="android:background">@drawable/bg_chip_outline</item>
+        <item name="android:minHeight">@dimen/chip_height</item>
+        <item name="android:paddingLeft">@dimen/spacing_md</item>
+        <item name="android:paddingRight">@dimen/spacing_md</item>
+        <item name="android:textSize">@dimen/text_caption</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/color_text_primary</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="TarkanaChip.Selected">
+        <item name="android:background">@drawable/bg_chip_selected</item>
+    </style>
+
+    <style name="TarkanaChip.Category">
+        <item name="android:background">@drawable/bg_chip_teal</item>
+        <item name="android:textColor">@color/color_text_primary</item>
+        <item name="android:textSize">@dimen/text_label</item>
+    </style>
+
+    <!-- ════════════════════════════════════════ -->
+    <!-- INPUT                                    -->
+    <!-- ════════════════════════════════════════ -->
+
+    <style name="TarkanaInput">
+        <item name="android:background">@drawable/bg_input</item>
+        <item name="android:minHeight">@dimen/input_height</item>
+        <item name="android:paddingLeft">@dimen/spacing_base</item>
+        <item name="android:paddingRight">@dimen/spacing_base</item>
+        <item name="android:textSize">@dimen/text_body</item>
+        <item name="android:textColor">@color/color_text_primary</item>
+        <item name="android:textColorHint">@color/color_text_secondary</item>
+    </style>
+
+    <!-- ════════════════════════════════════════ -->
+    <!-- BADGES                                   -->
+    <!-- ════════════════════════════════════════ -->
+
+    <style name="TarkanaBadge">
+        <item name="android:minHeight">@dimen/badge_height</item>
+        <item name="android:paddingLeft">@dimen/spacing_sm</item>
+        <item name="android:paddingRight">@dimen/spacing_sm</item>
+        <item name="android:paddingTop">@dimen/spacing_xs</item>
+        <item name="android:paddingBottom">@dimen/spacing_xs</item>
+        <item name="android:textSize">@dimen/text_label</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="TarkanaBadge.Yellow">
+        <item name="android:background">@drawable/bg_badge_yellow</item>
+        <item name="android:textColor">@color/color_text_primary</item>
+    </style>
+
+    <style name="TarkanaBadge.Teal">
+        <item name="android:background">@drawable/bg_badge_teal</item>
+        <item name="android:textColor">@color/color_text_primary</item>
+    </style>
+
+    <style name="TarkanaBadge.Green">
+        <item name="android:background">@drawable/bg_badge_green</item>
+        <item name="android:textColor">@color/color_text_white</item>
+    </style>
+
+    <style name="TarkanaBadge.Rank">
+        <item name="android:background">@drawable/bg_badge_rank_bronze</item>
+        <item name="android:textColor">@color/color_text_primary</item>
+        <item name="android:textSize">@dimen/text_small</item>
+    </style>
+
+</resources>

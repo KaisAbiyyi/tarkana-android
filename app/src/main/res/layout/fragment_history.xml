@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_background"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/spacing_base">
+
+        <!-- ==================== Header ==================== -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:letterSpacing="0.1"
+            android:text="@string/history_label"
+            android:textAllCaps="true"
+            android:textColor="@color/color_text_secondary"
+            android:textSize="@dimen/text_label"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xs"
+            android:text="@string/history_title"
+            android:textColor="@color/color_text_primary"
+            android:textSize="@dimen/text_display"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_sm"
+            android:text="@string/history_subtitle"
+            android:textColor="@color/color_text_secondary"
+            android:textSize="@dimen/text_caption" />
+
+        <!-- ==================== Stats Row ==================== -->
+        <!-- ==================== Stats 2x2 Grid ==================== -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_base"
+            android:orientation="vertical">
+
+            <!-- First Row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <!-- Sessions Completed -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_card_white"
+                    android:orientation="vertical"
+                    android:padding="@dimen/spacing_md">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/history_sessions_label"
+                        android:textColor="@color/color_text_secondary"
+                        android:textSize="@dimen/text_label" />
+
+                    <TextView
+                        android:id="@+id/tv_hist_sessions"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_xs"
+                        android:text="@string/history_sessions_value"
+                        android:textColor="@color/color_text_primary"
+                        android:textSize="@dimen/text_headline"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <!-- Average Accuracy -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/spacing_sm"
+                    android:background="@drawable/bg_card_white"
+                    android:orientation="vertical"
+                    android:padding="@dimen/spacing_md">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/history_accuracy_label"
+                        android:textColor="@color/color_text_secondary"
+                        android:textSize="@dimen/text_label" />
+
+                    <TextView
+                        android:id="@+id/tv_hist_accuracy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_xs"
+                        android:text="@string/history_accuracy_value"
+                        android:textColor="@color/color_text_primary"
+                        android:textSize="@dimen/text_headline"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Second Row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_sm"
+                android:orientation="horizontal">
+
+                <!-- Best Score -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_card_white"
+                    android:orientation="vertical"
+                    android:padding="@dimen/spacing_md">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/history_best_score_label"
+                        android:textColor="@color/color_text_secondary"
+                        android:textSize="@dimen/text_label" />
+
+                    <TextView
+                        android:id="@+id/tv_hist_best_score"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_xs"
+                        android:text="@string/history_best_score_value"
+                        android:textColor="@color/color_text_primary"
+                        android:textSize="@dimen/text_headline"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <!-- Rating Change -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/spacing_sm"
+                    android:background="@drawable/bg_card_white"
+                    android:orientation="vertical"
+                    android:padding="@dimen/spacing_md">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/history_rating_label"
+                        android:textColor="@color/color_text_secondary"
+                        android:textSize="@dimen/text_label" />
+
+                    <TextView
+                        android:id="@+id/tv_hist_rating_change"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_xs"
+                        android:text="@string/history_rating_value"
+                        android:textColor="@color/color_accent_green"
+                        android:textSize="@dimen/text_headline"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- ==================== Filter Chips ==================== -->
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_base"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/chip_all"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/chip_height"
+                    android:background="@drawable/bg_chip_selected"
+                    android:gravity="center"
+                    android:paddingHorizontal="@dimen/spacing_md"
+                    android:text="@string/history_chip_all"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/text_label"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/chip_mixed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/chip_height"
+                    android:layout_marginStart="@dimen/spacing_sm"
+                    android:background="@drawable/bg_chip_outline"
+                    android:gravity="center"
+                    android:paddingHorizontal="@dimen/spacing_md"
+                    android:text="@string/history_chip_mixed"
+                    android:textColor="@color/color_text_primary"
+                    android:textSize="@dimen/text_label" />
+
+                <TextView
+                    android:id="@+id/chip_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/chip_height"
+                    android:layout_marginStart="@dimen/spacing_sm"
+                    android:background="@drawable/bg_chip_outline"
+                    android:gravity="center"
+                    android:paddingHorizontal="@dimen/spacing_md"
+                    android:text="@string/history_chip_number"
+                    android:textColor="@color/color_text_primary"
+                    android:textSize="@dimen/text_label" />
+
+                <TextView
+                    android:id="@+id/chip_symbol"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/chip_height"
+                    android:layout_marginStart="@dimen/spacing_sm"
+                    android:background="@drawable/bg_chip_outline"
+                    android:gravity="center"
+                    android:paddingHorizontal="@dimen/spacing_md"
+                    android:text="@string/history_chip_symbol"
+                    android:textColor="@color/color_text_primary"
+                    android:textSize="@dimen/text_label" />
+
+                <TextView
+                    android:id="@+id/chip_deduction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/chip_height"
+                    android:layout_marginStart="@dimen/spacing_sm"
+                    android:background="@drawable/bg_chip_outline"
+                    android:gravity="center"
+                    android:paddingHorizontal="@dimen/spacing_md"
+                    android:text="@string/history_chip_deduction"
+                    android:textColor="@color/color_text_primary"
+                    android:textSize="@dimen/text_label" />
+
+                <TextView
+                    android:id="@+id/chip_memory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/chip_height"
+                    android:layout_marginStart="@dimen/spacing_sm"
+                    android:background="@drawable/bg_chip_outline"
+                    android:gravity="center"
+                    android:paddingHorizontal="@dimen/spacing_md"
+                    android:text="@string/history_chip_memory"
+                    android:textColor="@color/color_text_primary"
+                    android:textSize="@dimen/text_label" />
+
+            </LinearLayout>
+
+        </HorizontalScrollView>
+
+        <!-- ==================== Date Header ==================== -->
+        <TextView
+            android:id="@+id/tv_date_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_base"
+            android:background="@drawable/bg_chip_outline"
+            android:paddingHorizontal="@dimen/spacing_md"
+            android:paddingVertical="@dimen/spacing_xs"
+            android:text="@string/history_date_header"
+            android:textColor="@color/color_text_secondary"
+            android:textSize="@dimen/text_label"
+            android:textStyle="bold" />
+
+        <!-- ==================== Sessions RecyclerView ==================== -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_history_sessions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_md"
+            android:nestedScrollingEnabled="false" />
+
+        <!-- ==================== CTA Card ==================== -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xl"
+            android:background="@drawable/bg_card_white"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/spacing_xl">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/history_cta_title"
+                android:textColor="@color/color_text_primary"
+                android:textSize="@dimen/text_title"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xs"
+                android:gravity="center"
+                android:text="@string/history_cta_subtitle"
+                android:textColor="@color/color_text_secondary"
+                android:textSize="@dimen/text_caption" />
+
+            <Button
+                android:id="@+id/btn_play_next"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/button_height"
+                android:layout_marginTop="@dimen/spacing_base"
+                android:background="@drawable/bg_button_primary"
+                android:backgroundTint="@null"
+                android:text="@string/history_play_next"
+                android:textColor="@color/color_text_primary"
+                android:textSize="@dimen/text_body"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>
