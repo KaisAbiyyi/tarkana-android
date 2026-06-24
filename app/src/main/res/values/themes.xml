@@ -1,9 +1,42 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.Tarkanaandroid" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.Tarkana" parent="Theme.Material3.Light.NoActionBar">
+        <!-- Primary -->
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorOnPrimary">@color/color_text_primary</item>
+        <item name="colorPrimaryContainer">@color/color_primary</item>
+        <item name="colorOnPrimaryContainer">@color/color_text_primary</item>
+
+        <!-- Secondary -->
+        <item name="colorSecondary">@color/color_secondary</item>
+        <item name="colorOnSecondary">@color/color_text_primary</item>
+
+        <!-- Surface -->
+        <item name="colorSurface">@color/color_surface</item>
+        <item name="colorOnSurface">@color/color_text_primary</item>
+        <item name="colorSurfaceVariant">@color/color_surface_cream</item>
+        <item name="colorSecondaryContainer">@color/color_active_indicator</item>
+        <item name="colorOnSecondaryContainer">@color/color_text_primary</item>
+
+        <!-- Background -->
+        <item name="android:colorBackground">@color/color_background</item>
+        <item name="colorOnBackground">@color/color_text_primary</item>
+        <item name="android:windowBackground">@color/color_background</item>
+
+        <!-- Error -->
+        <item name="colorError">@color/color_error</item>
+
+        <!-- Status bar -->
+        <item name="android:statusBarColor">@color/color_background</item>
+        <item name="android:windowLightStatusBar">true</item>
+
+        <!-- Navigation bar -->
+        <item name="android:navigationBarColor">@color/color_surface</item>
+
+        <!-- Default text -->
+        <item name="android:textColorPrimary">@color/color_text_primary</item>
+        <item name="android:textColorSecondary">@color/color_text_secondary</item>
     </style>
 
-    <style name="Theme.Tarkanaandroid" parent="Base.Theme.Tarkanaandroid" />
 </resources>
