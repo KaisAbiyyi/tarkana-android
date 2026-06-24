@@ -188,4 +188,9 @@
         <item name="android:textSize">@dimen/text_small</item>
     </style>
 
+    <!-- Bottom Navigation Active Indicator -->
+    <style name="Widget.App.BottomNavigationView.ActiveIndicator.Transparent" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@android:color/transparent</item>
+    </style>
+
 </resources>
