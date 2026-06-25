@@ -2,6 +2,9 @@
 <resources>
 
     <style name="Theme.Tarkana" parent="Theme.Material3.Light.NoActionBar">
+        <!-- Custom Button Style Reset -->
+        <item name="materialButtonStyle">@style/TarkanaButton</item>
+
         <!-- Primary -->
         <item name="colorPrimary">@color/color_primary</item>
         <item name="colorOnPrimary">@color/color_text_primary</item>
