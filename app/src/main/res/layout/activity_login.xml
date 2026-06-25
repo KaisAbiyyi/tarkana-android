@@ -248,14 +248,12 @@
 
             </RelativeLayout>
 
-            <!-- Login Button -->
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_login"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/button_height"
                 android:layout_marginTop="@dimen/spacing_lg"
                 android:background="@drawable/bg_button_primary"
-                android:backgroundTint="@null"
                 android:text="@string/login_button"
                 android:textAllCaps="true"
                 android:textColor="@color/color_text_primary"
@@ -293,13 +291,12 @@
             </LinearLayout>
 
             <!-- Google Button -->
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_google"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/button_height"
                 android:layout_marginTop="@dimen/spacing_base"
                 android:background="@drawable/bg_button_secondary"
-                android:backgroundTint="@null"
                 android:text="@string/login_google_button"
                 android:textColor="@color/color_text_primary"
                 android:textSize="@dimen/text_body"

@@ -318,13 +318,12 @@
                 android:textColor="@color/color_text_secondary"
                 android:textSize="@dimen/text_caption" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_play_next"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/button_height"
                 android:layout_marginTop="@dimen/spacing_base"
                 android:background="@drawable/bg_button_primary"
-                android:backgroundTint="@null"
                 android:text="@string/history_play_next"
                 android:textColor="@color/color_text_primary"
                 android:textSize="@dimen/text_body"

@@ -1052,14 +1052,12 @@
                 android:textColor="@color/color_text_secondary"
                 android:textSize="@dimen/text_caption" />
 
-            <!-- Choose Configuration Button -->
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_choose_config"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/button_height"
                 android:layout_marginTop="@dimen/spacing_base"
                 android:background="@drawable/bg_button_disabled"
-                android:backgroundTint="@null"
                 android:enabled="false"
                 android:text="@string/challenge_choose_config"
                 android:textColor="@color/color_text_secondary"

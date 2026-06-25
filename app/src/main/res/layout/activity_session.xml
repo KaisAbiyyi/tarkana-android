@@ -390,13 +390,12 @@
         android:layout_weight="1" />
 
     <!-- Action -->
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_submit"
         android:layout_width="match_parent"
         android:layout_height="64dp"
         android:layout_marginTop="@dimen/spacing_lg"
         android:background="@drawable/bg_button_disabled"
-        android:backgroundTint="@null"
         android:enabled="false"
         android:text="@string/session_submit"
         android:textColor="#A0A0A0"

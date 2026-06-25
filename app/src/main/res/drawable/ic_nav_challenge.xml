@@ -17,7 +17,7 @@
                 </shape>
             </item>
             <!-- Icon centered inside card -->
-            <item android:top="7dp" android:left="7dp" android:bottom="11dp" android:right="11dp"
+            <item android:top="6dp" android:left="6dp" android:bottom="10dp" android:right="10dp"
                   android:drawable="@drawable/ic_challenge" />
         </layer-list>
     </item>
@@ -38,7 +38,7 @@
                 </shape>
             </item>
             <!-- Icon centered inside card -->
-            <item android:top="7dp" android:left="7dp" android:bottom="11dp" android:right="11dp"
+            <item android:top="6dp" android:left="6dp" android:bottom="10dp" android:right="10dp"
                   android:drawable="@drawable/ic_challenge" />
         </layer-list>
     </item>
@@ -54,7 +54,7 @@
                 </shape>
             </item>
             <!-- Icon shifted with the card -->
-            <item android:top="11dp" android:left="11dp" android:bottom="7dp" android:right="7dp"
+            <item android:top="10dp" android:left="10dp" android:bottom="6dp" android:right="6dp"
                   android:drawable="@drawable/ic_challenge" />
         </layer-list>
     </item>
@@ -69,7 +69,7 @@
                 </shape>
             </item>
             <!-- Icon centered -->
-            <item android:top="7dp" android:left="7dp" android:bottom="11dp" android:right="11dp"
+            <item android:top="6dp" android:left="6dp" android:bottom="10dp" android:right="10dp"
                   android:drawable="@drawable/ic_challenge" />
         </layer-list>
     </item>

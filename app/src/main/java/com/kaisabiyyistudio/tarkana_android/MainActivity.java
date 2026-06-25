@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
+        bottomNav.setItemIconTintList(null);
+        bottomNav.setItemActiveIndicatorEnabled(false);
         bottomNav.setOnItemSelectedListener(item -> {
             Fragment fragment = null;
             int id = item.getItemId();

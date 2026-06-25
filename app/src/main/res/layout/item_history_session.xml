@@ -220,13 +220,12 @@
     </LinearLayout>
 
     <!-- View Result Button -->
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_view_result"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_md"
         android:background="@drawable/bg_button_outline"
-        android:backgroundTint="@null"
         android:text="@string/view_result"
         android:textColor="@color/color_text_primary"
         android:textSize="@dimen/text_label"

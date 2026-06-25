@@ -68,11 +68,11 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav"
         android:layout_width="0dp"
-        android:layout_height="@dimen/bottom_nav_height"
+        android:layout_height="wrap_content"
         android:background="@drawable/bg_bottom_nav"
         app:itemIconTint="@null"
         app:itemTextColor="#000000"
-        app:itemIconSize="36dp"
+        app:itemIconSize="48dp"
         app:itemActiveIndicatorStyle="@style/Widget.App.BottomNavigationView.ActiveIndicator.Transparent"
         app:labelVisibilityMode="unlabeled"
         app:layout_constraintBottom_toBottomOf="parent"
