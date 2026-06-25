@@ -53,17 +53,20 @@ public class SessionActivity extends AppCompatActivity {
         }
     }
 
-    // Shapes
-    private static final int STAR = R.drawable.ic_shape_star;
-    private static final int DIAMOND = R.drawable.ic_shape_diamond;
-    private static final int SQUARE = R.drawable.ic_shape_square;
-    private static final int CIRCLE = R.drawable.ic_shape_circle;
+    // Colored Shapes
+    private static final int COLORED_CIRCLE = R.drawable.ic_shape_circle_colored;
+    private static final int COLORED_STAR = R.drawable.ic_shape_star_colored;
+    private static final int COLORED_DIAMOND = R.drawable.ic_shape_diamond_colored;
+    private static final int COLORED_SQUARE = R.drawable.ic_shape_square_colored;
 
-    // Card backgrounds
-    private static final int BG_YELLOW = R.drawable.bg_card_yellow_bordered;
-    private static final int BG_RED = R.drawable.bg_card_red_bordered;
-    private static final int BG_BLUE = R.drawable.bg_card_blue_bordered;
-    private static final int BG_TEAL = R.drawable.bg_card_teal_bordered;
+    // Arrow/Rotation shapes
+    private static final int ARROW_RIGHT = R.drawable.ic_shape_arrow_right;
+    private static final int ARROW_DOWN = R.drawable.ic_shape_arrow_down;
+    private static final int ARROW_LEFT = R.drawable.ic_shape_arrow_left;
+    private static final int ARROW_UP = R.drawable.ic_shape_arrow_up;
+
+    // Backgrounds
+    private static final int BG_WHITE_CARD = R.drawable.bg_card_white;
 
     private final Question[] numberQuestions = {
         new Question("1, 11, 21, 31, 41, ?", new String[]{"42", "51", "61", "71"}, 1, "The sequence increases by 10 at each step: 41 + 10 = 51."),
@@ -75,35 +78,35 @@ public class SessionActivity extends AppCompatActivity {
 
     private final Question[] symbolQuestions = {
         new Question("Find the next symbol in the sequence:", 
-            new int[]{STAR, DIAMOND, SQUARE, CIRCLE, STAR}, 
-            new int[]{BG_YELLOW, BG_RED, BG_BLUE, BG_TEAL, BG_YELLOW},
-            new int[]{SQUARE, DIAMOND, STAR, CIRCLE},
-            new int[]{BG_BLUE, BG_RED, BG_YELLOW, BG_TEAL},
-            1, "The sequence repeats four shapes: Star, Diamond, Square, Circle. After the second Star, the next shape is the Diamond."),
+            new int[]{ARROW_RIGHT, ARROW_DOWN, ARROW_LEFT, ARROW_UP, ARROW_RIGHT}, 
+            new int[]{BG_WHITE_CARD, BG_WHITE_CARD, BG_WHITE_CARD, BG_WHITE_CARD, BG_WHITE_CARD},
+            new int[]{ARROW_UP, ARROW_DOWN, ARROW_LEFT, ARROW_RIGHT},
+            new int[]{BG_WHITE_CARD, BG_WHITE_CARD, BG_WHITE_CARD, BG_WHITE_CARD},
+            1, "The triangle rotates 90 degrees clockwise at each step: Right, Down, Left, Up. After Right, the next shape must point Down."),
         new Question("Find the next symbol in the sequence:", 
-            new int[]{CIRCLE, SQUARE, DIAMOND, STAR, CIRCLE}, 
-            new int[]{BG_TEAL, BG_BLUE, BG_RED, BG_YELLOW, BG_TEAL},
-            new int[]{STAR, DIAMOND, SQUARE, CIRCLE},
-            new int[]{BG_YELLOW, BG_RED, BG_BLUE, BG_TEAL},
-            2, "The sequence repeats: Circle, Square, Diamond, Star. After Circle, the next shape is Square."),
+            new int[]{COLORED_CIRCLE, COLORED_STAR, COLORED_DIAMOND, COLORED_SQUARE, COLORED_CIRCLE}, 
+            new int[]{BG_WHITE_CARD, BG_WHITE_CARD, BG_WHITE_CARD, BG_WHITE_CARD, BG_WHITE_CARD},
+            new int[]{COLORED_STAR, COLORED_DIAMOND, COLORED_SQUARE, COLORED_CIRCLE},
+            new int[]{BG_WHITE_CARD, BG_WHITE_CARD, BG_WHITE_CARD, BG_WHITE_CARD},
+            0, "The sequence repeats four shapes: Circle, Star, Diamond, Square. After Circle, the next shape is the yellow Star."),
         new Question("Find the next symbol in the sequence:", 
-            new int[]{DIAMOND, STAR, CIRCLE, SQUARE, DIAMOND}, 
-            new int[]{BG_RED, BG_YELLOW, BG_TEAL, BG_BLUE, BG_RED},
-            new int[]{CIRCLE, STAR, SQUARE, DIAMOND},
-            new int[]{BG_TEAL, BG_YELLOW, BG_BLUE, BG_RED},
-            1, "The sequence repeats: Diamond, Star, Circle, Square. After Diamond, the next shape is Star."),
+            new int[]{ARROW_LEFT, ARROW_UP, ARROW_RIGHT, ARROW_DOWN, ARROW_LEFT}, 
+            new int[]{BG_WHITE_CARD, BG_WHITE_CARD, BG_WHITE_CARD, BG_WHITE_CARD, BG_WHITE_CARD},
+            new int[]{ARROW_RIGHT, ARROW_UP, ARROW_LEFT, ARROW_DOWN},
+            new int[]{BG_WHITE_CARD, BG_WHITE_CARD, BG_WHITE_CARD, BG_WHITE_CARD},
+            1, "The triangle rotates 90 degrees clockwise at each step: Left, Up, Right, Down. After Left, the next shape must point Up."),
         new Question("Find the next symbol in the sequence:", 
-            new int[]{SQUARE, CIRCLE, STAR, DIAMOND, SQUARE}, 
-            new int[]{BG_BLUE, BG_TEAL, BG_YELLOW, BG_RED, BG_BLUE},
-            new int[]{DIAMOND, STAR, CIRCLE, SQUARE},
-            new int[]{BG_RED, BG_YELLOW, BG_TEAL, BG_BLUE},
-            2, "The sequence repeats: Square, Circle, Star, Diamond. After Square, the next shape is Circle."),
+            new int[]{COLORED_DIAMOND, COLORED_SQUARE, COLORED_CIRCLE, COLORED_STAR, COLORED_DIAMOND}, 
+            new int[]{BG_WHITE_CARD, BG_WHITE_CARD, BG_WHITE_CARD, BG_WHITE_CARD, BG_WHITE_CARD},
+            new int[]{COLORED_SQUARE, COLORED_CIRCLE, COLORED_STAR, COLORED_DIAMOND},
+            new int[]{BG_WHITE_CARD, BG_WHITE_CARD, BG_WHITE_CARD, BG_WHITE_CARD},
+            0, "The sequence repeats: Diamond, Square, Circle, Star. After Diamond, the next shape is the blue Square."),
         new Question("Find the next symbol in the sequence:", 
-            new int[]{STAR, STAR, DIAMOND, DIAMOND, SQUARE}, 
-            new int[]{BG_YELLOW, BG_YELLOW, BG_RED, BG_RED, BG_BLUE},
-            new int[]{STAR, DIAMOND, SQUARE, CIRCLE},
-            new int[]{BG_YELLOW, BG_RED, BG_BLUE, BG_TEAL},
-            2, "The sequence repeats each shape twice: Star, Star, Diamond, Diamond, Square, Square. The next shape is Square.")
+            new int[]{ARROW_UP, ARROW_LEFT, ARROW_DOWN, ARROW_RIGHT, ARROW_UP}, 
+            new int[]{BG_WHITE_CARD, BG_WHITE_CARD, BG_WHITE_CARD, BG_WHITE_CARD, BG_WHITE_CARD},
+            new int[]{ARROW_LEFT, ARROW_RIGHT, ARROW_UP, ARROW_DOWN},
+            new int[]{BG_WHITE_CARD, BG_WHITE_CARD, BG_WHITE_CARD, BG_WHITE_CARD},
+            0, "The triangle rotates 90 degrees counter-clockwise at each step: Up, Left, Down, Right. After Up, the next shape must point Left.")
     };
 
     private Question[] questions;
@@ -739,10 +742,14 @@ public class SessionActivity extends AppCompatActivity {
     }
 
     private String getShapeName(int drawableId) {
-        if (drawableId == STAR) return "Star";
-        if (drawableId == DIAMOND) return "Diamond";
-        if (drawableId == SQUARE) return "Square";
-        if (drawableId == CIRCLE) return "Circle";
+        if (drawableId == COLORED_CIRCLE) return "Circle";
+        if (drawableId == COLORED_STAR) return "Star";
+        if (drawableId == COLORED_DIAMOND) return "Diamond";
+        if (drawableId == COLORED_SQUARE) return "Square";
+        if (drawableId == ARROW_RIGHT) return "Arrow Right";
+        if (drawableId == ARROW_DOWN) return "Arrow Down";
+        if (drawableId == ARROW_LEFT) return "Arrow Left";
+        if (drawableId == ARROW_UP) return "Arrow Up";
         return "Unknown";
     }
 
