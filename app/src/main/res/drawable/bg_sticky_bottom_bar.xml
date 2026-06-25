@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Top Border (2dp black line at the top) -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#000000" />
+        </shape>
+    </item>
+    <!-- Cream Background (offset by 2dp from top to show border) -->
+    <item android:top="2dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#FDF6E3" />
+        </shape>
+    </item>
+</layer-list>

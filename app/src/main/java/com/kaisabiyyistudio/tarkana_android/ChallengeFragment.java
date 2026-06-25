@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 
 public class ChallengeFragment extends Fragment {
@@ -22,7 +23,7 @@ public class ChallengeFragment extends Fragment {
     private View cardMixed, cardNumber, cardSymbol, cardDeduction, cardMemory;
     private RadioButton radioQuick, radioStandard, radioLong;
     private RadioButton radioMixed, radioNumber, radioSymbol, radioDeduction, radioMemory;
-    private android.widget.Button btnChooseConfig;
+    private AppCompatButton btnChooseConfig;
     private TextView tvSummaryTitle, tvSummarySubtitle;
     private TextView tvDurationValue, tvCountValue, tvStatusValue, tvReviewValue;
     private android.widget.ProgressBar pbSteps;
@@ -94,6 +95,12 @@ public class ChallengeFragment extends Fragment {
         btnChooseConfig.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), SessionActivity.class);
             intent.putExtra("mode", selectedMode);
+            String modeStr = "number_patterns";
+            if (selectedMode == 0) modeStr = "mixed_mode";
+            else if (selectedMode == 2) modeStr = "symbol_patterns";
+            else if (selectedMode == 3) modeStr = "mini_deduction";
+            else if (selectedMode == 4) modeStr = "pattern_memory";
+            intent.putExtra("mode_str", modeStr);
             startActivity(intent);
         });
 
@@ -253,7 +260,11 @@ public class ChallengeFragment extends Fragment {
             btnChooseConfig.setEnabled(ready);
             if (ready) {
                 btnChooseConfig.setBackgroundResource(R.drawable.bg_button_primary);
-                btnChooseConfig.setText("Start Challenge");
+                if (selectedMode == 3) {
+                    btnChooseConfig.setText("Start Mini Deduction");
+                } else {
+                    btnChooseConfig.setText("Start Challenge");
+                }
                 btnChooseConfig.setTextColor(getResources().getColor(R.color.color_text_primary));
             } else {
                 btnChooseConfig.setBackgroundResource(R.drawable.bg_button_disabled);

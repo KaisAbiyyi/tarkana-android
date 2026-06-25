@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         if (savedInstanceState == null) {
-            bottomNav.setSelectedItemId(R.id.nav_dashboard);
+            bottomNav.setSelectedItemId(R.id.nav_challenge);
         }
     }
 }
