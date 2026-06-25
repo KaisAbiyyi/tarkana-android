@@ -230,59 +230,77 @@
 
                         <ImageView
                             android:id="@+id/iv_seq_1"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@drawable/bg_card_yellow_bordered"
-                            android:padding="6dp"
+                            android:layout_width="44dp"
+                            android:layout_height="44dp"
+                            android:background="@drawable/bg_card_white"
+                            android:paddingTop="8dp"
+                            android:paddingLeft="8dp"
+                            android:paddingBottom="12dp"
+                            android:paddingRight="12dp"
                             android:contentDescription="seq1"/>
 
                         <ImageView
                             android:id="@+id/iv_seq_2"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
+                            android:layout_width="44dp"
+                            android:layout_height="44dp"
                             android:layout_marginStart="8dp"
-                            android:background="@drawable/bg_card_red_bordered"
-                            android:padding="6dp"
+                            android:background="@drawable/bg_card_white"
+                            android:paddingTop="8dp"
+                            android:paddingLeft="8dp"
+                            android:paddingBottom="12dp"
+                            android:paddingRight="12dp"
                             android:contentDescription="seq2"/>
 
                         <ImageView
                             android:id="@+id/iv_seq_3"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
+                            android:layout_width="44dp"
+                            android:layout_height="44dp"
                             android:layout_marginStart="8dp"
-                            android:background="@drawable/bg_card_blue_bordered"
-                            android:padding="6dp"
+                            android:background="@drawable/bg_card_white"
+                            android:paddingTop="8dp"
+                            android:paddingLeft="8dp"
+                            android:paddingBottom="12dp"
+                            android:paddingRight="12dp"
                             android:contentDescription="seq3"/>
 
                         <ImageView
                             android:id="@+id/iv_seq_4"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
+                            android:layout_width="44dp"
+                            android:layout_height="44dp"
                             android:layout_marginStart="8dp"
-                            android:background="@drawable/bg_card_teal_bordered"
-                            android:padding="6dp"
+                            android:background="@drawable/bg_card_white"
+                            android:paddingTop="8dp"
+                            android:paddingLeft="8dp"
+                            android:paddingBottom="12dp"
+                            android:paddingRight="12dp"
                             android:contentDescription="seq4"/>
 
                         <ImageView
                             android:id="@+id/iv_seq_5"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
+                            android:layout_width="44dp"
+                            android:layout_height="44dp"
                             android:layout_marginStart="8dp"
-                            android:background="@drawable/bg_card_yellow_bordered"
-                            android:padding="6dp"
+                            android:background="@drawable/bg_card_white"
+                            android:paddingTop="8dp"
+                            android:paddingLeft="8dp"
+                            android:paddingBottom="12dp"
+                            android:paddingRight="12dp"
                             android:contentDescription="seq5"/>
 
-                        <!-- Question mark box -->
+                        <!-- Question mark box (Turquoise Card) -->
                         <TextView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
+                            android:id="@+id/tv_question_mark_box"
+                            android:layout_width="44dp"
+                            android:layout_height="44dp"
                             android:layout_marginStart="8dp"
                             android:background="@drawable/bg_card_blue_bordered"
                             android:gravity="center"
                             android:text="?"
                             android:textColor="@color/color_text_primary"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:paddingBottom="4dp"
+                            android:paddingRight="4dp" />
 
                     </LinearLayout>
 
@@ -332,7 +350,7 @@
                             android:layout_width="32dp"
                             android:layout_height="32dp"
                             android:layout_marginStart="14dp"
-                            android:background="@drawable/bg_card_blue_bordered"
+                            android:background="@color/color_transparent"
                             android:padding="4dp"
                             android:visibility="gone"
                             android:contentDescription="optA"/>
@@ -377,7 +395,7 @@
                             android:layout_width="32dp"
                             android:layout_height="32dp"
                             android:layout_marginStart="14dp"
-                            android:background="@drawable/bg_card_red_bordered"
+                            android:background="@color/color_transparent"
                             android:padding="4dp"
                             android:visibility="gone"
                             android:contentDescription="optB"/>
@@ -422,7 +440,7 @@
                             android:layout_width="32dp"
                             android:layout_height="32dp"
                             android:layout_marginStart="14dp"
-                            android:background="@drawable/bg_card_yellow_bordered"
+                            android:background="@color/color_transparent"
                             android:padding="4dp"
                             android:visibility="gone"
                             android:contentDescription="optC"/>
@@ -467,7 +485,7 @@
                             android:layout_width="32dp"
                             android:layout_height="32dp"
                             android:layout_marginStart="14dp"
-                            android:background="@drawable/bg_card_teal_bordered"
+                            android:background="@color/color_transparent"
                             android:padding="4dp"
                             android:visibility="gone"
                             android:contentDescription="optD"/>
