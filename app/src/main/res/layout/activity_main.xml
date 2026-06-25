@@ -74,7 +74,7 @@
         app:itemTextColor="#000000"
         app:itemIconSize="36dp"
         app:itemActiveIndicatorStyle="@style/Widget.App.BottomNavigationView.ActiveIndicator.Transparent"
-        app:labelVisibilityMode="labeled"
+        app:labelVisibilityMode="unlabeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
