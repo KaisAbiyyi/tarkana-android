@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import android.view.View;
 import androidx.fragment.app.Fragment;
 
 public class ChallengeFragment extends Fragment {
@@ -28,6 +27,8 @@ public class ChallengeFragment extends Fragment {
     private TextView tvDurationValue, tvCountValue, tvStatusValue, tvReviewValue;
     private android.widget.ProgressBar pbSteps;
     private TextView tvStepsReady;
+    private TextView tvStickySelection;
+    private View summaryContainer;
 
     @Nullable
     @Override
@@ -66,6 +67,12 @@ public class ChallengeFragment extends Fragment {
         tvReviewValue = view.findViewById(R.id.tv_summary_review);
         btnChooseConfig = view.findViewById(R.id.btn_choose_config);
         
+        // Sticky bottom selection info
+        tvStickySelection = view.findViewById(R.id.tv_sticky_selection);
+        
+        // Summary container
+        summaryContainer = view.findViewById(R.id.layout_summary_container);
+        
         // Step progress
         pbSteps = view.findViewById(R.id.pb_steps);
         tvStepsReady = view.findViewById(R.id.tv_steps_ready);
@@ -89,6 +96,9 @@ public class ChallengeFragment extends Fragment {
             startActivity(intent);
         });
 
+        // Initialize display
+        updateSummary();
+
         return view;
     }
 
@@ -96,9 +106,9 @@ public class ChallengeFragment extends Fragment {
         selectedSessionType = type;
 
         // Reset all session radios
-        radioQuick.setChecked(false);
-        radioStandard.setChecked(false);
-        radioLong.setChecked(false);
+        if (radioQuick != null) radioQuick.setChecked(false);
+        if (radioStandard != null) radioStandard.setChecked(false);
+        if (radioLong != null) radioLong.setChecked(false);
 
         // Reset card backgrounds
         cardQuick.setBackgroundResource(R.drawable.bg_card_white);
@@ -106,18 +116,18 @@ public class ChallengeFragment extends Fragment {
         cardExtended.setBackgroundResource(R.drawable.bg_card_white);
 
         // Set selected
-        RadioButton selectedRadio;
+        RadioButton selectedRadio = null;
         View selectedCard;
         switch (type) {
             case 0: selectedRadio = radioQuick; selectedCard = cardQuick; break;
             case 1: selectedRadio = radioStandard; selectedCard = cardStandard; break;
             default: selectedRadio = radioLong; selectedCard = cardExtended; break;
         }
-        selectedRadio.setChecked(true);
-        selectedCard.setBackgroundResource(R.drawable.bg_card_yellow);
+        if (selectedRadio != null) selectedRadio.setChecked(true);
+        selectedCard.setBackgroundResource(R.drawable.bg_card_teal);
 
         // Re-apply padding because setting background resets padding
-        int padding = getResources().getDimensionPixelSize(R.dimen.spacing_base);
+        int padding = getResources().getDimensionPixelSize(R.dimen.spacing_sm);
         cardQuick.setPadding(padding, padding, padding, padding);
         cardStandard.setPadding(padding, padding, padding, padding);
         cardExtended.setPadding(padding, padding, padding, padding);
@@ -130,11 +140,11 @@ public class ChallengeFragment extends Fragment {
         selectedMode = mode;
 
         // Reset all mode radios
-        radioMixed.setChecked(false);
-        radioNumber.setChecked(false);
-        radioSymbol.setChecked(false);
-        radioDeduction.setChecked(false);
-        radioMemory.setChecked(false);
+        if (radioMixed != null) radioMixed.setChecked(false);
+        if (radioNumber != null) radioNumber.setChecked(false);
+        if (radioSymbol != null) radioSymbol.setChecked(false);
+        if (radioDeduction != null) radioDeduction.setChecked(false);
+        if (radioMemory != null) radioMemory.setChecked(false);
 
         // Reset card backgrounds
         cardMixed.setBackgroundResource(R.drawable.bg_card_white);
@@ -144,7 +154,7 @@ public class ChallengeFragment extends Fragment {
         cardMemory.setBackgroundResource(R.drawable.bg_card_white);
 
         // Set selected
-        RadioButton selectedRadio;
+        RadioButton selectedRadio = null;
         View selectedCard;
         switch (mode) {
             case 0: selectedRadio = radioMixed; selectedCard = cardMixed; break;
@@ -153,11 +163,11 @@ public class ChallengeFragment extends Fragment {
             case 3: selectedRadio = radioDeduction; selectedCard = cardDeduction; break;
             default: selectedRadio = radioMemory; selectedCard = cardMemory; break;
         }
-        selectedRadio.setChecked(true);
-        selectedCard.setBackgroundResource(R.drawable.bg_card_yellow);
+        if (selectedRadio != null) selectedRadio.setChecked(true);
+        selectedCard.setBackgroundResource(R.drawable.bg_card_teal);
 
         // Re-apply padding because setting background resets padding
-        int padding = getResources().getDimensionPixelSize(R.dimen.spacing_base);
+        int padding = getResources().getDimensionPixelSize(R.dimen.spacing_sm);
         cardMixed.setPadding(padding, padding, padding, padding);
         cardNumber.setPadding(padding, padding, padding, padding);
         cardSymbol.setPadding(padding, padding, padding, padding);
@@ -178,42 +188,81 @@ public class ChallengeFragment extends Fragment {
             pbSteps.setProgress(steps);
         }
         if (tvStepsReady != null) {
-            tvStepsReady.setText(getString(R.string.challenge_steps_ready, steps));
+            if (selectedSessionType >= 0 && selectedMode >= 0) {
+                tvStepsReady.setText("Ready to start");
+            } else if (selectedSessionType >= 0 || selectedMode >= 0) {
+                tvStepsReady.setText("1/2 selected");
+            } else {
+                tvStepsReady.setText("0/2 selected");
+            }
         }
 
-        tvSummaryTitle.setText("Challenge Configuration");
-        tvSummarySubtitle.setText("Step " + (steps == 3 ? 3 : steps + 1) + " of 3");
+        if (tvSummaryTitle != null) {
+            tvSummaryTitle.setText("Selected Configuration");
+        }
+        if (tvSummarySubtitle != null) {
+            tvSummarySubtitle.setText("Step " + (steps == 3 ? 3 : steps + 1) + " of 3");
+        }
 
         // Duration/count based on session type
         if (selectedSessionType >= 0) {
-            String[] durations = {"~3 min", "~7 min", "~15 min"};
+            String[] durations = {"~1 min", "~2 min", "~4 min"};
             String[] counts = {"5", "10", "20"};
-            tvDurationValue.setText(durations[selectedSessionType]);
-            tvCountValue.setText(counts[selectedSessionType]);
+            if (tvDurationValue != null) tvDurationValue.setText(durations[selectedSessionType]);
+            if (tvCountValue != null) tvCountValue.setText(counts[selectedSessionType]);
         } else {
-            tvDurationValue.setText("-");
-            tvCountValue.setText("-");
+            if (tvDurationValue != null) tvDurationValue.setText("-");
+            if (tvCountValue != null) tvCountValue.setText("-");
         }
 
         // Mode status
         if (selectedMode >= 0) {
             String[] modes = {"Mixed", "Number", "Symbol", "Deduction", "Memory"};
-            tvStatusValue.setText(modes[selectedMode] + " Mode");
+            if (tvStatusValue != null) tvStatusValue.setText(modes[selectedMode] + " Mode");
         } else {
-            tvStatusValue.setText("-");
+            if (tvStatusValue != null) tvStatusValue.setText("-");
+        }
+
+        // Review/Rank
+        if (selectedSessionType >= 0 && selectedMode >= 0) {
+            if (tvReviewValue != null) tvReviewValue.setText("Ranked Arena");
+        } else {
+            if (tvReviewValue != null) tvReviewValue.setText("-");
+        }
+
+        // Toggle visibility of summary container
+        boolean ready = selectedSessionType >= 0 && selectedMode >= 0;
+        if (summaryContainer != null) {
+            summaryContainer.setVisibility(ready ? View.VISIBLE : View.GONE);
+        }
+
+        // Sticky bottom loadout text
+        if (tvStickySelection != null) {
+            if (ready) {
+                String[] sessions = {"Quick", "Standard", "Long"};
+                String[] modes = {"Mixed", "Number", "Symbol", "Deduction", "Memory"};
+                tvStickySelection.setText(sessions[selectedSessionType] + " + " + modes[selectedMode]);
+            } else {
+                tvStickySelection.setText("Choose 2 options");
+            }
         }
 
         // Enable button when both selected
-        boolean ready = selectedSessionType >= 0 && selectedMode >= 0;
-        btnChooseConfig.setEnabled(ready);
-        if (ready) {
-            btnChooseConfig.setBackgroundResource(R.drawable.bg_button_primary);
-            btnChooseConfig.setText(R.string.start_challenge);
-            btnChooseConfig.setTextColor(getResources().getColor(R.color.color_text_primary));
-        } else {
-            btnChooseConfig.setBackgroundResource(R.drawable.bg_button_disabled);
-            btnChooseConfig.setText(R.string.challenge_choose_config);
-            btnChooseConfig.setTextColor(getResources().getColor(R.color.color_text_secondary));
+        if (btnChooseConfig != null) {
+            btnChooseConfig.setEnabled(ready);
+            if (ready) {
+                btnChooseConfig.setBackgroundResource(R.drawable.bg_button_primary);
+                btnChooseConfig.setText("Start Challenge");
+                btnChooseConfig.setTextColor(getResources().getColor(R.color.color_text_primary));
+            } else {
+                btnChooseConfig.setBackgroundResource(R.drawable.bg_button_disabled);
+                if (selectedSessionType >= 0 || selectedMode >= 0) {
+                    btnChooseConfig.setText("Select 1 more option");
+                } else {
+                    btnChooseConfig.setText("Select session and mode");
+                }
+                btnChooseConfig.setTextColor(getResources().getColor(R.color.color_text_secondary));
+            }
         }
     }
 }

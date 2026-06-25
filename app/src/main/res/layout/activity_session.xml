@@ -1,432 +1,772 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_background"
-    android:orientation="vertical"
-    android:padding="@dimen/spacing_xl">
+    android:fitsSystemWindows="true">
 
-    <!-- Top text -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="RANKED ARENA"
-        android:textColor="@color/color_text_secondary"
-        android:textSize="@dimen/text_label"
-        android:textStyle="bold"
-        android:letterSpacing="0.1" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_xs"
-        android:text="@string/session_symbol_patterns"
-        android:textColor="@color/color_text_primary"
-        android:textSize="48sp"
-        android:textStyle="bold" />
-
-    <!-- Status Bar -->
-    <LinearLayout
+    <!-- ====================================================== -->
+    <!-- ACTIVE GAMEPLAY CONTAINER                              -->
+    <!-- ====================================================== -->
+    <RelativeLayout
+        android:id="@+id/layout_gameplay"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_lg"
-        android:background="@drawable/bg_card_white"
-        android:orientation="vertical"
-        android:paddingBottom="@dimen/spacing_sm">
+        android:layout_height="match_parent"
+        android:visibility="visible">
 
-        <!-- Info row -->
+        <!-- Scrollable gameplay content -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/bottom_bar_gameplay"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <!-- Game Header -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="16dp">
+
+                    <ImageView
+                        android:id="@+id/btn_back"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:background="@drawable/bg_card_white"
+                        android:src="@drawable/ic_back"
+                        android:padding="6dp"
+                        android:contentDescription="Go Back"
+                        android:clickable="true"
+                        android:focusable="true"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/btn_back"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="12dp"
+                        android:text="Number Patterns"
+                        android:textColor="@color/color_text_primary"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_game_timer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/bg_card_yellow"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="4dp"
+                        android:text="20s"
+                        android:textColor="@color/color_text_primary"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
+
+                <!-- Sticky Progress/Status Card -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_card_white"
+                    android:orientation="vertical"
+                    android:padding="12dp"
+                    android:layout_marginBottom="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="3"
+                        android:baselineAligned="false">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:gravity="center">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="PROGRESS"
+                                android:textColor="@color/color_text_secondary"
+                                android:textSize="10sp"
+                                android:textStyle="bold"/>
+                            <TextView
+                                android:id="@+id/tv_progress_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Question 1 of 5"
+                                android:textColor="@color/color_text_primary"
+                                android:textSize="13sp"
+                                android:textStyle="bold"
+                                android:layout_marginTop="2dp"/>
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="2dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/color_divider"
+                            android:layout_marginVertical="2dp"/>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:gravity="center">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="STREAK"
+                                android:textColor="@color/color_text_secondary"
+                                android:textSize="10sp"
+                                android:textStyle="bold"/>
+                            <TextView
+                                android:id="@+id/tv_streak_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0"
+                                android:textColor="@color/color_text_primary"
+                                android:textSize="13sp"
+                                android:textStyle="bold"
+                                android:layout_marginTop="2dp"/>
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="2dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/color_divider"
+                            android:layout_marginVertical="2dp"/>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:gravity="center">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="SCORE"
+                                android:textColor="@color/color_text_secondary"
+                                android:textSize="10sp"
+                                android:textStyle="bold"/>
+                            <TextView
+                                android:id="@+id/tv_score_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0"
+                                android:textColor="@color/color_text_primary"
+                                android:textSize="13sp"
+                                android:textStyle="bold"
+                                android:layout_marginTop="2dp"/>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <ProgressBar
+                        android:id="@+id/pb_gameplay_steps"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="8dp"
+                        android:layout_marginTop="8dp"
+                        android:max="5"
+                        android:progress="1"
+                        android:progressDrawable="@drawable/bg_progress_fill"
+                        android:background="@drawable/bg_card_white"/>
+
+                </LinearLayout>
+
+                <!-- Question Card -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_card_white"
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    android:layout_marginBottom="16dp">
+
+                    <TextView
+                        android:id="@+id/tv_question_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="QUESTION 1"
+                        android:textColor="@color/color_text_secondary"
+                        android:textSize="12sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/tv_question_prompt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Find the next number: 1, 11, 21, 31, 41, ?"
+                        android:textColor="@color/color_text_primary"
+                        android:textSize="22sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <!-- Answer Choices Vertical Stack -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <!-- Option A -->
+                    <LinearLayout
+                        android:id="@+id/card_option_a"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_card_white"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="14dp"
+                        android:layout_marginBottom="12dp">
+
+                        <TextView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:background="@drawable/bg_badge_yellow"
+                            android:gravity="center"
+                            android:text="A"
+                            android:textColor="@color/color_text_primary"
+                            android:textSize="12sp"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/tv_option_a_val"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="14dp"
+                            android:text="42"
+                            android:textColor="@color/color_text_primary"
+                            android:textSize="16sp"
+                            android:textStyle="bold"/>
+
+                    </LinearLayout>
+
+                    <!-- Option B -->
+                    <LinearLayout
+                        android:id="@+id/card_option_b"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_card_white"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="14dp"
+                        android:layout_marginBottom="12dp">
+
+                        <TextView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:background="@drawable/bg_badge_yellow"
+                            android:gravity="center"
+                            android:text="B"
+                            android:textColor="@color/color_text_primary"
+                            android:textSize="12sp"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/tv_option_b_val"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="14dp"
+                            android:text="51"
+                            android:textColor="@color/color_text_primary"
+                            android:textSize="16sp"
+                            android:textStyle="bold"/>
+
+                    </LinearLayout>
+
+                    <!-- Option C -->
+                    <LinearLayout
+                        android:id="@+id/card_option_c"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_card_white"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="14dp"
+                        android:layout_marginBottom="12dp">
+
+                        <TextView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:background="@drawable/bg_badge_yellow"
+                            android:gravity="center"
+                            android:text="C"
+                            android:textColor="@color/color_text_primary"
+                            android:textSize="12sp"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/tv_option_c_val"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="14dp"
+                            android:text="61"
+                            android:textColor="@color/color_text_primary"
+                            android:textSize="16sp"
+                            android:textStyle="bold"/>
+
+                    </LinearLayout>
+
+                    <!-- Option D -->
+                    <LinearLayout
+                        android:id="@+id/card_option_d"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_card_white"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="14dp"
+                        android:layout_marginBottom="12dp">
+
+                        <TextView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:background="@drawable/bg_badge_yellow"
+                            android:gravity="center"
+                            android:text="D"
+                            android:textColor="@color/color_text_primary"
+                            android:textSize="12sp"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/tv_option_d_val"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="14dp"
+                            android:text="71"
+                            android:textColor="@color/color_text_primary"
+                            android:textSize="16sp"
+                            android:textStyle="bold"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <!-- Sticky Bottom Action Bar for Gameplay -->
         <LinearLayout
+            android:id="@+id/bottom_bar_gameplay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:baselineAligned="false">
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/bg_bottom_nav"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp">
 
-            <LinearLayout
-                android:layout_width="0dp"
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_submit"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_button_disabled"
+                android:enabled="false"
+                android:text="Choose an answer"
+                android:textColor="@color/color_text_secondary"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_helper_text"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
+                android:layout_marginTop="6dp"
                 android:gravity="center"
-                android:padding="@dimen/spacing_sm">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/session_progress"
-                    android:textColor="@color/color_text_secondary"
-                    android:textSize="@dimen/text_caption"
-                    android:textStyle="bold" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Question 1 of 10"
-                    android:textColor="@color/color_text_primary"
-                    android:textSize="@dimen/text_body"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <View android:layout_width="2dp" android:layout_height="match_parent" android:background="@color/color_text_primary" />
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:padding="@dimen/spacing_sm">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/session_streak"
-                    android:textColor="@color/color_text_secondary"
-                    android:textSize="@dimen/text_caption"
-                    android:textStyle="bold" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textColor="@color/color_text_primary"
-                    android:textSize="@dimen/text_body"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <View android:layout_width="2dp" android:layout_height="match_parent" android:background="@color/color_text_primary" />
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:padding="@dimen/spacing_sm">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/session_score"
-                    android:textColor="@color/color_text_secondary"
-                    android:textSize="@dimen/text_caption"
-                    android:textStyle="bold" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textColor="@color/color_text_primary"
-                    android:textSize="@dimen/text_body"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <View android:layout_width="2dp" android:layout_height="match_parent" android:background="@color/color_text_primary" />
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:padding="@dimen/spacing_sm">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/session_time_left"
-                    android:textColor="@color/color_text_secondary"
-                    android:textSize="@dimen/text_caption"
-                    android:textStyle="bold" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="24s"
-                    android:textColor="@color/color_text_primary"
-                    android:textSize="@dimen/text_body"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <!-- Progress bar -->
-        <ProgressBar
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="12dp"
-            android:layout_marginHorizontal="@dimen/spacing_md"
-            android:layout_marginTop="@dimen/spacing_xs"
-            android:max="100"
-            android:progress="15"
-            android:progressDrawable="@drawable/bg_progress_fill"
-            android:background="@drawable/bg_card_white" />
-
-    </LinearLayout>
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
-
-    <!-- Question Box -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_card_white"
-        android:orientation="vertical"
-        android:padding="@dimen/spacing_lg">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:text="Question 1"
-            android:textColor="@color/color_text_secondary"
-            android:textSize="@dimen/text_body"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_xs"
-            android:text="@string/session_find_next"
-            android:textColor="@color/color_text_primary"
-            android:textSize="@dimen/text_headline"
-            android:textStyle="bold" />
-
-        <!-- Symbols row -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_lg"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="@drawable/bg_card_yellow_bordered"
-                android:padding="@dimen/spacing_xs"
-                android:src="@drawable/ic_shape_star" />
-
-            <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginStart="@dimen/spacing_sm"
-                android:background="@drawable/bg_card_red_bordered"
-                android:padding="@dimen/spacing_xs"
-                android:src="@drawable/ic_shape_diamond" />
-
-            <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginStart="@dimen/spacing_sm"
-                android:background="@drawable/bg_card_blue_bordered"
-                android:padding="@dimen/spacing_xs"
-                android:src="@drawable/ic_shape_square" />
-
-            <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginStart="@dimen/spacing_sm"
-                android:background="@drawable/bg_card_teal_bordered"
-                android:padding="@dimen/spacing_xs"
-                android:src="@drawable/ic_shape_circle" />
-
-            <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginStart="@dimen/spacing_sm"
-                android:background="@drawable/bg_card_yellow_bordered"
-                android:padding="@dimen/spacing_xs"
-                android:src="@drawable/ic_shape_star" />
-
-            <!-- Question mark box -->
-            <TextView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginStart="@dimen/spacing_sm"
-                android:background="@drawable/bg_card_blue_bordered"
-                android:gravity="center"
-                android:text="?"
-                android:textColor="@color/color_text_primary"
-                android:textSize="@dimen/text_title"
+                android:text="One answer · Timer running · Review after round"
+                android:textColor="@color/color_text_secondary"
+                android:textSize="11sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
 
-    </LinearLayout>
+    </RelativeLayout>
 
-    <!-- Options 2x2 grid -->
-    <LinearLayout
+    <!-- ====================================================== -->
+    <!-- OVERLAY FOR FINISHING ROUND                            -->
+    <!-- ====================================================== -->
+    <RelativeLayout
+        android:id="@+id/layout_finishing"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_md"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:id="@+id/card_option_a"
-            android:layout_width="0dp"
-            android:layout_height="64dp"
-            android:layout_weight="1"
-            android:layout_marginEnd="@dimen/spacing_xs"
-            android:background="@drawable/bg_card_white"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:clickable="true"
-            android:focusable="true">
-
-            <TextView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:background="@drawable/bg_badge_yellow"
-                android:gravity="center"
-                android:text="A"
-                android:textColor="@color/color_text_primary"
-                android:textSize="@dimen/text_caption"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginStart="@dimen/spacing_md"
-                android:background="@drawable/bg_card_blue_bordered"
-                android:src="@drawable/ic_shape_square" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/card_option_b"
-            android:layout_width="0dp"
-            android:layout_height="64dp"
-            android:layout_weight="1"
-            android:layout_marginStart="@dimen/spacing_xs"
-            android:background="@drawable/bg_card_white"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:clickable="true"
-            android:focusable="true">
-
-            <TextView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:background="@drawable/bg_badge_yellow"
-                android:gravity="center"
-                android:text="B"
-                android:textColor="@color/color_text_primary"
-                android:textSize="@dimen/text_caption"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginStart="@dimen/spacing_md"
-                android:background="@drawable/bg_card_red_bordered"
-                android:src="@drawable/ic_shape_diamond" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_sm"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:id="@+id/card_option_c"
-            android:layout_width="0dp"
-            android:layout_height="64dp"
-            android:layout_weight="1"
-            android:layout_marginEnd="@dimen/spacing_xs"
-            android:background="@drawable/bg_card_white"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:clickable="true"
-            android:focusable="true">
-
-            <TextView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:background="@drawable/bg_badge_yellow"
-                android:gravity="center"
-                android:text="C"
-                android:textColor="@color/color_text_primary"
-                android:textSize="@dimen/text_caption"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginStart="@dimen/spacing_md"
-                android:background="@drawable/bg_card_yellow_bordered"
-                android:src="@drawable/ic_shape_star" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/card_option_d"
-            android:layout_width="0dp"
-            android:layout_height="64dp"
-            android:layout_weight="1"
-            android:layout_marginStart="@dimen/spacing_xs"
-            android:background="@drawable/bg_card_white"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:clickable="true"
-            android:focusable="true">
-
-            <TextView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:background="@drawable/bg_badge_yellow"
-                android:gravity="center"
-                android:text="D"
-                android:textColor="@color/color_text_primary"
-                android:textSize="@dimen/text_caption"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginStart="@dimen/spacing_md"
-                android:background="@drawable/bg_card_teal_bordered"
-                android:src="@drawable/ic_shape_circle" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
-
-    <!-- Action -->
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_submit"
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:layout_marginTop="@dimen/spacing_lg"
-        android:background="@drawable/bg_button_disabled"
-        android:enabled="false"
-        android:text="@string/session_submit"
-        android:textColor="#A0A0A0"
-        android:textSize="@dimen/text_body"
-        android:textStyle="bold" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_sm"
+        android:layout_height="match_parent"
+        android:background="@color/color_background"
         android:gravity="center"
-        android:text="@string/session_choose_one"
-        android:textColor="@color/color_text_secondary"
-        android:textSize="@dimen/text_caption"
-        android:textStyle="bold" />
+        android:visibility="gone">
 
-    <View
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="24dp"
+            android:background="@drawable/bg_card_white"
+            android:orientation="vertical"
+            android:padding="24dp"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Round Complete!"
+                android:textColor="@color/color_text_primary"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:text="Calculating Reasoning Score and Rank Progress..."
+                android:textColor="@color/color_text_secondary"
+                android:textSize="14sp" />
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:indeterminateTint="@color/color_primary"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Finishing Round..."
+                android:textColor="@color/color_text_secondary"
+                android:textSize="12sp"
+                android:textStyle="italic" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <!-- ====================================================== -->
+    <!-- POST-ROUND RESULT REVIEW CONTAINER                     -->
+    <!-- ====================================================== -->
+    <RelativeLayout
+        android:id="@+id/layout_result_review"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_marginTop="@dimen/spacing_xl"
-        android:background="@drawable/bg_divider" />
+        android:layout_height="match_parent"
+        android:visibility="gone">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_md"
-        android:layout_marginBottom="@dimen/spacing_md"
-        android:gravity="center"
-        android:text="@string/session_footer"
-        android:textColor="@color/color_text_secondary"
-        android:textSize="@dimen/text_caption"
-        android:textStyle="bold" />
+        <!-- Scrollable result review content -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/bottom_bar_result"
+            android:fillViewport="true">
 
-</LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <!-- Header -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:letterSpacing="0.1"
+                    android:text="Completed Session"
+                    android:textAllCaps="true"
+                    android:textColor="@color/color_text_secondary"
+                    android:textSize="11sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Result Review"
+                    android:textColor="@color/color_text_primary"
+                    android:textSize="26sp"
+                    android:textStyle="bold"/>
+
+                <!-- Session Summary Card -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_card_white"
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    android:layout_marginTop="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="REASONING SCORE"
+                        android:textColor="@color/color_text_secondary"
+                        android:textSize="10sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/tv_result_score"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="4,091"
+                        android:textColor="@color/color_primary_dark"
+                        android:textSize="36sp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="2dp"/>
+
+                    <!-- Mini Stat Grid (2 columns) -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="16dp">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Correct / Wrong"
+                                android:textColor="@color/color_text_secondary"
+                                android:textSize="10sp"/>
+                            <TextView
+                                android:id="@+id/tv_result_correct_wrong"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="4 / 1"
+                                android:textColor="@color/color_text_primary"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                android:layout_marginTop="2dp"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Accuracy"
+                                android:textColor="@color/color_text_secondary"
+                                android:textSize="10sp"
+                                android:layout_marginTop="8dp"/>
+                            <TextView
+                                android:id="@+id/tv_result_accuracy"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="80%"
+                                android:textColor="@color/color_text_primary"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                android:layout_marginTop="2dp"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Avg Time"
+                                android:textColor="@color/color_text_secondary"
+                                android:textSize="10sp"
+                                android:layout_marginTop="8dp"/>
+                            <TextView
+                                android:id="@+id/tv_result_avg_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="5.2s"
+                                android:textColor="@color/color_text_primary"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                android:layout_marginTop="2dp"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Rating Change"
+                                android:textColor="@color/color_text_secondary"
+                                android:textSize="10sp"/>
+                            <TextView
+                                android:id="@+id/tv_result_rating_change"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="+105"
+                                android:textColor="@color/color_accent_green"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                android:layout_marginTop="2dp"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Current Rank"
+                                android:textColor="@color/color_text_secondary"
+                                android:textSize="10sp"
+                                android:layout_marginTop="8dp"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="BRONZE MIND"
+                                android:textColor="@color/color_text_primary"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                android:layout_marginTop="2dp"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Rank Progress"
+                                android:textColor="@color/color_text_secondary"
+                                android:textSize="10sp"
+                                android:layout_marginTop="8dp"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="21% to Silver"
+                                android:textColor="@color/color_text_primary"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                android:layout_marginTop="2dp"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <!-- Rank progress bar -->
+                    <ProgressBar
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="8dp"
+                        android:layout_marginTop="16dp"
+                        android:max="100"
+                        android:progress="21"
+                        android:progressDrawable="@drawable/bg_progress_fill"
+                        android:background="@drawable/bg_card_white"/>
+
+                </LinearLayout>
+
+                <!-- Category Mastery Card -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_card_white"
+                    android:orientation="horizontal"
+                    android:padding="12dp"
+                    android:layout_marginTop="14dp"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_badge_teal"
+                        android:text="MASTERY"
+                        android:textColor="@color/color_text_primary"
+                        android:textSize="9sp"
+                        android:textStyle="bold"
+                        android:paddingHorizontal="6dp"
+                        android:paddingVertical="2dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="Number Patterns: Proficient (+15 XP)"
+                        android:textColor="@color/color_text_primary"
+                        android:textSize="12sp"
+                        android:textStyle="bold"/>
+
+                </LinearLayout>
+
+                <!-- Question Review List Section Title -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Question Breakdown"
+                    android:textColor="@color/color_text_primary"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"/>
+
+                <!-- Container for Review Cards -->
+                <LinearLayout
+                    android:id="@+id/layout_review_cards_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <!-- Question review cards will be dynamically added or shown here -->
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <!-- Sticky Bottom Action Bar for Results -->
+        <LinearLayout
+            android:id="@+id/bottom_bar_result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/bg_bottom_nav"
+            android:orientation="horizontal"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:weightSum="2">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_retry"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="6dp"
+                android:background="@drawable/bg_button_secondary"
+                android:text="Retry"
+                android:textColor="@color/color_text_primary"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_finish"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:layout_marginStart="6dp"
+                android:background="@drawable/bg_button_primary"
+                android:text="Finish Round"
+                android:textColor="@color/color_text_primary"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

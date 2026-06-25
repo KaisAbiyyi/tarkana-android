@@ -1,1028 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_background"
-    android:fillViewport="true">
+    tools:context=".ChallengeFragment">
 
-    <LinearLayout
+    <!-- Scrollable Content -->
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/spacing_base">
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottom_sticky_bar"
+        android:fillViewport="true">
 
-        <!-- ==================== Header ==================== -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:letterSpacing="0.1"
-            android:text="@string/challenge_label"
-            android:textAllCaps="true"
-            android:textColor="@color/color_text_secondary"
-            android:textSize="@dimen/text_label"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_xs"
-            android:text="@string/challenge_title"
-            android:textColor="@color/color_text_primary"
-            android:textSize="@dimen/text_display"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_sm"
-            android:text="@string/challenge_subtitle"
-            android:textColor="@color/color_text_secondary"
-            android:textSize="@dimen/text_caption" />
-
-        <!-- Verified Badge -->
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_md"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="@dimen/icon_size_sm"
-                android:layout_height="@dimen/icon_size_sm"
-                android:contentDescription="@null"
-                android:src="@drawable/ic_verified"
-                app:tint="@color/color_accent_green"
-                xmlns:app="http://schemas.android.com/apk/res-auto" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_xs"
-                android:text="@string/challenge_verified"
-                android:textColor="@color/color_accent_green"
-                android:textSize="@dimen/text_caption"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-        <!-- ==================== Progress Card ==================== -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_base"
-            android:background="@drawable/bg_card_white"
             android:orientation="vertical"
-            android:padding="@dimen/spacing_base">
+            android:padding="@dimen/spacing_base"
+            android:paddingBottom="16dp">
 
+            <!-- ==================== Header ==================== -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:letterSpacing="0.1"
-                android:text="@string/challenge_prep_label"
+                android:text="Ranked Arena"
                 android:textAllCaps="true"
                 android:textColor="@color/color_text_secondary"
                 android:textSize="@dimen/text_label"
                 android:textStyle="bold" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_sm"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/challenge_prep_subtitle"
-                    android:textColor="@color/color_text_secondary"
-                    android:textSize="@dimen/text_body" />
-
-                <TextView
-                    android:id="@+id/tv_steps_ready"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/challenge_steps_ready"
-                    android:textColor="@color/color_text_primary"
-                    android:textSize="@dimen/text_caption"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <ProgressBar
-                android:id="@+id/pb_steps"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/progress_height"
-                android:layout_marginTop="@dimen/spacing_sm"
-                android:max="3"
-                android:progress="0"
-                android:progressDrawable="@drawable/bg_progress_fill" />
-
-            <!-- Step Labels -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_md"
-                android:orientation="horizontal">
-
-                <!-- Step 1 -->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="@dimen/icon_size_md"
-                        android:layout_height="@dimen/icon_size_md"
-                        android:background="@drawable/bg_step_active"
-                        android:gravity="center"
-                        android:text="@string/step_1"
-                        android:textColor="@android:color/white"
-                        android:textSize="@dimen/text_caption"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/spacing_xs"
-                        android:text="@string/challenge_step_session"
-                        android:textColor="@color/color_text_secondary"
-                        android:textSize="@dimen/text_label" />
-
-                </LinearLayout>
-
-                <!-- Step 2 -->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="@dimen/icon_size_md"
-                        android:layout_height="@dimen/icon_size_md"
-                        android:background="@drawable/bg_step_inactive"
-                        android:gravity="center"
-                        android:text="@string/step_2"
-                        android:textColor="@color/color_text_secondary"
-                        android:textSize="@dimen/text_caption"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/spacing_xs"
-                        android:text="@string/challenge_step_mode"
-                        android:textColor="@color/color_text_secondary"
-                        android:textSize="@dimen/text_label" />
-
-                </LinearLayout>
-
-                <!-- Step 3 -->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="@dimen/icon_size_md"
-                        android:layout_height="@dimen/icon_size_md"
-                        android:background="@drawable/bg_step_inactive"
-                        android:gravity="center"
-                        android:text="@string/step_3"
-                        android:textColor="@color/color_text_secondary"
-                        android:textSize="@dimen/text_caption"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/spacing_xs"
-                        android:text="@string/challenge_step_review"
-                        android:textColor="@color/color_text_secondary"
-                        android:textSize="@dimen/text_label" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <!-- ==================== Section 01: Choose Session Type ==================== -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_xl"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="@dimen/icon_size_md"
-                android:layout_height="@dimen/icon_size_md"
-                android:background="@drawable/bg_step_active"
-                android:gravity="center"
-                android:text="@string/section_01"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/text_caption"
-                android:textStyle="bold" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_md"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/challenge_session_title"
-                    android:textColor="@color/color_text_primary"
-                    android:textSize="@dimen/text_title"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/challenge_session_subtitle"
-                    android:textColor="@color/color_text_secondary"
-                    android:textSize="@dimen/text_caption" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <!-- Session Type Cards (Stacked Vertically) -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_md"
-            android:orientation="vertical">
-
-            <!-- Quick Round Card -->
-            <LinearLayout
-                android:id="@+id/card_quick"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/spacing_sm"
-                android:background="@drawable/bg_card_white"
-                android:orientation="vertical"
-                android:padding="@dimen/spacing_base">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="@dimen/icon_size_lg"
-                        android:layout_height="@dimen/icon_size_lg"
-                        android:background="@drawable/bg_border_black"
-                        android:contentDescription="@null"
-                        android:padding="@dimen/spacing_xs"
-                        android:src="@drawable/ic_bolt" />
-
-                    <Space
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_weight="1" />
-
-                    <RadioButton
-                        android:id="@+id/rb_quick"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_sm"
-                    android:text="@string/challenge_quick_title"
-                    android:textColor="@color/color_text_primary"
-                    android:textSize="@dimen/text_body"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_xs"
-                    android:text="@string/challenge_quick_desc"
-                    android:textColor="@color/color_text_secondary"
-                    android:textSize="@dimen/text_caption" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_xs"
-                    android:text="@string/challenge_quick_detail"
-                    android:textColor="@color/color_text_primary"
-                    android:textSize="@dimen/text_caption" />
-
-            </LinearLayout>
-
-            <!-- Standard Round Card -->
-            <LinearLayout
-                android:id="@+id/card_standard"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/spacing_sm"
-                android:background="@drawable/bg_card_white"
-                android:orientation="vertical"
-                android:padding="@dimen/spacing_base">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="@dimen/icon_size_lg"
-                        android:layout_height="@dimen/icon_size_lg"
-                        android:background="@drawable/bg_border_black"
-                        android:contentDescription="@null"
-                        android:padding="@dimen/spacing_xs"
-                        android:src="@drawable/ic_chart" />
-
-                    <Space
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_weight="1" />
-
-                    <RadioButton
-                        android:id="@+id/rb_standard"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_sm"
-                    android:text="@string/challenge_standard_title"
-                    android:textColor="@color/color_text_primary"
-                    android:textSize="@dimen/text_body"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_xs"
-                    android:text="@string/challenge_standard_desc"
-                    android:textColor="@color/color_text_secondary"
-                    android:textSize="@dimen/text_caption" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_xs"
-                    android:text="@string/challenge_standard_detail"
-                    android:textColor="@color/color_text_primary"
-                    android:textSize="@dimen/text_caption" />
-
-            </LinearLayout>
-
-            <!-- Extended Round Card -->
-            <LinearLayout
-                android:id="@+id/card_extended"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_card_white"
-                android:orientation="vertical"
-                android:padding="@dimen/spacing_base">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="@dimen/icon_size_lg"
-                        android:layout_height="@dimen/icon_size_lg"
-                        android:background="@drawable/bg_border_black"
-                        android:contentDescription="@null"
-                        android:padding="@dimen/spacing_xs"
-                        android:src="@drawable/ic_timer" />
-
-                    <Space
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_weight="1" />
-
-                    <RadioButton
-                        android:id="@+id/rb_extended"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_sm"
-                    android:text="@string/challenge_extended_title"
-                    android:textColor="@color/color_text_primary"
-                    android:textSize="@dimen/text_body"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_xs"
-                    android:text="@string/challenge_extended_desc"
-                    android:textColor="@color/color_text_secondary"
-                    android:textSize="@dimen/text_caption" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_xs"
-                    android:text="@string/challenge_extended_detail"
-                    android:textColor="@color/color_text_primary"
-                    android:textSize="@dimen/text_caption" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <!-- ==================== Section 02: Choose Mode ==================== -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_xl"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="@dimen/icon_size_md"
-                android:layout_height="@dimen/icon_size_md"
-                android:background="@drawable/bg_step_inactive"
-                android:gravity="center"
-                android:text="@string/section_02"
-                android:textColor="@color/color_text_secondary"
-                android:textSize="@dimen/text_caption"
-                android:textStyle="bold" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_md"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/challenge_mode_title"
-                    android:textColor="@color/color_text_primary"
-                    android:textSize="@dimen/text_title"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/challenge_mode_subtitle"
-                    android:textColor="@color/color_text_secondary"
-                    android:textSize="@dimen/text_caption" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <!-- Mixed Mode Card -->
-        <LinearLayout
-            android:id="@+id/card_mixed"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_md"
-            android:background="@drawable/bg_card_white"
-            android:orientation="vertical"
-            android:padding="@dimen/spacing_base">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="@dimen/icon_size_lg"
-                    android:layout_height="@dimen/icon_size_lg"
-                    android:background="@drawable/bg_border_black"
-                    android:contentDescription="@null"
-                    android:padding="@dimen/spacing_xs"
-                    android:src="@drawable/ic_mixed" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/spacing_md"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/challenge_mixed_title"
-                        android:textColor="@color/color_text_primary"
-                        android:textSize="@dimen/text_body"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/challenge_mixed_desc"
-                        android:textColor="@color/color_text_secondary"
-                        android:textSize="@dimen/text_caption" />
-
-                </LinearLayout>
-
-                <RadioButton
-                    android:id="@+id/rb_mixed"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
-
-            <!-- Category Chips -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_md"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/chip_height"
-                        android:layout_marginBottom="@dimen/spacing_xs"
-                        android:layout_marginEnd="@dimen/spacing_xs"
-                        android:background="@drawable/bg_chip_outline"
-                        android:gravity="center"
-                        android:paddingHorizontal="@dimen/spacing_sm"
-                        android:text="@string/challenge_chip_number"
-                        android:textColor="@color/color_text_primary"
-                        android:textSize="@dimen/text_label" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/chip_height"
-                        android:layout_marginBottom="@dimen/spacing_xs"
-                        android:background="@drawable/bg_chip_outline"
-                        android:gravity="center"
-                        android:paddingHorizontal="@dimen/spacing_sm"
-                        android:text="@string/challenge_chip_symbol"
-                        android:textColor="@color/color_text_primary"
-                        android:textSize="@dimen/text_label" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/chip_height"
-                        android:layout_marginEnd="@dimen/spacing_xs"
-                        android:background="@drawable/bg_chip_outline"
-                        android:gravity="center"
-                        android:paddingHorizontal="@dimen/spacing_sm"
-                        android:text="@string/challenge_chip_deduction"
-                        android:textColor="@color/color_text_primary"
-                        android:textSize="@dimen/text_label" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/chip_height"
-                        android:background="@drawable/bg_chip_outline"
-                        android:gravity="center"
-                        android:paddingHorizontal="@dimen/spacing_sm"
-                        android:text="@string/challenge_chip_memory"
-                        android:textColor="@color/color_text_primary"
-                        android:textSize="@dimen/text_label" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <!-- Mode Cards Stacked Vertically -->
-        <!-- Number Patterns -->
-        <LinearLayout
-            android:id="@+id/card_number"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_sm"
-            android:background="@drawable/bg_card_white"
-            android:orientation="vertical"
-            android:padding="@dimen/spacing_md">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="@dimen/icon_size_md"
-                    android:layout_height="@dimen/icon_size_md"
-                    android:background="@drawable/bg_border_black"
-                    android:contentDescription="@null"
-                    android:padding="@dimen/spacing_xs"
-                    android:src="@drawable/ic_number" />
-
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-
-                <RadioButton
-                    android:id="@+id/rb_number"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_sm"
-                android:text="@string/challenge_number_title"
+                android:layout_marginTop="4dp"
+                android:text="Prepare your next round"
                 android:textColor="@color/color_text_primary"
-                android:textSize="@dimen/text_body"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_xs"
-                android:text="@string/challenge_number_desc"
+                android:layout_marginTop="4dp"
+                android:text="Configure the round, lock your choices, then enter the arena."
                 android:textColor="@color/color_text_secondary"
                 android:textSize="@dimen/text_caption" />
 
-        </LinearLayout>
-
-        <!-- Symbol Patterns -->
-        <LinearLayout
-            android:id="@+id/card_symbol"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_sm"
-            android:background="@drawable/bg_card_white"
-            android:orientation="vertical"
-            android:padding="@dimen/spacing_md">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="@dimen/icon_size_md"
-                    android:layout_height="@dimen/icon_size_md"
-                    android:background="@drawable/bg_border_black"
-                    android:contentDescription="@null"
-                    android:padding="@dimen/spacing_xs"
-                    android:src="@drawable/ic_symbol" />
-
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-
-                <RadioButton
-                    android:id="@+id/rb_symbol"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_sm"
-                android:text="@string/challenge_symbol_title"
-                android:textColor="@color/color_text_primary"
-                android:textSize="@dimen/text_body"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_xs"
-                android:text="@string/challenge_symbol_desc"
-                android:textColor="@color/color_text_secondary"
-                android:textSize="@dimen/text_caption" />
-
-        </LinearLayout>
-
-        <!-- Mini Deduction -->
-        <LinearLayout
-            android:id="@+id/card_deduction"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_sm"
-            android:background="@drawable/bg_card_white"
-            android:orientation="vertical"
-            android:padding="@dimen/spacing_md">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="@dimen/icon_size_md"
-                    android:layout_height="@dimen/icon_size_md"
-                    android:background="@drawable/bg_border_black"
-                    android:contentDescription="@null"
-                    android:padding="@dimen/spacing_xs"
-                    android:src="@drawable/ic_deduction" />
-
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-
-                <RadioButton
-                    android:id="@+id/rb_deduction"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_sm"
-                android:text="@string/challenge_deduction_title"
-                android:textColor="@color/color_text_primary"
-                android:textSize="@dimen/text_body"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_xs"
-                android:text="@string/challenge_deduction_desc"
-                android:textColor="@color/color_text_secondary"
-                android:textSize="@dimen/text_caption" />
-
-        </LinearLayout>
-
-        <!-- Pattern Memory -->
-        <LinearLayout
-            android:id="@+id/card_memory"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_sm"
-            android:background="@drawable/bg_card_white"
-            android:orientation="vertical"
-            android:padding="@dimen/spacing_md">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="@dimen/icon_size_md"
-                    android:layout_height="@dimen/icon_size_md"
-                    android:background="@drawable/bg_border_black"
-                    android:contentDescription="@null"
-                    android:padding="@dimen/spacing_xs"
-                    android:src="@drawable/ic_memory" />
-
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-
-                <RadioButton
-                    android:id="@+id/rb_memory"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_sm"
-                android:text="@string/challenge_memory_title"
-                android:textColor="@color/color_text_primary"
-                android:textSize="@dimen/text_body"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_xs"
-                android:text="@string/challenge_memory_desc"
-                android:textColor="@color/color_text_secondary"
-                android:textSize="@dimen/text_caption" />
-
-        </LinearLayout>
-
-        <!-- ==================== Summary Card ==================== -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_xl"
-            android:background="@drawable/bg_card_yellow"
-            android:orientation="vertical"
-            android:padding="@dimen/spacing_base">
-
-            <ImageView
-                android:layout_width="@dimen/icon_size_xl"
-                android:layout_height="@dimen/icon_size_xl"
-                android:layout_marginBottom="@dimen/spacing_md"
-                android:contentDescription="@null"
-                android:src="@drawable/ic_question_mark" />
-
-            <TextView
-                android:id="@+id/tv_summary_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/challenge_summary_title"
-                android:textColor="@color/color_text_primary"
-                android:textSize="@dimen/text_headline"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tv_summary_subtitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_xs"
-                android:text="@string/challenge_summary_session"
-                android:textColor="@color/color_text_secondary"
-                android:textSize="@dimen/text_caption" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_sm"
-                android:text="@string/challenge_summary_desc"
-                android:textColor="@color/color_text_secondary"
-                android:textSize="@dimen/text_body" />
-
-            <!-- Info Boxes 2x2 -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_base"
-                android:orientation="vertical">
-
-                <!-- Row 1 -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/spacing_sm"
-                        android:layout_weight="1"
-                        android:background="@drawable/bg_border_black"
-                        android:orientation="vertical"
-                        android:padding="@dimen/spacing_md">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/challenge_info_duration"
-                            android:textColor="@color/color_text_secondary"
-                            android:textSize="@dimen/text_label" />
-
-                        <TextView
-                            android:id="@+id/tv_summary_duration"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/placeholder_dash"
-                            android:textColor="@color/color_text_primary"
-                            android:textSize="@dimen/text_body"
-                            android:textStyle="bold" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@drawable/bg_border_black"
-                        android:orientation="vertical"
-                        android:padding="@dimen/spacing_md">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/challenge_info_count"
-                            android:textColor="@color/color_text_secondary"
-                            android:textSize="@dimen/text_label" />
-
-                        <TextView
-                            android:id="@+id/tv_summary_count"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/placeholder_dash"
-                            android:textColor="@color/color_text_primary"
-                            android:textSize="@dimen/text_body"
-                            android:textStyle="bold" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <!-- Row 2 -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_sm"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/spacing_sm"
-                        android:layout_weight="1"
-                        android:background="@drawable/bg_border_black"
-                        android:orientation="vertical"
-                        android:padding="@dimen/spacing_md">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/challenge_info_status"
-                            android:textColor="@color/color_text_secondary"
-                            android:textSize="@dimen/text_label" />
-
-                        <TextView
-                            android:id="@+id/tv_summary_status"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/placeholder_dash"
-                            android:textColor="@color/color_text_primary"
-                            android:textSize="@dimen/text_body"
-                            android:textStyle="bold" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@drawable/bg_border_black"
-                        android:orientation="vertical"
-                        android:padding="@dimen/spacing_md">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/challenge_info_review"
-                            android:textColor="@color/color_text_secondary"
-                            android:textSize="@dimen/text_label" />
-
-                        <TextView
-                            android:id="@+id/tv_summary_review"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/placeholder_dash"
-                            android:textColor="@color/color_text_primary"
-                            android:textSize="@dimen/text_body"
-                            android:textStyle="bold" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <!-- Verified Score -->
+            <!-- Verified Badge (Compact) -->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_md"
+                android:layout_marginTop="8dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -1031,50 +62,660 @@
                     android:layout_height="@dimen/icon_size_sm"
                     android:contentDescription="@null"
                     android:src="@drawable/ic_verified"
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
                     app:tint="@color/color_accent_green" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/spacing_xs"
-                    android:text="@string/challenge_verified_score"
+                    android:text="VERIFIED RESULTS"
+                    android:textColor="@color/color_accent_green"
+                    android:textSize="11dp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <!-- ==================== Compact Status Card ==================== -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_card_white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="12dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="2 required selections"
+                    android:textColor="@color/color_text_primary"
+                    android:textStyle="bold"
+                    android:textSize="13sp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_steps_ready"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:text="0/2 selected"
+                        android:textColor="@color/color_text_secondary"
+                        android:textStyle="bold"
+                        android:textSize="11sp" />
+
+                    <ProgressBar
+                        android:id="@+id/pb_steps"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="60dp"
+                        android:layout_height="8dp"
+                        android:max="3"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/bg_progress_fill" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- ==================== Section 01: Choose Session Type ==================== -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1. Choose Session Type"
+                    android:textColor="@color/color_text_primary"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:orientation="horizontal">
+
+                    <!-- Quick Round Card -->
+                    <LinearLayout
+                        android:id="@+id/card_quick"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="6dp"
+                        android:background="@drawable/bg_card_white"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="8dp">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_bolt" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="Quick"
+                            android:textColor="@color/color_text_primary"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="5Q · ~1 min"
+                            android:textColor="@color/color_text_secondary"
+                            android:textSize="10sp" />
+
+                        <!-- Hidden RadioButton to prevent Java crash -->
+                        <RadioButton
+                            android:id="@+id/rb_quick"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone" />
+
+                    </LinearLayout>
+
+                    <!-- Standard Round Card -->
+                    <LinearLayout
+                        android:id="@+id/card_standard"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginHorizontal="3dp"
+                        android:background="@drawable/bg_card_white"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="8dp">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_chart" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="Standard"
+                            android:textColor="@color/color_text_primary"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="10Q · ~2 min"
+                            android:textColor="@color/color_text_secondary"
+                            android:textSize="10sp" />
+
+                        <RadioButton
+                            android:id="@+id/rb_standard"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone" />
+
+                    </LinearLayout>
+
+                    <!-- Extended Round Card -->
+                    <LinearLayout
+                        android:id="@+id/card_extended"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="6dp"
+                        android:background="@drawable/bg_card_white"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="8dp">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_timer" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="Long"
+                            android:textColor="@color/color_text_primary"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="20Q · ~4 min"
+                            android:textColor="@color/color_text_secondary"
+                            android:textSize="10sp" />
+
+                        <RadioButton
+                            android:id="@+id/rb_extended"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- ==================== Section 02: Choose Mode ==================== -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2. Choose Mode"
+                    android:textColor="@color/color_text_primary"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <!-- Mixed Mode Card (Full width compact bar) -->
+                <LinearLayout
+                    android:id="@+id/card_mixed"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/bg_card_white"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_mixed" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="Mixed Mode"
+                        android:textColor="@color/color_text_primary"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="All Categories"
+                        android:textColor="@color/color_text_secondary"
+                        android:textSize="10sp" />
+
+                    <RadioButton
+                        android:id="@+id/rb_mixed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+                <!-- Row 1: Number & Symbol Patterns -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:orientation="horizontal">
+
+                    <!-- Number Patterns -->
+                    <LinearLayout
+                        android:id="@+id/card_number"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="4dp"
+                        android:background="@drawable/bg_card_white"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="8dp">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_number" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="Number"
+                            android:textColor="@color/color_text_primary"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <RadioButton
+                            android:id="@+id/rb_number"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone" />
+
+                    </LinearLayout>
+
+                    <!-- Symbol Patterns -->
+                    <LinearLayout
+                        android:id="@+id/card_symbol"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="4dp"
+                        android:background="@drawable/bg_card_white"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="8dp">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_symbol" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="Symbol"
+                            android:textColor="@color/color_text_primary"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <RadioButton
+                            android:id="@+id/rb_symbol"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!-- Row 2: Mini Deduction & Pattern Memory -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:orientation="horizontal">
+
+                    <!-- Mini Deduction -->
+                    <LinearLayout
+                        android:id="@+id/card_deduction"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="4dp"
+                        android:background="@drawable/bg_card_white"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="8dp">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_deduction" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="Deduction"
+                            android:textColor="@color/color_text_primary"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <RadioButton
+                            android:id="@+id/rb_deduction"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone" />
+
+                    </LinearLayout>
+
+                    <!-- Pattern Memory -->
+                    <LinearLayout
+                        android:id="@+id/card_memory"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="4dp"
+                        android:background="@drawable/bg_card_white"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="8dp">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_memory" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="Memory"
+                            android:textColor="@color/color_text_primary"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <RadioButton
+                            android:id="@+id/rb_memory"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Summary Container (Only visible when both options are selected) -->
+            <LinearLayout
+                android:id="@+id/layout_summary_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <!-- ==================== Lightweight Summary Card ==================== -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/bg_card_white"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:id="@+id/tv_summary_title"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Selected Configuration"
+                            android:textColor="@color/color_text_primary"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv_summary_subtitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Step 1 of 3"
+                            android:textColor="@color/color_text_secondary"
+                            android:textSize="11sp" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@color/color_divider" />
+
+                    <!-- 2x2 Detail Grid -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Duration"
+                                android:textColor="@color/color_text_secondary"
+                                android:textSize="10sp" />
+                            <TextView
+                                android:id="@+id/tv_summary_duration"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="-"
+                                android:textColor="@color/color_text_primary"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Questions"
+                                android:textColor="@color/color_text_secondary"
+                                android:textSize="10sp" />
+                            <TextView
+                                android:id="@+id/tv_summary_count"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="-"
+                                android:textColor="@color/color_text_primary"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Mode"
+                                android:textColor="@color/color_text_secondary"
+                                android:textSize="10sp" />
+                            <TextView
+                                android:id="@+id/tv_summary_status"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="-"
+                                android:textColor="@color/color_text_primary"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Review/Rank"
+                                android:textColor="@color/color_text_secondary"
+                                android:textSize="10sp" />
+                            <TextView
+                                android:id="@+id/tv_summary_review"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="-"
+                                android:textColor="@color/color_text_primary"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center"
+                    android:text="@string/challenge_footer"
                     android:textColor="@color/color_text_secondary"
                     android:textSize="@dimen/text_caption" />
 
             </LinearLayout>
 
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Sticky Bottom Action Bar -->
+    <LinearLayout
+        android:id="@+id/bottom_sticky_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bg_bottom_nav"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
+        android:paddingTop="14dp"
+        android:paddingBottom="12dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_xs"
-                android:text="@string/challenge_rank_info"
-                android:textColor="@color/color_text_secondary"
-                android:textSize="@dimen/text_caption" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_choose_config"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/button_height"
-                android:layout_marginTop="@dimen/spacing_base"
-                android:background="@drawable/bg_button_disabled"
-                android:enabled="false"
-                android:text="@string/challenge_choose_config"
-                android:textColor="@color/color_text_secondary"
-                android:textSize="@dimen/text_body"
+                android:text="Selected Loadout"
+                android:textColor="#555555"
+                android:textSize="10sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/tv_sticky_selection"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_sm"
-                android:gravity="center"
-                android:text="@string/challenge_footer"
-                android:textColor="@color/color_text_secondary"
-                android:textSize="@dimen/text_caption" />
+                android:layout_marginTop="2dp"
+                android:text="Choose 2 options"
+                android:textColor="@color/color_text_primary"
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_choose_config"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:minWidth="140dp"
+            android:paddingHorizontal="12dp"
+            android:background="@drawable/bg_button_disabled"
+            android:enabled="false"
+            android:text="Select session and mode"
+            android:textColor="@color/color_text_secondary"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
     </LinearLayout>
 
-</ScrollView>
+</RelativeLayout>
