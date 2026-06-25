@@ -93,6 +93,7 @@ public class ChallengeFragment extends Fragment {
 
         btnChooseConfig.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), SessionActivity.class);
+            intent.putExtra("mode", selectedMode);
             startActivity(intent);
         });
 
