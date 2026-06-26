@@ -1,10 +1,17 @@
 package com.kaisabiyyistudio.tarkana_android;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.InputType;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -12,10 +19,24 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.security.crypto.EncryptedSharedPreferences;
+import androidx.security.crypto.MasterKey;
+
+import org.json.JSONObject;
+
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class LoginActivity extends AppCompatActivity {
 
     private boolean passwordVisible = false;
+    private final ExecutorService executor = Executors.newSingleThreadExecutor();
+    private final Handler handler = new Handler(Looper.getMainLooper());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,10 +50,31 @@ public class LoginActivity extends AppCompatActivity {
             return insets;
         });
 
+        EditText etEmail = findViewById(R.id.et_email);
         EditText etPassword = findViewById(R.id.et_password);
         ImageButton btnToggle = findViewById(R.id.btn_toggle_password);
+        Button btnLogin = findViewById(R.id.btn_login);
+        TextView tvPrompt = findViewById(R.id.tv_register_prompt);
 
-        // Password visibility toggle
+        // Ponytail: Avoid heavy splash screens. Quick token check on main thread UI init.
+        try {
+            MasterKey masterKey = new MasterKey.Builder(this)
+                    .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+                    .build();
+            SharedPreferences prefs = EncryptedSharedPreferences.create(
+                    this, "auth_prefs", masterKey,
+                    EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+                    EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+            );
+            if (prefs.contains("access_token")) {
+                startActivity(new Intent(this, MainActivity.class));
+                finish();
+                return;
+            }
+        } catch (Exception e) {
+            Log.e("LoginActivity", "Auth pref check failed", e);
+        }
+
         btnToggle.setOnClickListener(v -> {
             passwordVisible = !passwordVisible;
             if (passwordVisible) {
@@ -45,18 +87,91 @@ public class LoginActivity extends AppCompatActivity {
             etPassword.setSelection(etPassword.length());
         });
 
-        // MASUK → navigate to MainActivity
-        findViewById(R.id.btn_login).setOnClickListener(v -> {
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-            finish();
+        tvPrompt.setOnClickListener(v -> {
+            startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
         });
 
-        // Google login
-        findViewById(R.id.btn_google).setOnClickListener(v ->
-                Toast.makeText(this, "Google login clicked", Toast.LENGTH_SHORT).show());
+        btnLogin.setOnClickListener(v -> {
+            String email = etEmail.getText().toString().trim();
+            String password = etPassword.getText().toString();
+            
+            if (email.isEmpty() || password.isEmpty()) {
+                Toast.makeText(this, "Email and password required", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            
+            btnLogin.setEnabled(false);
+            btnLogin.setText(R.string.login_wait);
+            
+            authenticate("/auth/v1/token?grant_type=password", email, password, btnLogin);
+        });
 
-        // Register link
-        findViewById(R.id.tv_register_prompt).setOnClickListener(v ->
-                Toast.makeText(this, "Register clicked", Toast.LENGTH_SHORT).show());
+        findViewById(R.id.btn_google).setOnClickListener(v ->
+                Toast.makeText(this, "Google login not implemented yet", Toast.LENGTH_SHORT).show());
+    }
+
+    private void authenticate(String path, String email, String password, Button btnLogin) {
+        executor.execute(() -> {
+            try {
+                URL url = new URL(BuildConfig.SUPABASE_URL + path);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                conn.setRequestProperty("apikey", BuildConfig.SUPABASE_KEY);
+                conn.setRequestProperty("Content-Type", "application/json");
+                conn.setDoOutput(true);
+
+                JSONObject body = new JSONObject();
+                body.put("email", email);
+                body.put("password", password);
+
+                try (OutputStream os = conn.getOutputStream()) {
+                    os.write(body.toString().getBytes());
+                }
+
+                int code = conn.getResponseCode();
+                InputStream is = code < 400 ? conn.getInputStream() : conn.getErrorStream();
+                Scanner scanner = new Scanner(is).useDelimiter("\\A");
+                String response = scanner.hasNext() ? scanner.next() : "";
+
+                if (code >= 400) {
+                    JSONObject err = new JSONObject(response);
+                    String msg = err.optString("error_description", err.optString("msg", "Error " + code));
+                    handler.post(() -> {
+                        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+                        resetButton(btnLogin);
+                    });
+                } else {
+                    JSONObject res = new JSONObject(response);
+                    String token = res.getString("access_token");
+                    String refreshToken = res.optString("refresh_token", "");
+                    MasterKey masterKey = new MasterKey.Builder(this)
+                            .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+                            .build();
+                    SharedPreferences prefs = EncryptedSharedPreferences.create(
+                            this, "auth_prefs", masterKey,
+                            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+                            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+                    );
+                    prefs.edit()
+                        .putString("access_token", token)
+                        .putString("refresh_token", refreshToken)
+                        .apply();
+                    handler.post(() -> {
+                        startActivity(new Intent(this, MainActivity.class));
+                        finish();
+                    });
+                }
+            } catch (Exception e) {
+                handler.post(() -> {
+                    Toast.makeText(this, "Network error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    resetButton(btnLogin);
+                });
+            }
+        });
+    }
+
+    private void resetButton(Button btnLogin) {
+        btnLogin.setEnabled(true);
+        btnLogin.setText(R.string.login_button);
     }
 }

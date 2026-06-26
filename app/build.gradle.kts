@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
 }
@@ -18,6 +20,14 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        
+        val properties = Properties()
+        val localProperties = project.rootProject.file("local.properties")
+        if (localProperties.exists()) {
+            properties.load(localProperties.inputStream())
+        }
+        buildConfigField("String", "SUPABASE_URL", "\"${properties.getProperty("supabaseUrl", "https://your-project.supabase.co")}\"")
+        buildConfigField("String", "SUPABASE_KEY", "\"${properties.getProperty("supabaseKey", "your-anon-key")}\"")
     }
 
     buildTypes {
@@ -33,6 +43,9 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+    buildFeatures {
+        buildConfig = true
+    }
 }
 
 dependencies {
@@ -43,4 +56,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+    implementation("androidx.security:security-crypto:1.1.0-alpha06")
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+    implementation("com.facebook.shimmer:shimmer:0.5.0")
 }

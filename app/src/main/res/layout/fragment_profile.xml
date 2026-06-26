@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/swipe_refresh_profile"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/color_background"
-    android:fillViewport="true">
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:id="@+id/content_profile"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/color_background"
+            android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -77,7 +88,7 @@
                     android:id="@+id/tv_profile_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Kais Abiyyi"
+                    android:text="-"
                     android:textColor="@color/color_text_primary"
                     android:textSize="@dimen/text_headline"
                     android:textStyle="bold" />
@@ -93,12 +104,13 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/tv_badge_rank_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_badge_rank_bronze"
                     android:paddingHorizontal="@dimen/spacing_sm"
                     android:paddingVertical="@dimen/spacing_xs"
-                    android:text="@string/rank_bronze_mind"
+                    android:text="-"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/text_caption"
                     android:textStyle="bold" />
@@ -123,12 +135,13 @@
                 android:letterSpacing="0.1" />
 
             <EditText
+                android:id="@+id/et_display_name"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginTop="@dimen/spacing_xs"
                 android:background="@drawable/bg_input"
                 android:paddingHorizontal="@dimen/spacing_md"
-                android:text="Kais Abiyyi"
+                android:text=""
                 android:textColor="@color/color_text_primary"
                 android:textSize="@dimen/text_body" />
 
@@ -192,21 +205,23 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tv_summary_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Kais Abiyyi"
+                        android:text="-"
                         android:textColor="@color/color_text_primary"
                         android:textSize="@dimen/text_headline"
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/tv_badge_rank_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/spacing_xs"
                         android:background="@drawable/bg_badge_rank_bronze"
                         android:paddingHorizontal="@dimen/spacing_sm"
                         android:paddingVertical="@dimen/spacing_xs"
-                        android:text="@string/rank_bronze_mind"
+                        android:text="-"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/text_caption"
                         android:textStyle="bold" />
@@ -227,9 +242,10 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/tv_logic_rating"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="105"
+                        android:text="0"
                         android:textColor="@color/color_text_primary"
                         android:textSize="32sp"
                         android:textStyle="bold" />
@@ -261,9 +277,10 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/tv_rating_remaining"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="395 MORE RATING NEEDED"
+                    android:text="-"
                     android:textColor="@color/color_text_secondary"
                     android:textSize="@dimen/text_caption"
                     android:textStyle="bold" />
@@ -271,21 +288,23 @@
             </LinearLayout>
 
             <ProgressBar
+                android:id="@+id/pb_rating_progress"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
                 android:layout_height="8dp"
                 android:layout_marginTop="@dimen/spacing_xs"
                 android:max="500"
-                android:progress="105"
+                android:progress="0"
                 android:progressDrawable="@drawable/bg_progress_fill"
                 android:background="@drawable/bg_card_white" />
 
             <TextView
+                android:id="@+id/tv_rating_toward"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_xs"
                 android:gravity="end"
-                android:text="TOWARD SILVER SOLVER"
+                android:text="-"
                 android:textColor="@color/color_text_secondary"
                 android:textSize="@dimen/text_caption"
                 android:textStyle="bold" />
@@ -314,10 +333,11 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/tv_accuracy"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/spacing_xs"
-                        android:text="86.7%"
+                        android:text="0%"
                         android:textColor="@color/color_text_primary"
                         android:textSize="@dimen/text_headline"
                         android:textStyle="bold" />
@@ -340,10 +360,11 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/tv_completed_rounds"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/spacing_xs"
-                        android:text="3"
+                        android:text="0"
                         android:textColor="@color/color_text_primary"
                         android:textSize="@dimen/text_headline"
                         android:textStyle="bold" />
@@ -450,6 +471,7 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/tv_email"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/spacing_xs"
@@ -466,6 +488,26 @@
 
         </LinearLayout>
 
+        <!-- Logout Button -->
+        <Button
+            android:id="@+id/btn_logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xl"
+            android:background="@drawable/bg_button_secondary"
+            android:text="LOGOUT"
+            android:textColor="@color/color_text_primary"
+            android:textSize="@dimen/text_button"
+            android:textStyle="bold"
+            android:backgroundTint="@null" />
+
     </LinearLayout>
 
 </ScrollView>
+
+        <include layout="@layout/layout_profile_skeleton"
+            android:id="@+id/skeleton_profile"
+            android:visibility="gone" />
+
+    </FrameLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

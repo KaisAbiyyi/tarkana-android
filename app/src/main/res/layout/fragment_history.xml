@@ -1,9 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swipe_refresh_history"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_background"
-    android:fillViewport="true">
+    android:background="@color/color_background">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/skeleton_history"
+            layout="@layout/layout_history_skeleton"
+            android:visibility="visible" />
+
+        <ScrollView
+            android:id="@+id/content_history"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:visibility="gone">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -333,4 +349,6 @@
 
     </LinearLayout>
 
-</ScrollView>
+    </ScrollView>
+    </FrameLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

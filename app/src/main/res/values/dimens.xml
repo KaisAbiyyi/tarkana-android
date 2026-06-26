@@ -20,6 +20,7 @@
     <dimen name="text_caption">12sp</dimen>
     <dimen name="text_label">11sp</dimen>
     <dimen name="text_small">10sp</dimen>
+    <dimen name="text_button">14sp</dimen>
 
     <!-- Border -->
     <dimen name="border_width">2dp</dimen>

@@ -44,9 +44,14 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         holder.tvAccuracyValue.setText(item.getAccuracy() + "%");
         holder.tvAvgValue.setText(item.getAvgTime() + "s");
 
-        // Rating: "65 → 105 (+40)"
-        String ratingText = item.getRatingBefore() + " → " + item.getRatingAfter()
-                + " (+" + item.getRatingChange() + ")";
+        // Rating
+        String ratingText;
+        if (item.getRatingBefore() > 0 || item.getRatingAfter() > 0) {
+            ratingText = item.getRatingBefore() + " → " + item.getRatingAfter()
+                    + " (+" + item.getRatingChange() + ")";
+        } else {
+            ratingText = (item.getRatingChange() >= 0 ? "+" : "") + item.getRatingChange();
+        }
         holder.tvRatingValue.setText(ratingText);
 
         // Badges

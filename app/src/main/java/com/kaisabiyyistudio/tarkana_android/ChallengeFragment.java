@@ -94,13 +94,21 @@ public class ChallengeFragment extends Fragment {
 
         btnChooseConfig.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), SessionActivity.class);
-            intent.putExtra("mode", selectedMode);
-            String modeStr = "number_patterns";
-            if (selectedMode == 0) modeStr = "mixed_mode";
-            else if (selectedMode == 2) modeStr = "symbol_patterns";
-            else if (selectedMode == 3) modeStr = "mini_deduction";
-            else if (selectedMode == 4) modeStr = "pattern_memory";
-            intent.putExtra("mode_str", modeStr);
+            
+            String cType = "standard";
+            if (selectedSessionType == 0) cType = "quick";
+            else if (selectedSessionType == 2) cType = "long";
+
+            String qType = null;
+            if (selectedMode == 1) qType = "number_sequence";
+            else if (selectedMode == 2) qType = "symbol_pattern";
+            else if (selectedMode == 3) qType = "mini_deduction";
+            else if (selectedMode == 4) qType = "memory_pattern";
+
+            intent.putExtra("challengeType", cType);
+            if (qType != null) {
+                intent.putExtra("selectedMode", qType);
+            }
             startActivity(intent);
         });
 
