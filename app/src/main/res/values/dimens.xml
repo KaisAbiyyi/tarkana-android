@@ -34,8 +34,10 @@
     <!-- Component heights -->
     <dimen name="button_height">48dp</dimen>
     <dimen name="input_height">48dp</dimen>
-    <dimen name="top_bar_height">56dp</dimen>
+    <dimen name="top_bar_height">48dp</dimen>
     <dimen name="bottom_nav_height">72dp</dimen>
+    <dimen name="bottom_nav_height_mobile">64dp</dimen>
+    <dimen name="bottom_nav_icon_size">44dp</dimen>
     <dimen name="chip_height">32dp</dimen>
     <dimen name="badge_height">24dp</dimen>
     <dimen name="icon_size_sm">20dp</dimen>

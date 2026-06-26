@@ -18,8 +18,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="@dimen/spacing_base"
-            android:paddingBottom="16dp">
+            android:paddingHorizontal="16dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="24dp">
 
             <!-- ==================== Header ==================== -->
             <TextView
@@ -79,47 +80,46 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="16dp"
                 android:background="@drawable/bg_card_white"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:padding="12dp">
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="2 required selections"
-                    android:textColor="@color/color_text_primary"
-                    android:textStyle="bold"
-                    android:textSize="13sp" />
-
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="2 required selections"
+                        android:textColor="@color/color_text_primary"
+                        android:textStyle="bold"
+                        android:textSize="13sp" />
+
+                    <TextView
                         android:id="@+id/tv_steps_ready"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
                         android:text="0/2 selected"
                         android:textColor="@color/color_text_secondary"
                         android:textStyle="bold"
                         android:textSize="11sp" />
 
-                    <ProgressBar
-                        android:id="@+id/pb_steps"
-                        style="?android:attr/progressBarStyleHorizontal"
-                        android:layout_width="60dp"
-                        android:layout_height="8dp"
-                        android:max="3"
-                        android:progress="0"
-                        android:progressDrawable="@drawable/bg_progress_fill" />
-
                 </LinearLayout>
+
+                <ProgressBar
+                    android:id="@+id/pb_steps"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="4dp"
+                    android:layout_marginTop="8dp"
+                    android:max="100"
+                    android:progress="0"
+                    android:progressDrawable="@drawable/bg_progress_fill" />
 
             </LinearLayout>
 
@@ -127,7 +127,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="14dp"
+                android:layout_marginTop="18dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -141,87 +141,116 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
+                    android:layout_marginTop="8dp"
                     android:orientation="horizontal">
 
                     <!-- Quick Round Card -->
-                    <LinearLayout
+                    <FrameLayout
                         android:id="@+id/card_quick"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_marginEnd="6dp"
+                        android:layout_marginEnd="10dp"
                         android:background="@drawable/bg_card_white"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:padding="8dp">
+                        android:padding="12dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:contentDescription="@null"
+                                android:src="@drawable/ic_bolt" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="Quick"
+                                android:textColor="@color/color_text_primary"
+                                android:textSize="13sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="5Q · ~1 min"
+                                android:textColor="@color/color_text_secondary"
+                                android:textSize="11sp" />
+
+                        </LinearLayout>
 
                         <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:contentDescription="@null"
-                            android:src="@drawable/ic_bolt" />
+                            android:id="@+id/iv_check_quick"
+                            android:layout_width="14dp"
+                            android:layout_height="14dp"
+                            android:layout_gravity="top|end"
+                            android:src="@drawable/ic_check"
+                            android:visibility="invisible"
+                            app:tint="@color/color_text_primary" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:text="Quick"
-                            android:textColor="@color/color_text_primary"
-                            android:textSize="12sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:text="5Q · ~1 min"
-                            android:textColor="@color/color_text_secondary"
-                            android:textSize="10sp" />
-
-                        <!-- Hidden RadioButton to prevent Java crash -->
                         <RadioButton
                             android:id="@+id/rb_quick"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:visibility="gone" />
 
-                    </LinearLayout>
+                    </FrameLayout>
 
                     <!-- Standard Round Card -->
-                    <LinearLayout
+                    <FrameLayout
                         android:id="@+id/card_standard"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_marginHorizontal="3dp"
+                        android:layout_marginHorizontal="5dp"
                         android:background="@drawable/bg_card_white"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:padding="8dp">
+                        android:padding="12dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:contentDescription="@null"
+                                android:src="@drawable/ic_chart" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="Standard"
+                                android:textColor="@color/color_text_primary"
+                                android:textSize="13sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="10Q · ~2 min"
+                                android:textColor="@color/color_text_secondary"
+                                android:textSize="11sp" />
+
+                        </LinearLayout>
 
                         <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:contentDescription="@null"
-                            android:src="@drawable/ic_chart" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:text="Standard"
-                            android:textColor="@color/color_text_primary"
-                            android:textSize="12sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:text="10Q · ~2 min"
-                            android:textColor="@color/color_text_secondary"
-                            android:textSize="10sp" />
+                            android:id="@+id/iv_check_standard"
+                            android:layout_width="14dp"
+                            android:layout_height="14dp"
+                            android:layout_gravity="top|end"
+                            android:src="@drawable/ic_check"
+                            android:visibility="invisible"
+                            app:tint="@color/color_text_primary" />
 
                         <RadioButton
                             android:id="@+id/rb_standard"
@@ -229,42 +258,57 @@
                             android:layout_height="wrap_content"
                             android:visibility="gone" />
 
-                    </LinearLayout>
+                    </FrameLayout>
 
                     <!-- Extended Round Card -->
-                    <LinearLayout
+                    <FrameLayout
                         android:id="@+id/card_extended"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_marginStart="6dp"
+                        android:layout_marginStart="10dp"
                         android:background="@drawable/bg_card_white"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:padding="8dp">
+                        android:padding="12dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:contentDescription="@null"
+                                android:src="@drawable/ic_timer" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="Long"
+                                android:textColor="@color/color_text_primary"
+                                android:textSize="13sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="20Q · ~4 min"
+                                android:textColor="@color/color_text_secondary"
+                                android:textSize="11sp" />
+
+                        </LinearLayout>
 
                         <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:contentDescription="@null"
-                            android:src="@drawable/ic_timer" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:text="Long"
-                            android:textColor="@color/color_text_primary"
-                            android:textSize="12sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:text="20Q · ~4 min"
-                            android:textColor="@color/color_text_secondary"
-                            android:textSize="10sp" />
+                            android:id="@+id/iv_check_extended"
+                            android:layout_width="14dp"
+                            android:layout_height="14dp"
+                            android:layout_gravity="top|end"
+                            android:src="@drawable/ic_check"
+                            android:visibility="invisible"
+                            app:tint="@color/color_text_primary" />
 
                         <RadioButton
                             android:id="@+id/rb_extended"
@@ -272,7 +316,7 @@
                             android:layout_height="wrap_content"
                             android:visibility="gone" />
 
-                    </LinearLayout>
+                    </FrameLayout>
 
                 </LinearLayout>
             </LinearLayout>
@@ -281,7 +325,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="14dp"
+                android:layout_marginTop="18dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -297,11 +341,11 @@
                     android:id="@+id/card_mixed"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
+                    android:layout_marginTop="8dp"
                     android:background="@drawable/bg_card_white"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:padding="8dp">
+                    android:padding="12dp">
 
                     <ImageView
                         android:layout_width="20dp"
@@ -315,7 +359,7 @@
                         android:layout_marginStart="8dp"
                         android:text="Mixed Mode"
                         android:textColor="@color/color_text_primary"
-                        android:textSize="12sp"
+                        android:textSize="13sp"
                         android:textStyle="bold" />
 
                     <Space
@@ -328,7 +372,16 @@
                         android:layout_height="wrap_content"
                         android:text="All Categories"
                         android:textColor="@color/color_text_secondary"
-                        android:textSize="10sp" />
+                        android:textSize="11sp" />
+
+                    <ImageView
+                        android:id="@+id/iv_check_mixed"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_marginStart="8dp"
+                        android:src="@drawable/ic_check"
+                        android:visibility="invisible"
+                        app:tint="@color/color_text_primary" />
 
                     <RadioButton
                         android:id="@+id/rb_mixed"
@@ -342,7 +395,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
+                    android:layout_marginTop="10dp"
                     android:orientation="horizontal">
 
                     <!-- Number Patterns -->
@@ -351,17 +404,17 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_marginEnd="4dp"
+                        android:layout_marginEnd="5dp"
                         android:background="@drawable/bg_card_white"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:padding="8dp">
+                        android:padding="12dp">
 
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:contentDescription="@null"
-                            android:src="@drawable/ic_number" />
+                            android:src="@drawable/ic_chart" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -369,8 +422,21 @@
                             android:layout_marginStart="8dp"
                             android:text="Number"
                             android:textColor="@color/color_text_primary"
-                            android:textSize="12sp"
+                            android:textSize="13sp"
                             android:textStyle="bold" />
+
+                        <Space
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_weight="1" />
+
+                        <ImageView
+                            android:id="@+id/iv_check_number"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:src="@drawable/ic_check"
+                            android:visibility="invisible"
+                            app:tint="@color/color_text_primary" />
 
                         <RadioButton
                             android:id="@+id/rb_number"
@@ -386,11 +452,11 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_marginStart="4dp"
+                        android:layout_marginStart="5dp"
                         android:background="@drawable/bg_card_white"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:padding="8dp">
+                        android:padding="12dp">
 
                         <ImageView
                             android:layout_width="20dp"
@@ -404,8 +470,21 @@
                             android:layout_marginStart="8dp"
                             android:text="Symbol"
                             android:textColor="@color/color_text_primary"
-                            android:textSize="12sp"
+                            android:textSize="13sp"
                             android:textStyle="bold" />
+
+                        <Space
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_weight="1" />
+
+                        <ImageView
+                            android:id="@+id/iv_check_symbol"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:src="@drawable/ic_check"
+                            android:visibility="invisible"
+                            app:tint="@color/color_text_primary" />
 
                         <RadioButton
                             android:id="@+id/rb_symbol"
@@ -421,7 +500,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
+                    android:layout_marginTop="10dp"
                     android:orientation="horizontal">
 
                     <!-- Mini Deduction -->
@@ -430,11 +509,11 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_marginEnd="4dp"
+                        android:layout_marginEnd="5dp"
                         android:background="@drawable/bg_card_white"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:padding="8dp">
+                        android:padding="12dp">
 
                         <ImageView
                             android:layout_width="20dp"
@@ -448,8 +527,21 @@
                             android:layout_marginStart="8dp"
                             android:text="Deduction"
                             android:textColor="@color/color_text_primary"
-                            android:textSize="12sp"
+                            android:textSize="13sp"
                             android:textStyle="bold" />
+
+                        <Space
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_weight="1" />
+
+                        <ImageView
+                            android:id="@+id/iv_check_deduction"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:src="@drawable/ic_check"
+                            android:visibility="invisible"
+                            app:tint="@color/color_text_primary" />
 
                         <RadioButton
                             android:id="@+id/rb_deduction"
@@ -465,11 +557,11 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_marginStart="4dp"
+                        android:layout_marginStart="5dp"
                         android:background="@drawable/bg_card_white"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:padding="8dp">
+                        android:padding="12dp">
 
                         <ImageView
                             android:layout_width="20dp"
@@ -483,8 +575,21 @@
                             android:layout_marginStart="8dp"
                             android:text="Memory"
                             android:textColor="@color/color_text_primary"
-                            android:textSize="12sp"
+                            android:textSize="13sp"
                             android:textStyle="bold" />
+
+                        <Space
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_weight="1" />
+
+                        <ImageView
+                            android:id="@+id/iv_check_memory"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:src="@drawable/ic_check"
+                            android:visibility="invisible"
+                            app:tint="@color/color_text_primary" />
 
                         <RadioButton
                             android:id="@+id/rb_memory"
@@ -498,168 +603,26 @@
 
             </LinearLayout>
 
-            <!-- Summary Container (Only visible when both options are selected) -->
-            <LinearLayout
-                android:id="@+id/layout_summary_container"
+            <!-- Loadout Preview Card (Always visible, stable position, neutral default text) -->
+            <TextView
+                android:id="@+id/tv_loadout_preview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="gone">
+                android:layout_marginTop="20dp"
+                android:minHeight="44dp"
+                android:background="@drawable/bg_card_white_small"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="Choose a session and mode"
+                android:textColor="@color/color_text_primary"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:visibility="visible" />
 
-                <!-- ==================== Lightweight Summary Card ==================== -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:background="@drawable/bg_card_white"
-                    android:orientation="vertical"
-                    android:padding="12dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical">
-
-                        <TextView
-                            android:id="@+id/tv_summary_title"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Selected Configuration"
-                            android:textColor="@color/color_text_primary"
-                            android:textSize="13sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/tv_summary_subtitle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Step 1 of 3"
-                            android:textColor="@color/color_text_secondary"
-                            android:textSize="11sp" />
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="8dp"
-                        android:background="@color/color_divider" />
-
-                    <!-- 2x2 Detail Grid -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Duration"
-                                android:textColor="@color/color_text_secondary"
-                                android:textSize="10sp" />
-                            <TextView
-                                android:id="@+id/tv_summary_duration"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="-"
-                                android:textColor="@color/color_text_primary"
-                                android:textSize="12sp"
-                                android:textStyle="bold" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Questions"
-                                android:textColor="@color/color_text_secondary"
-                                android:textSize="10sp" />
-                            <TextView
-                                android:id="@+id/tv_summary_count"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="-"
-                                android:textColor="@color/color_text_primary"
-                                android:textSize="12sp"
-                                android:textStyle="bold" />
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Mode"
-                                android:textColor="@color/color_text_secondary"
-                                android:textSize="10sp" />
-                            <TextView
-                                android:id="@+id/tv_summary_status"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="-"
-                                android:textColor="@color/color_text_primary"
-                                android:textSize="12sp"
-                                android:textStyle="bold" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Review/Rank"
-                                android:textColor="@color/color_text_secondary"
-                                android:textSize="10sp" />
-                            <TextView
-                                android:id="@+id/tv_summary_review"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="-"
-                                android:textColor="@color/color_text_primary"
-                                android:textSize="12sp"
-                                android:textStyle="bold" />
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:gravity="center"
-                    android:text="@string/challenge_footer"
-                    android:textColor="@color/color_text_secondary"
-                    android:textSize="@dimen/text_caption" />
-
-            </LinearLayout>
+            <!-- Spacer at the bottom to allow scrolling past the sticky bottom bar -->
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="48dp" />
 
         </LinearLayout>
     </ScrollView>
@@ -699,7 +662,10 @@
                 android:text="Choose 2 options"
                 android:textColor="@color/color_text_primary"
                 android:textSize="13sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:singleLine="true"
+                android:maxLines="1"
+                android:ellipsize="end" />
 
         </LinearLayout>
 
@@ -711,7 +677,7 @@
             android:paddingHorizontal="14dp"
             android:background="@drawable/bg_button_disabled"
             android:enabled="false"
-            android:text="Select session and mode"
+            android:text="Choose session and mode"
             android:textColor="@color/color_text_secondary"
             android:textSize="12sp"
             android:textStyle="bold" />

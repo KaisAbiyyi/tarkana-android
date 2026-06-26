@@ -236,7 +236,11 @@
   <string name="dashboard_rank_remaining">-</string>
   <string name="dashboard_mastery_title">Mastery</string>
   <string name="dashboard_mastery_empty">Unlock mastery details by completing more sessions.</string>
+  <string name="dashboard_mastery_empty_title">No mastery data yet</string>
+  <string name="dashboard_mastery_empty_subtitle">Complete more sessions to reveal your category strengths.</string>
   <string name="dashboard_recent_title">Recent Sessions</string>
+  <string name="dashboard_recent_empty_title">No history yet</string>
+  <string name="dashboard_recent_empty_subtitle">Complete your first round to see your session history.</string>
   <string name="dashboard_view_history">VIEW FULL HISTORY</string>
   <string name="history_label">Your Progress</string>
   <string name="history_sessions_label">Sessions Completed</string>

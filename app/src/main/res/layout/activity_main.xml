@@ -45,8 +45,8 @@
 
         <ImageButton
             android:id="@+id/btn_account"
-            android:layout_width="@dimen/icon_size_md"
-            android:layout_height="@dimen/icon_size_md"
+            android:layout_width="48dp"
+            android:layout_height="match_parent"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/cd_account"
             android:scaleType="centerInside"

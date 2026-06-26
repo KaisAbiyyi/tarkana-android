@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/swipe_refresh_dashboard"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -15,424 +16,479 @@
             android:background="@color/color_background"
             android:fillViewport="true">
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/spacing_base">
-
-        <!-- ==================== Header Card ==================== -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_card_white"
-            android:orientation="vertical"
-            android:padding="@dimen/spacing_base">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:letterSpacing="0.1"
-                android:text="@string/dashboard_label"
-                android:textAllCaps="true"
-                android:textColor="@color/color_text_secondary"
-                android:textSize="@dimen/text_label"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tv_logic_rating"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_xs"
-                android:text="@string/dashboard_rating"
-                android:textColor="@color/color_text_primary"
-                android:textSize="@dimen/text_display"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_xs"
-                android:text="@string/dashboard_subtitle"
-                android:textColor="@color/color_text_secondary"
-                android:textSize="@dimen/text_caption" />
-
-            <!-- Stat chips row -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_md"
-                android:baselineAligned="false"
-                android:orientation="horizontal">
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/spacing_base"
+                android:paddingTop="@dimen/spacing_base"
+                android:paddingBottom="@dimen/spacing_xxl">
 
-                <!-- Current Rank -->
+                <!-- ==================== Header Card ==================== -->
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/spacing_sm"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_card_yellow"
-                    android:orientation="vertical"
-                    android:padding="@dimen/spacing_sm">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="CURRENT RANK"
-                        android:textColor="@color/color_text_secondary"
-                        android:textSize="10sp"
-                        android:textStyle="bold" />
-                    <TextView
-                        android:id="@+id/tv_rank_badge"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/dashboard_rank"
-                        android:textColor="@color/color_text_primary"
-                        android:textSize="@dimen/text_body"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <!-- Sessions -->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/spacing_sm"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_card_blue_bordered"
-                    android:orientation="vertical"
-                    android:padding="@dimen/spacing_sm">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="SESSIONS COMPLETED"
-                        android:textColor="@color/color_text_secondary"
-                        android:textSize="10sp"
-                        android:textStyle="bold" />
-                    <TextView
-                        android:id="@+id/tv_sessions_count"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/dashboard_sessions_value"
-                        android:textColor="@color/color_text_primary"
-                        android:textSize="@dimen/text_body"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <!-- Best Score -->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:background="@drawable/bg_card_white"
                     android:orientation="vertical"
-                    android:padding="@dimen/spacing_sm">
+                    android:padding="@dimen/spacing_base">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="BEST SCORE"
+                        android:letterSpacing="0.1"
+                        android:text="@string/dashboard_label"
+                        android:textAllCaps="true"
                         android:textColor="@color/color_text_secondary"
-                        android:textSize="10sp"
+                        android:textSize="@dimen/text_label"
                         android:textStyle="bold" />
+
                     <TextView
-                        android:id="@+id/tv_best_score"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/dashboard_best_score_value"
+                        android:layout_marginTop="@dimen/spacing_sm"
+                        android:letterSpacing="0.05"
+                        android:text="Logic Rating"
+                        android:textAllCaps="true"
+                        android:textColor="@color/color_text_secondary"
+                        android:textSize="@dimen/text_caption"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_logic_rating"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-black"
+                        android:includeFontPadding="false"
+                        android:text="@string/dashboard_rating"
+                        android:textColor="@color/color_text_primary"
+                        android:textSize="54sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_sm"
+                        android:text="@string/dashboard_subtitle"
+                        android:textColor="@color/color_text_secondary"
+                        android:textSize="@dimen/text_caption" />
+
+                    <!-- Stat chips row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_md"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal">
+
+                        <!-- Current Rank -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/spacing_sm"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_card_yellow_small"
+                            android:orientation="vertical"
+                            android:padding="@dimen/spacing_sm">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="CURRENT RANK"
+                                android:textColor="@color/color_text_secondary"
+                                android:textSize="9sp"
+                                android:textStyle="bold" />
+                            <TextView
+                                android:id="@+id/tv_rank_badge"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/spacing_xxs"
+                                android:text="@string/dashboard_rank"
+                                android:textColor="@color/color_text_primary"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <!-- Sessions -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/spacing_sm"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_card_blue_small"
+                            android:orientation="vertical"
+                            android:padding="@dimen/spacing_sm">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/dashboard_sessions_label"
+                                android:textColor="@color/color_text_secondary"
+                                android:textSize="9sp"
+                                android:textStyle="bold" />
+                            <TextView
+                                android:id="@+id/tv_sessions_count"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/spacing_xxs"
+                                android:text="@string/dashboard_sessions_value"
+                                android:textColor="@color/color_text_primary"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <!-- Best Score -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_card_white_small"
+                            android:orientation="vertical"
+                            android:padding="@dimen/spacing_sm">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="BEST SCORE"
+                                android:textColor="@color/color_text_secondary"
+                                android:textSize="9sp"
+                                android:textStyle="bold" />
+                            <TextView
+                                android:id="@+id/tv_best_score"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/spacing_xxs"
+                                android:text="@string/dashboard_best_score_value"
+                                android:textColor="@color/color_text_primary"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!-- ==================== Next Challenge Card ==================== -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_base"
+                    android:background="@drawable/bg_card_white"
+                    android:orientation="vertical"
+                    android:padding="@dimen/spacing_base">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:letterSpacing="0.1"
+                        android:text="@string/dashboard_next_label"
+                        android:textAllCaps="true"
+                        android:textColor="@color/color_text_secondary"
+                        android:textSize="@dimen/text_label"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_sm"
+                        android:text="@string/dashboard_next_title"
+                        android:textColor="@color/color_text_primary"
+                        android:textSize="@dimen/text_title"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_sm"
+                        android:text="@string/dashboard_next_detail"
+                        android:textColor="@color/color_text_secondary"
+                        android:textSize="@dimen/text_caption" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_start_challenge"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/button_height"
+                        android:layout_marginTop="@dimen/spacing_md"
+                        android:background="@drawable/bg_button_primary"
+                        android:text="@string/start_challenge"
                         android:textColor="@color/color_text_primary"
                         android:textSize="@dimen/text_body"
                         android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <!-- ==================== Stats Row ==================== -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_base"
+                    android:orientation="horizontal">
+
+                    <!-- Average Accuracy -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/spacing_sm"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_card_green_small"
+                        android:orientation="vertical"
+                        android:padding="@dimen/spacing_base">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:letterSpacing="0.05"
+                            android:text="@string/dashboard_avg_accuracy_label"
+                            android:textColor="@color/color_text_secondary"
+                            android:textSize="@dimen/text_label"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv_avg_accuracy"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_sm"
+                            android:text="@string/dashboard_avg_accuracy_value"
+                            android:textColor="@color/color_text_primary"
+                            android:textSize="24sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <!-- Average Time -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_card_white_small"
+                        android:orientation="vertical"
+                        android:padding="@dimen/spacing_base">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:letterSpacing="0.05"
+                            android:text="@string/dashboard_avg_time_label"
+                            android:textColor="@color/color_text_secondary"
+                            android:textSize="@dimen/text_label"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv_avg_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_sm"
+                            android:text="@string/dashboard_avg_time_value"
+                            android:textColor="@color/color_text_primary"
+                            android:textSize="24sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!-- ==================== Rank Progress Card ==================== -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_base"
+                    android:background="@drawable/bg_card_white"
+                    android:orientation="vertical"
+                    android:padding="@dimen/spacing_base">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/dashboard_rank_progress_title"
+                        android:textColor="@color/color_text_primary"
+                        android:textSize="@dimen/text_title"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_sm"
+                        android:text="@string/dashboard_rank_subtitle"
+                        android:textColor="@color/color_text_secondary"
+                        android:textSize="@dimen/text_caption" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_md"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/dashboard_rank_progress_label"
+                            android:textColor="@color/color_text_primary"
+                            android:textSize="@dimen/text_body"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv_rank_pct"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/dashboard_rank_pct"
+                            android:textColor="@color/color_text_primary"
+                            android:textSize="@dimen/text_body"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <ProgressBar
+                        android:id="@+id/pb_rank_progress"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/progress_height"
+                        android:layout_marginTop="@dimen/spacing_md"
+                        android:max="100"
+                        android:progress="21"
+                        android:progressDrawable="@drawable/bg_progress_fill" />
+
+                    <TextView
+                        android:id="@+id/tv_rank_remaining"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_md"
+                        android:text="@string/dashboard_rank_remaining"
+                        android:textColor="@color/color_text_secondary"
+                        android:textSize="@dimen/text_caption" />
+
+                </LinearLayout>
+
+                <!-- ==================== Category Mastery Card ==================== -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_base"
+                    android:background="@drawable/bg_card_white_flat"
+                    android:orientation="vertical"
+                    android:padding="@dimen/spacing_base">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/dashboard_mastery_title"
+                        android:textColor="@color/color_text_primary"
+                        android:textSize="@dimen/text_title"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_md"
+                        android:background="@drawable/bg_dashed_border"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="@dimen/spacing_md">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_chart"
+                            app:tint="@color/color_text_secondary" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_sm"
+                            android:gravity="center"
+                            android:text="@string/dashboard_mastery_empty_title"
+                            android:textColor="@color/color_text_primary"
+                            android:textSize="@dimen/text_body"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_xs"
+                            android:gravity="center"
+                            android:text="@string/dashboard_mastery_empty_subtitle"
+                            android:textColor="@color/color_text_secondary"
+                            android:textSize="@dimen/text_caption" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!-- ==================== Recent Sessions ==================== -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_base"
+                    android:background="@drawable/bg_card_white_flat"
+                    android:orientation="vertical"
+                    android:padding="@dimen/spacing_base">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/dashboard_recent_title"
+                        android:textColor="@color/color_text_primary"
+                        android:textSize="@dimen/text_title"
+                        android:textStyle="bold" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_recent_sessions"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_md"
+                        android:nestedScrollingEnabled="false" />
+
+                    <LinearLayout
+                        android:id="@+id/layout_recent_empty"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_md"
+                        android:background="@drawable/bg_dashed_border"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="@dimen/spacing_md"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_history"
+                            app:tint="@color/color_text_secondary" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_sm"
+                            android:gravity="center"
+                            android:text="@string/dashboard_recent_empty_title"
+                            android:textColor="@color/color_text_primary"
+                            android:textSize="@dimen/text_body"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_xs"
+                            android:gravity="center"
+                            android:text="@string/dashboard_recent_empty_subtitle"
+                            android:textColor="@color/color_text_secondary"
+                            android:textSize="@dimen/text_caption" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv_view_history"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/spacing_md"
+                        android:text="@string/dashboard_view_history"
+                        android:textColor="@color/color_text_primary"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/text_body" />
+
                 </LinearLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
-
-        <!-- ==================== Next Challenge Card ==================== -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_base"
-            android:background="@drawable/bg_card_white"
-            android:orientation="vertical"
-            android:padding="@dimen/spacing_base">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:letterSpacing="0.1"
-                android:text="@string/dashboard_next_label"
-                android:textAllCaps="true"
-                android:textColor="@color/color_text_secondary"
-                android:textSize="@dimen/text_label"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_xs"
-                android:text="@string/dashboard_next_title"
-                android:textColor="@color/color_text_primary"
-                android:textSize="@dimen/text_title"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_xs"
-                android:text="@string/dashboard_next_detail"
-                android:textColor="@color/color_text_secondary"
-                android:textSize="@dimen/text_caption" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_start_challenge"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/button_height"
-                android:layout_marginTop="@dimen/spacing_md"
-                android:background="@drawable/bg_button_primary"
-                android:text="@string/start_challenge"
-                android:textColor="@color/color_text_primary"
-                android:textSize="@dimen/text_body"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-        <!-- ==================== Stats Row ==================== -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_base"
-            android:orientation="horizontal">
-
-            <!-- Average Accuracy -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/spacing_sm"
-                android:layout_weight="0.6"
-                android:background="@drawable/bg_card_green_bordered"
-                android:orientation="vertical"
-                android:padding="@dimen/spacing_base">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:letterSpacing="0.05"
-                    android:text="@string/dashboard_avg_accuracy_label"
-                    android:textColor="@color/color_text_secondary"
-                    android:textSize="@dimen/text_label" />
-
-                <TextView
-                    android:id="@+id/tv_avg_accuracy"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_xs"
-                    android:text="@string/dashboard_avg_accuracy_value"
-                    android:textColor="@color/color_text_primary"
-                    android:textSize="@dimen/text_display"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <!-- Average Time -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.4"
-                android:background="@drawable/bg_card_white"
-                android:orientation="vertical"
-                android:padding="@dimen/spacing_base">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:letterSpacing="0.05"
-                    android:text="@string/dashboard_avg_time_label"
-                    android:textColor="@color/color_text_secondary"
-                    android:textSize="@dimen/text_label" />
-
-                <TextView
-                    android:id="@+id/tv_avg_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_xs"
-                    android:text="@string/dashboard_avg_time_value"
-                    android:textColor="@color/color_text_primary"
-                    android:textSize="@dimen/text_display"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <!-- ==================== Rank Progress Card ==================== -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_base"
-            android:background="@drawable/bg_card_white"
-            android:orientation="vertical"
-            android:padding="@dimen/spacing_base">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/dashboard_rank_progress_title"
-                android:textColor="@color/color_text_primary"
-                android:textSize="@dimen/text_title"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_xs"
-                android:text="@string/dashboard_rank_subtitle"
-                android:textColor="@color/color_text_secondary"
-                android:textSize="@dimen/text_caption" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_md"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/dashboard_rank_progress_label"
-                    android:textColor="@color/color_text_primary"
-                    android:textSize="@dimen/text_body" />
-
-                <TextView
-                    android:id="@+id/tv_rank_pct"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/dashboard_rank_pct"
-                    android:textColor="@color/color_text_primary"
-                    android:textSize="@dimen/text_body"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <ProgressBar
-                android:id="@+id/pb_rank_progress"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/progress_height"
-                android:layout_marginTop="@dimen/spacing_sm"
-                android:max="100"
-                android:progress="21"
-                android:progressDrawable="@drawable/bg_progress_fill" />
-
-            <TextView
-                android:id="@+id/tv_rank_remaining"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_sm"
-                android:text="@string/dashboard_rank_remaining"
-                android:textColor="@color/color_text_secondary"
-                android:textSize="@dimen/text_caption" />
-
-        </LinearLayout>
-
-        <!-- ==================== Category Mastery Card ==================== -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_base"
-            android:background="@drawable/bg_card_white"
-            android:orientation="vertical"
-            android:padding="@dimen/spacing_base">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/dashboard_mastery_title"
-                android:textColor="@color/color_text_primary"
-                android:textSize="@dimen/text_title"
-                android:textStyle="bold" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_md"
-                android:background="@drawable/bg_dashed_border"
-                android:gravity="center"
-                android:padding="@dimen/spacing_xl">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/dashboard_mastery_empty"
-                    android:textColor="@color/color_text_secondary"
-                    android:textSize="@dimen/text_body" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <!-- ==================== Recent Sessions ==================== -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_base"
-            android:background="@drawable/bg_card_white"
-            android:orientation="vertical"
-            android:padding="@dimen/spacing_base">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/dashboard_recent_title"
-                android:textColor="@color/color_text_primary"
-                android:textSize="@dimen/text_title"
-                android:textStyle="bold" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_recent_sessions"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_md"
-                android:nestedScrollingEnabled="false" />
-
-            <LinearLayout
-                android:id="@+id/layout_recent_empty"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_md"
-                android:background="@drawable/bg_dashed_border"
-                android:gravity="center"
-                android:padding="@dimen/spacing_xl"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="No history yet"
-                    android:textColor="@color/color_text_secondary"
-                    android:textSize="@dimen/text_body" />
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/tv_view_history"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/spacing_md"
-                android:text="@string/dashboard_view_history"
-                android:textColor="@color/color_text_primary"
-                android:textStyle="bold"
-                android:textSize="@dimen/text_body" />
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-</ScrollView>
+        </ScrollView>
 
         <include layout="@layout/layout_dashboard_skeleton"
             android:id="@+id/skeleton_dashboard"

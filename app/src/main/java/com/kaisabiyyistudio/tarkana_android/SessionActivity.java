@@ -231,16 +231,26 @@ public class SessionActivity extends AppCompatActivity {
 
     private void setTitle() {
         if (tvGameplayTitle == null) return;
-        if (selectedMode == null) {
+        if (selectedMode == null || "mixed_mode".equals(selectedMode)) {
             tvGameplayTitle.setText(challengeType.substring(0,1).toUpperCase()
                     + challengeType.substring(1) + " Mode");
             return;
         }
         switch (selectedMode) {
-            case "symbol_pattern":  tvGameplayTitle.setText("Symbol Patterns"); break;
-            case "mini_deduction":  tvGameplayTitle.setText("Mini Deduction");  break;
-            case "memory_pattern":  tvGameplayTitle.setText("Pattern Memory");  break;
-            default:                tvGameplayTitle.setText("Number Patterns"); break;
+            case "symbol_patterns":
+            case "symbol_pattern":
+                tvGameplayTitle.setText("Symbol Patterns");
+                break;
+            case "mini_deduction":
+                tvGameplayTitle.setText("Mini Deduction");
+                break;
+            case "pattern_memory":
+            case "memory_pattern":
+                tvGameplayTitle.setText("Pattern Memory");
+                break;
+            default:
+                tvGameplayTitle.setText("Number Patterns");
+                break;
         }
     }
 
@@ -263,7 +273,17 @@ public class SessionActivity extends AppCompatActivity {
 
                 JSONObject body = new JSONObject();
                 body.put("challengeType", challengeType);
-                if (selectedMode != null) body.put("selectedMode", selectedMode);
+                if (selectedMode != null) {
+                    String apiMode = selectedMode;
+                    if ("number_patterns".equals(selectedMode)) apiMode = "number_sequence";
+                    else if ("symbol_patterns".equals(selectedMode)) apiMode = "symbol_pattern";
+                    else if ("pattern_memory".equals(selectedMode)) apiMode = "memory_pattern";
+                    else if ("mixed_mode".equals(selectedMode)) apiMode = null;
+                    
+                    if (apiMode != null) {
+                        body.put("selectedMode", apiMode);
+                    }
+                }
 
                 URL url = new URL(BuildConfig.SUPABASE_URL + "/functions/v1/start-challenge");
                 HttpURLConnection conn = openPostConn(url, token);
