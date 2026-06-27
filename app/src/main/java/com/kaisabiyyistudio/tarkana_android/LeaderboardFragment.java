@@ -129,12 +129,18 @@ public class LeaderboardFragment extends Fragment {
                                 tvYourPosition.setText("Your position: #" + finalCurrentUser.getPosition());
                                 
                                 String rankStr = finalCurrentUser.getRank();
-                                if (rankStr.equalsIgnoreCase("silver")) {
+                                if (rankStr != null && rankStr.equalsIgnoreCase("silver")) {
                                     tvYourRankBadge.setText("SILVER SOLVER");
                                     tvYourRankBadge.setBackgroundResource(R.drawable.bg_badge_rank_silver);
-                                } else {
+                                    tvYourRankBadge.setTextColor(0xFF000000);
+                                } else if (rankStr != null && rankStr.equalsIgnoreCase("bronze")) {
                                     tvYourRankBadge.setText("BRONZE MIND");
                                     tvYourRankBadge.setBackgroundResource(R.drawable.bg_badge_rank_bronze);
+                                    tvYourRankBadge.setTextColor(0xFFFFFFFF);
+                                } else {
+                                    tvYourRankBadge.setText("UNRANKED");
+                                    tvYourRankBadge.setBackgroundResource(R.drawable.bg_badge_yellow);
+                                    tvYourRankBadge.setTextColor(0xFF000000);
                                 }
                                 
                                 tvYourRating.setText("Logic Rating " + finalCurrentUser.getLogicRating());

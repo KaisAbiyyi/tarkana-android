@@ -72,7 +72,7 @@
         android:background="@drawable/bg_bottom_nav"
         app:itemIconTint="@null"
         app:itemTextColor="#000000"
-        app:itemIconSize="48dp"
+        app:itemIconSize="44dp"
         app:itemActiveIndicatorStyle="@style/Widget.App.BottomNavigationView.ActiveIndicator.Transparent"
         app:labelVisibilityMode="unlabeled"
         app:layout_constraintBottom_toBottomOf="parent"

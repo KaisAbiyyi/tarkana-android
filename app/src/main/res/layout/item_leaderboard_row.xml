@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/leaderboard_row_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -7,13 +8,13 @@
     android:layout_marginBottom="@dimen/spacing_md"
     android:background="@drawable/bg_card_white"
     android:orientation="vertical"
-    android:padding="@dimen/spacing_base">
+    android:padding="@dimen/leaderboard_card_padding">
 
     <!-- Header Row: Position + Name/Rank -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
+        android:gravity="top"
         android:orientation="horizontal">
 
         <!-- Position Badge -->
@@ -28,6 +29,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:gravity="center"
+                android:includeFontPadding="false"
                 android:textColor="@color/color_text_primary"
                 android:textSize="@dimen/text_body"
                 android:textStyle="bold" />
@@ -42,44 +45,58 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/tv_lb_player_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
                     android:textColor="@color/color_text_primary"
                     android:textSize="@dimen/text_body"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    app:layout_constrainedWidth="true"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/tv_lb_you_badge"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
 
                 <TextView
                     android:id="@+id/tv_lb_you_badge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/spacing_xs"
+                    android:layout_marginStart="6dp"
                     android:background="@drawable/bg_badge_yellow"
                     android:paddingHorizontal="@dimen/spacing_sm"
-                    android:paddingVertical="2dp"
+                    android:paddingVertical="3dp"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
                     android:text="@string/leaderboard_you"
                     android:textColor="@color/color_text_primary"
                     android:textSize="@dimen/text_label"
                     android:textStyle="bold"
-                    android:visibility="gone" />
+                    android:visibility="gone"
+                    app:layout_constraintStart_toEndOf="@id/tv_lb_player_name"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tv_lb_player_name"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_lb_player_name" />
 
-            </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:id="@+id/tv_lb_rank_badge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_xs"
+                android:layout_marginTop="6dp"
                 android:background="@drawable/bg_badge_rank_bronze"
                 android:paddingHorizontal="@dimen/spacing_sm"
-                android:paddingVertical="2dp"
+                android:paddingVertical="3dp"
+                android:gravity="center"
+                android:includeFontPadding="false"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/text_label"
                 android:textStyle="bold" />
@@ -92,8 +109,8 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="@dimen/spacing_sm"
-        android:layout_marginBottom="@dimen/spacing_sm"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="8dp"
         android:background="@color/color_border" />
 
     <!-- Metrics Row: Rating, Accuracy, Rounds -->
@@ -110,18 +127,20 @@
             android:orientation="vertical">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:includeFontPadding="false"
                 android:text="@string/leaderboard_col_rating"
                 android:textColor="@color/color_text_secondary"
                 android:textSize="@dimen/text_label" />
 
             <TextView
                 android:id="@+id/tv_lb_rating"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:includeFontPadding="false"
                 android:textColor="@color/color_text_primary"
-                android:textSize="@dimen/text_body"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -134,18 +153,20 @@
             android:orientation="vertical">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:includeFontPadding="false"
                 android:text="@string/leaderboard_col_accuracy"
                 android:textColor="@color/color_text_secondary"
                 android:textSize="@dimen/text_label" />
 
             <TextView
                 android:id="@+id/tv_lb_accuracy"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:includeFontPadding="false"
                 android:textColor="@color/color_text_primary"
-                android:textSize="@dimen/text_body"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -158,18 +179,20 @@
             android:orientation="vertical">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:includeFontPadding="false"
                 android:text="@string/leaderboard_col_rounds"
                 android:textColor="@color/color_text_secondary"
                 android:textSize="@dimen/text_label" />
 
             <TextView
                 android:id="@+id/tv_lb_rounds"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:includeFontPadding="false"
                 android:textColor="@color/color_text_primary"
-                android:textSize="@dimen/text_body"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
         </LinearLayout>

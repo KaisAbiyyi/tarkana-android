@@ -131,7 +131,7 @@
   <string name="leaderboard_col_player">Player name</string>
   <string name="leaderboard_col_rank">Rank</string>
   <string name="leaderboard_col_accuracy">Accuracy</string>
-  <string name="leaderboard_col_rounds">Completed rounds</string>
+  <string name="leaderboard_col_rounds">Rounds</string>
   <string name="leaderboard_rounds_count">%d rounds</string>
   <string name="leaderboard_you">YOU</string>
   <!-- Ranks -->
@@ -262,7 +262,7 @@
   <string name="history_cta_subtitle">Play a new round to continue developing your Logic Rating.</string>
   <string name="leaderboard_label">Global · All Time</string>
   <string name="leaderboard_subtitle">Rankings use verified results. Accuracy reflects lifetime performance across completed rounds.</string>
-  <string name="leaderboard_top_title">Leaderboard</string>
+  <string name="leaderboard_top_title">Top reasoners</string>
   <string name="leaderboard_your_rank">Your Position</string>
   <string name="leaderboard_your_rating">Logic Rating</string>
   <string name="leaderboard_next_info">Need 66 rating to reach position 3</string>

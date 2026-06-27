@@ -11,6 +11,9 @@
     <dimen name="spacing_xxl">32dp</dimen>
     <dimen name="spacing_xxxl">48dp</dimen>
 
+    <!-- Leaderboard Card Padding -->
+    <dimen name="leaderboard_card_padding">14dp</dimen>
+
     <!-- Text sizes -->
     <dimen name="text_display">36sp</dimen>
     <dimen name="text_headline">22sp</dimen>
