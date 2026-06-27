@@ -145,7 +145,7 @@
   <string name="nav_profile">Profile</string>
   <!-- Profile -->
   <string name="profile_player_profile">PLAYER PROFILE</string>
-  <string name="profile_desc">Manage your public identity and review your account progress.</string>
+  <string name="profile_desc">Manage your display name, rank, and account progress.</string>
   <string name="profile_public_identity">Public identity</string>
   <string name="profile_leaderboard_display">LEADERBOARD DISPLAY</string>
   <string name="profile_display_name">DISPLAY NAME</string>

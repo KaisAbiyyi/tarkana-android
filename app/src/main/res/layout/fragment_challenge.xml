@@ -39,7 +39,7 @@
                 android:layout_marginTop="4dp"
                 android:text="Prepare your next round"
                 android:textColor="@color/color_text_primary"
-                android:textSize="20sp"
+                android:textSize="24sp"
                 android:textStyle="bold" />
 
             <TextView

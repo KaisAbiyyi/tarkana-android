@@ -44,6 +44,9 @@ public class ProfileFragment extends Fragment {
     private TextView tvCompletedRounds;
     private TextView tvEmail;
     private Button btnSaveChanges;
+    private TextView tvStatusNoChanges;
+    
+    private String originalDisplayName = "";
     
     private TextView tvBadgeRank1;
     private TextView tvBadgeRank2;
@@ -79,6 +82,7 @@ public class ProfileFragment extends Fragment {
         tvCompletedRounds = view.findViewById(R.id.tv_completed_rounds);
         tvEmail = view.findViewById(R.id.tv_email);
         btnSaveChanges = view.findViewById(R.id.btn_save_changes);
+        tvStatusNoChanges = view.findViewById(R.id.tv_status_no_changes);
         
         tvBadgeRank1 = view.findViewById(R.id.tv_badge_rank_1);
         tvBadgeRank2 = view.findViewById(R.id.tv_badge_rank_2);
@@ -86,18 +90,35 @@ public class ProfileFragment extends Fragment {
         pbRatingProgress = view.findViewById(R.id.pb_rating_progress);
         tvRatingToward = view.findViewById(R.id.tv_rating_toward);
         
-        // Clear dummy data
-        tvProfileName.setText("...");
-        tvSummaryName.setText("...");
+        // Clear dummy data (Set clean default values instead of "...")
+        tvProfileName.setText("");
+        tvSummaryName.setText("");
         etDisplayName.setText("");
-        tvLogicRating.setText("...");
-        tvAccuracy.setText("...");
-        tvCompletedRounds.setText("...");
-        tvEmail.setText("...");
-        tvBadgeRank1.setText("...");
-        tvBadgeRank2.setText("...");
-        tvRatingRemaining.setText("...");
-        tvRatingToward.setText("...");
+        tvLogicRating.setText("0");
+        tvAccuracy.setText("0.0%");
+        tvCompletedRounds.setText("0");
+        tvEmail.setText("");
+        tvBadgeRank1.setText("BRONZE MIND");
+        tvBadgeRank2.setText("BRONZE MIND");
+        tvBadgeRank1.setBackgroundResource(R.drawable.bg_badge_rank_bronze);
+        tvBadgeRank2.setBackgroundResource(R.drawable.bg_badge_rank_bronze);
+        tvRatingRemaining.setText("0%");
+        pbRatingProgress.setMax(500);
+        pbRatingProgress.setProgress(0);
+        tvRatingToward.setText("Toward Silver Solver");
+        
+        etDisplayName.addTextChangedListener(new android.text.TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                updateSaveChangesButtonState();
+            }
+
+            @Override
+            public void afterTextChanged(android.text.Editable s) {}
+        });
         
         btnSaveChanges.setOnClickListener(v -> saveProfile());
         
@@ -177,25 +198,15 @@ public class ProfileFragment extends Fragment {
                     String rank = res.optString("rank", "bronze");
                     
                     handler.post(() -> {
+                        originalDisplayName = displayName;
                         tvProfileName.setText(displayName);
                         tvSummaryName.setText(displayName);
                         etDisplayName.setText(displayName);
                         tvEmail.setText(email);
                         tvLogicRating.setText(String.valueOf(rating));
                         
-                        if (rank.equalsIgnoreCase("silver")) {
-                            tvBadgeRank1.setText("SILVER SOLVER");
-                            tvBadgeRank2.setText("SILVER SOLVER");
-                            tvBadgeRank1.setBackgroundResource(R.drawable.bg_badge_rank_silver);
-                            tvBadgeRank2.setBackgroundResource(R.drawable.bg_badge_rank_silver);
-                            tvRatingToward.setText("TOWARD GOLD");
-                        } else {
-                            tvBadgeRank1.setText("BRONZE MIND");
-                            tvBadgeRank2.setText("BRONZE MIND");
-                            tvBadgeRank1.setBackgroundResource(R.drawable.bg_badge_rank_bronze);
-                            tvBadgeRank2.setBackgroundResource(R.drawable.bg_badge_rank_bronze);
-                            tvRatingToward.setText("TOWARD SILVER SOLVER");
-                        }
+                        updateRankUI(rating, rank);
+                        updateSaveChangesButtonState();
                         
                         // 2. Fetch Dashboard stats
                         fetchDashboardStats(token);
@@ -349,7 +360,7 @@ public class ProfileFragment extends Fragment {
             rankStr = getString(R.string.rank_silver_solver);
             badgeDrawableRes = R.drawable.bg_badge_rank_silver;
             nextTarget = 1000;
-            nextRankStr = "GOLD SOLVER";
+            nextRankStr = "Gold Solver";
         } else {
             rankStr = getString(R.string.rank_bronze_mind);
             badgeDrawableRes = R.drawable.bg_badge_rank_bronze;
@@ -362,14 +373,34 @@ public class ProfileFragment extends Fragment {
         tvBadgeRank2.setText(rankStr);
         tvBadgeRank2.setBackgroundResource(badgeDrawableRes);
 
-        int remaining = nextTarget - rating;
-        if (remaining < 0) remaining = 0;
-        tvRatingRemaining.setText(remaining + " MORE RATING NEEDED");
+        int percent = nextTarget > 0 ? (rating * 100) / nextTarget : 0;
+        tvRatingRemaining.setText(percent + "%");
 
         pbRatingProgress.setMax(nextTarget);
         pbRatingProgress.setProgress(rating);
 
-        tvRatingToward.setText("TOWARD " + nextRankStr);
+        tvRatingToward.setText("Toward " + nextRankStr);
+    }
+
+    private void updateSaveChangesButtonState() {
+        if (!isAdded()) return;
+        String currentName = etDisplayName.getText().toString().trim();
+        boolean hasChanges = !currentName.equals(originalDisplayName) && !currentName.isEmpty();
+        
+        btnSaveChanges.setEnabled(hasChanges);
+        if (hasChanges) {
+            btnSaveChanges.setBackgroundResource(R.drawable.bg_button_primary);
+            btnSaveChanges.setTextColor(getResources().getColor(R.color.color_text_primary));
+            if (tvStatusNoChanges != null) {
+                tvStatusNoChanges.setVisibility(View.GONE);
+            }
+        } else {
+            btnSaveChanges.setBackgroundResource(R.drawable.bg_button_disabled);
+            btnSaveChanges.setTextColor(getResources().getColor(R.color.color_text_secondary));
+            if (tvStatusNoChanges != null) {
+                tvStatusNoChanges.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
     private void saveProfile() {
@@ -399,15 +430,16 @@ public class ProfileFragment extends Fragment {
                     os.write(body.toString().getBytes());
                     os.flush();
                 }
-
+ 
                 int responseCode = conn.getResponseCode();
                 if (responseCode == 200) {
                     handler.post(() -> {
                         Toast.makeText(requireContext(), "Profile updated!", Toast.LENGTH_SHORT).show();
-                        btnSaveChanges.setEnabled(true);
-                        btnSaveChanges.setText(R.string.profile_save_changes);
+                        originalDisplayName = newName;
                         tvProfileName.setText(newName);
                         tvSummaryName.setText(newName);
+                        btnSaveChanges.setText(R.string.profile_save_changes);
+                        updateSaveChangesButtonState();
                     });
                 } else {
                     InputStream es = conn.getErrorStream();
@@ -418,15 +450,15 @@ public class ProfileFragment extends Fragment {
                     }
                     handler.post(() -> {
                         Toast.makeText(requireContext(), "Failed to update", Toast.LENGTH_SHORT).show();
-                        btnSaveChanges.setEnabled(true);
                         btnSaveChanges.setText(R.string.profile_save_changes);
+                        updateSaveChangesButtonState();
                     });
                 }
             } catch (Exception e) {
                 handler.post(() -> {
                     Toast.makeText(requireContext(), "Network Error", Toast.LENGTH_SHORT).show();
-                    btnSaveChanges.setEnabled(true);
                     btnSaveChanges.setText(R.string.profile_save_changes);
+                    updateSaveChangesButtonState();
                 });
             }
         });

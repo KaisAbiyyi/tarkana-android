@@ -20,7 +20,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="@dimen/spacing_xl">
+        android:paddingHorizontal="16dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="24dp">
 
         <!-- Header -->
         <TextView
@@ -35,20 +37,19 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_xs"
+            android:layout_marginTop="6dp"
             android:text="Profile"
             android:textColor="@color/color_text_primary"
-            android:textSize="48sp"
+            android:textSize="24sp"
             android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_sm"
+            android:layout_marginTop="6dp"
             android:text="@string/profile_desc"
             android:textColor="@color/color_text_secondary"
-            android:textSize="@dimen/text_subtitle"
-            android:textStyle="bold" />
+            android:textSize="13sp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -158,13 +159,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginTop="@dimen/spacing_md"
-                android:background="@drawable/bg_button_primary"
+                android:background="@drawable/bg_button_disabled"
+                android:enabled="false"
                 android:text="@string/profile_save_changes"
-                android:textColor="@color/color_text_primary"
+                android:textColor="@color/color_text_secondary"
                 android:textSize="@dimen/text_body"
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/tv_status_no_changes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_xs"
@@ -280,7 +283,7 @@
                     android:id="@+id/tv_rating_remaining"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="-"
+                    android:text="0%"
                     android:textColor="@color/color_text_secondary"
                     android:textSize="@dimen/text_caption"
                     android:textStyle="bold" />
@@ -304,7 +307,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_xs"
                 android:gravity="end"
-                android:text="-"
+                android:text="Toward Silver Solver"
                 android:textColor="@color/color_text_secondary"
                 android:textSize="@dimen/text_caption"
                 android:textStyle="bold" />
@@ -317,7 +320,7 @@
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:layout_marginEnd="@dimen/spacing_sm"
                     android:background="@drawable/bg_card_white"
@@ -345,7 +348,7 @@
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/bg_card_white"
                     android:orientation="vertical"
@@ -472,15 +475,13 @@
 
                         <TextView
                             android:id="@+id/tv_email"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/spacing_xs"
                             android:text="kaisabiyyi2@gmail.com"
                             android:textColor="@color/color_text_primary"
                             android:textSize="@dimen/text_body"
-                            android:textStyle="bold"
-                            android:ellipsize="end"
-                            android:maxLines="1" />
+                            android:textStyle="bold" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -494,6 +495,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_xl"
+            android:layout_marginBottom="32dp"
             android:background="@drawable/bg_button_secondary"
             android:text="LOGOUT"
             android:textColor="@color/color_text_primary"
