@@ -20,7 +20,9 @@
             android:layout_height="wrap_content"
             android:background="@drawable/bg_chip_teal"
             android:paddingHorizontal="@dimen/spacing_sm"
-            android:paddingVertical="@dimen/spacing_xs"
+            android:paddingVertical="3dp"
+            android:gravity="center"
+            android:includeFontPadding="false"
             android:textColor="@android:color/white"
             android:textSize="@dimen/text_label"
             android:textStyle="bold" />
@@ -49,7 +51,9 @@
             android:layout_height="wrap_content"
             android:background="@drawable/bg_chip_green"
             android:paddingHorizontal="@dimen/spacing_sm"
-            android:paddingVertical="@dimen/spacing_xs"
+            android:paddingVertical="3dp"
+            android:gravity="center"
+            android:includeFontPadding="false"
             android:textColor="@android:color/white"
             android:textSize="@dimen/text_label"
             android:textStyle="bold" />
@@ -80,21 +84,23 @@
             <!-- Score -->
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/history_item_score_label"
+                    android:includeFontPadding="false"
                     android:textColor="@color/color_text_secondary"
                     android:textSize="@dimen/text_label" />
 
                 <TextView
                     android:id="@+id/tv_hist_score"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
                     android:textColor="@color/color_text_primary"
                     android:textSize="@dimen/text_body"
                     android:textStyle="bold" />
@@ -104,21 +110,23 @@
             <!-- Accuracy -->
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/history_item_accuracy_label"
+                    android:includeFontPadding="false"
                     android:textColor="@color/color_text_secondary"
                     android:textSize="@dimen/text_label" />
 
                 <TextView
                     android:id="@+id/tv_hist_item_accuracy"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
                     android:textColor="@color/color_text_primary"
                     android:textSize="@dimen/text_body"
                     android:textStyle="bold" />
@@ -137,21 +145,23 @@
             <!-- Avg Time -->
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/history_item_avg_time_label"
+                    android:includeFontPadding="false"
                     android:textColor="@color/color_text_secondary"
                     android:textSize="@dimen/text_label" />
 
                 <TextView
                     android:id="@+id/tv_hist_avg_time"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
                     android:textColor="@color/color_text_primary"
                     android:textSize="@dimen/text_body"
                     android:textStyle="bold" />
@@ -161,21 +171,23 @@
             <!-- Rating -->
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/history_item_rating_label"
+                    android:includeFontPadding="false"
                     android:textColor="@color/color_text_secondary"
                     android:textSize="@dimen/text_label" />
 
                 <TextView
                     android:id="@+id/tv_hist_rating"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
                     android:textColor="@color/color_text_primary"
                     android:textSize="@dimen/text_body"
                     android:textStyle="bold" />
@@ -223,10 +235,12 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_view_result"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/button_height"
         android:layout_marginTop="@dimen/spacing_md"
         android:background="@drawable/bg_button_outline"
         android:text="@string/view_result"
+        android:gravity="center"
+        android:includeFontPadding="false"
         android:textColor="@color/color_text_primary"
         android:textSize="@dimen/text_label"
         android:textStyle="bold" />

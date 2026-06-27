@@ -402,7 +402,7 @@
                     <LinearLayout
                         android:id="@+id/card_number"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:layout_marginEnd="5dp"
                         android:background="@drawable/bg_card_white"
@@ -417,18 +417,15 @@
                             android:src="@drawable/ic_chart" />
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:layout_marginStart="8dp"
-                            android:text="Number"
+                            android:layout_marginEnd="4dp"
+                            android:text="Number Patterns"
                             android:textColor="@color/color_text_primary"
                             android:textSize="13sp"
                             android:textStyle="bold" />
-
-                        <Space
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:layout_weight="1" />
 
                         <ImageView
                             android:id="@+id/iv_check_number"
@@ -450,7 +447,7 @@
                     <LinearLayout
                         android:id="@+id/card_symbol"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:layout_marginStart="5dp"
                         android:background="@drawable/bg_card_white"
@@ -465,18 +462,15 @@
                             android:src="@drawable/ic_symbol" />
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:layout_marginStart="8dp"
-                            android:text="Symbol"
+                            android:layout_marginEnd="4dp"
+                            android:text="Symbol Patterns"
                             android:textColor="@color/color_text_primary"
                             android:textSize="13sp"
                             android:textStyle="bold" />
-
-                        <Space
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:layout_weight="1" />
 
                         <ImageView
                             android:id="@+id/iv_check_symbol"
@@ -507,7 +501,7 @@
                     <LinearLayout
                         android:id="@+id/card_deduction"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:layout_marginEnd="5dp"
                         android:background="@drawable/bg_card_white"
@@ -522,18 +516,15 @@
                             android:src="@drawable/ic_deduction" />
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:layout_marginStart="8dp"
-                            android:text="Deduction"
+                            android:layout_marginEnd="4dp"
+                            android:text="Mini Deduction"
                             android:textColor="@color/color_text_primary"
                             android:textSize="13sp"
                             android:textStyle="bold" />
-
-                        <Space
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:layout_weight="1" />
 
                         <ImageView
                             android:id="@+id/iv_check_deduction"
@@ -555,7 +546,7 @@
                     <LinearLayout
                         android:id="@+id/card_memory"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:layout_marginStart="5dp"
                         android:background="@drawable/bg_card_white"
@@ -570,18 +561,15 @@
                             android:src="@drawable/ic_memory" />
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:layout_marginStart="8dp"
-                            android:text="Memory"
+                            android:layout_marginEnd="4dp"
+                            android:text="Pattern Memory"
                             android:textColor="@color/color_text_primary"
                             android:textSize="13sp"
                             android:textStyle="bold" />
-
-                        <Space
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:layout_weight="1" />
 
                         <ImageView
                             android:id="@+id/iv_check_memory"

@@ -42,7 +42,7 @@ public class HistoryFragment extends Fragment {
     private final Handler handler = new Handler(Looper.getMainLooper());
 
     private androidx.swiperefreshlayout.widget.SwipeRefreshLayout swipeRefresh;
-    private View contentHistory, skeletonHistory;
+    private View contentHistory, skeletonHistory, layoutHistoryEmpty;
     
     private TextView tvSessions, tvAccuracy, tvBestScore, tvRatingChange;
     private RecyclerView rv;
@@ -65,6 +65,7 @@ public class HistoryFragment extends Fragment {
 
         contentHistory = view.findViewById(R.id.content_history);
         skeletonHistory = view.findViewById(R.id.skeleton_history);
+        layoutHistoryEmpty = view.findViewById(R.id.layout_history_empty);
 
         swipeRefresh = view.findViewById(R.id.swipe_refresh_history);
         swipeRefresh.setOnRefreshListener(() -> {
@@ -219,7 +220,7 @@ public class HistoryFragment extends Fragment {
                         tvSessions.setText(String.valueOf(totalCompleted));
                         tvAccuracy.setText(String.format(Locale.getDefault(), "%.1f%%", avgAccuracy));
                         tvBestScore.setText(String.valueOf(bestScore));
-                        tvRatingChange.setText("-"); // or fetch from somewhere else if possible
+                        tvRatingChange.setText("+0");
                     });
                 }
                 connDash.disconnect();
@@ -328,7 +329,20 @@ public class HistoryFragment extends Fragment {
                     handler.post(() -> {
                         historyItems.addAll(newItems);
                         adapter.notifyDataSetChanged();
+
+                        int totalRatingChange = 0;
+                        for (HistoryItem item : historyItems) {
+                            totalRatingChange += item.getRatingChange();
+                        }
                         
+                        if (totalRatingChange >= 0) {
+                            tvRatingChange.setText("+" + totalRatingChange);
+                        } else {
+                            tvRatingChange.setText(String.valueOf(totalRatingChange));
+                        }
+
+                        updateEmptyStateVisibility();
+
                         if (currentOffset + LIMIT >= total || items == null || items.length() == 0) {
                             hasMoreData = false;
                         }
@@ -349,6 +363,7 @@ public class HistoryFragment extends Fragment {
                     final int code = responseCode;
                     handler.post(() -> {
                         android.widget.Toast.makeText(requireContext(), "Error " + code + ": " + err, android.widget.Toast.LENGTH_LONG).show();
+                        updateEmptyStateVisibility();
                         contentHistory.setVisibility(View.VISIBLE);
                         skeletonHistory.setVisibility(View.GONE);
                         if (swipeRefresh != null) swipeRefresh.setRefreshing(false);
@@ -360,6 +375,7 @@ public class HistoryFragment extends Fragment {
             } catch (Exception e) {
                 Log.e("HistoryFragment", "Error fetching history", e);
                 handler.post(() -> {
+                    updateEmptyStateVisibility();
                     contentHistory.setVisibility(View.VISIBLE);
                     skeletonHistory.setVisibility(View.GONE);
                     if (swipeRefresh != null) swipeRefresh.setRefreshing(false);
@@ -367,5 +383,17 @@ public class HistoryFragment extends Fragment {
                 });
             }
         });
+    }
+
+    private void updateEmptyStateVisibility() {
+        if (layoutHistoryEmpty != null && rv != null) {
+            if (historyItems.isEmpty()) {
+                layoutHistoryEmpty.setVisibility(View.VISIBLE);
+                rv.setVisibility(View.GONE);
+            } else {
+                layoutHistoryEmpty.setVisibility(View.GONE);
+                rv.setVisibility(View.VISIBLE);
+            }
+        }
     }
 }

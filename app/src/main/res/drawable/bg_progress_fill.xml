@@ -11,10 +11,11 @@
     
     <!-- Progress (Fill) -->
     <item android:id="@android:id/progress">
-        <clip>
+        <clip
+            android:clipOrientation="horizontal"
+            android:gravity="left">
             <shape android:shape="rectangle">
                 <solid android:color="@color/color_accent_lime" />
-                <stroke android:width="2dp" android:color="#000000" />
                 <corners android:radius="0dp" />
             </shape>
         </clip>

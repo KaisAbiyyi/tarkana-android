@@ -255,14 +255,14 @@ public class ChallengeFragment extends Fragment {
         if (tvLoadoutPreview != null) {
             if (ready) {
                 String[] sessions = {"Quick", "Standard", "Long"};
-                String[] modes = {"Mixed Mode", "Number", "Symbol", "Deduction", "Memory"};
+                String[] modes = {"Mixed Mode", "Number Patterns", "Symbol Patterns", "Mini Deduction", "Pattern Memory"};
                 String[] info = {"5Q · ~1 min", "10Q · ~2 min", "20Q · ~4 min"};
                 tvLoadoutPreview.setText("Ready: " + sessions[selectedSessionType] + " · " + modes[selectedMode] + " · " + info[selectedSessionType]);
             } else if (hasSession) {
                 String[] sessions = {"Quick", "Standard", "Long"};
                 tvLoadoutPreview.setText("Selected: " + sessions[selectedSessionType]);
             } else if (hasMode) {
-                String[] modes = {"Mixed Mode", "Number", "Symbol", "Deduction", "Memory"};
+                String[] modes = {"Mixed Mode", "Number Patterns", "Symbol Patterns", "Mini Deduction", "Pattern Memory"};
                 tvLoadoutPreview.setText("Selected: " + modes[selectedMode]);
             } else {
                 tvLoadoutPreview.setText("Choose a session and mode");
@@ -273,7 +273,7 @@ public class ChallengeFragment extends Fragment {
         if (tvStickySelection != null) {
             if (ready) {
                 String[] sessions = {"Quick", "Standard", "Long"};
-                String[] modes = {"Mixed Mode", "Number", "Symbol", "Deduction", "Memory"};
+                String[] modes = {"Mixed Mode", "Number Patterns", "Symbol Patterns", "Mini Deduction", "Pattern Memory"};
                 tvStickySelection.setText(sessions[selectedSessionType] + " · " + modes[selectedMode]);
             } else if (eitherSelected) {
                 tvStickySelection.setText("Choose 1 more option");
@@ -290,10 +290,10 @@ public class ChallengeFragment extends Fragment {
                 String btnText = "Start Challenge";
                 switch (selectedMode) {
                     case 0: btnText = "Start Mixed Mode"; break;
-                    case 1: btnText = "Start Number"; break;
-                    case 2: btnText = "Start Symbol"; break;
-                    case 3: btnText = "Start Deduction"; break;
-                    case 4: btnText = "Start Memory"; break;
+                    case 1: btnText = "Start Number Patterns"; break;
+                    case 2: btnText = "Start Symbol Patterns"; break;
+                    case 3: btnText = "Start Mini Deduction"; break;
+                    case 4: btnText = "Start Pattern Memory"; break;
                 }
                 btnChooseConfig.setText(btnText);
                 btnChooseConfig.setTextColor(getResources().getColor(R.color.color_text_primary));
