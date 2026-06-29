@@ -88,7 +88,7 @@ public class SessionActivity extends AppCompatActivity {
 
     // Views â€“ memory phase
     private View cardPatternMemorize, cardPatternHidden;
-    private TextView tvMemorizeCountdown;
+    private TextView tvMemorizeCountdown, tvMemorizeSequence;
 
     // Views â€“ feedback
     private View layoutFeedbackCard;
@@ -201,6 +201,7 @@ public class SessionActivity extends AppCompatActivity {
         cardPatternMemorize = findViewById(R.id.card_pattern_memorize);
         cardPatternHidden   = findViewById(R.id.card_pattern_hidden);
         tvMemorizeCountdown = findViewById(R.id.tv_memorize_countdown);
+        tvMemorizeSequence  = findViewById(R.id.tv_memorize_sequence);
 
         tvResultScore       = findViewById(R.id.tv_result_score);
         tvResultAccuracy    = findViewById(R.id.tv_result_accuracy);
@@ -541,6 +542,9 @@ public class SessionActivity extends AppCompatActivity {
 
         // Store memorize sequence for this question's review later
         memorizeSeqs[currentQuestionIndex] = memorize;
+        if (tvMemorizeSequence != null) {
+            tvMemorizeSequence.setText(formatMemorySequence(memorize));
+        }
 
         // Populate sequence images
         ImageView[] seqViews = {ivSeq1, ivSeq2, ivSeq3, ivSeq4, ivSeq5};
@@ -1111,6 +1115,37 @@ public class SessionActivity extends AppCompatActivity {
         String l = s.toLowerCase();
         return l.equals("circle") || l.equals("star") || l.equals("diamond") || l.equals("square")
                 || l.contains("triangle") || l.contains("hex") || l.contains("pent") || l.contains("oct");
+    }
+
+    private String formatMemorySequence(JSONArray sequence) {
+        if (sequence == null || sequence.length() == 0) return "No pattern received";
+
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < sequence.length(); i++) {
+            if (i > 0) builder.append(" > ");
+            builder.append(displaySymbolLabel(sequence.optString(i)));
+        }
+        return builder.toString();
+    }
+
+    private String displaySymbolLabel(String token) {
+        if (token == null) return "";
+        String normalized = token.trim().replace('_', '-').toLowerCase();
+        switch (normalized) {
+            case "circle": return "Circle";
+            case "square": return "Square";
+            case "triangle": return "Triangle";
+            case "diamond": return "Diamond";
+            case "star": return "Star";
+            case "hex": return "Hexagon";
+            case "pentagon": return "Pentagon";
+            case "octagon": return "Octagon";
+            case "triangle-right": return "Triangle Right";
+            case "triangle-down": return "Triangle Down";
+            case "triangle-left": return "Triangle Left";
+            case "triangle-up": return "Triangle Up";
+            default: return capitalize(token);
+        }
     }
 
     // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ Helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
