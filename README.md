@@ -31,7 +31,7 @@ https://github.com/KaisAbiyyi/tarkana
 Current beta version:
 
 ```text
-0.1.0-beta.1
+0.1.0-beta.2
 ```
 
 APK releases are published through GitHub Releases:
@@ -141,13 +141,13 @@ Build an installable beta APK:
 Use aligned beta tags with the web repository:
 
 ```text
-android-v0.1.0-beta.1
+android-v0.1.0-beta.2
 ```
 
 The uploaded APK asset should use this shape:
 
 ```text
-tarkana-android-0.1.0-beta.1.apk
+tarkana-android-0.1.0-beta.2.apk
 ```
 
 ## Related Repositories

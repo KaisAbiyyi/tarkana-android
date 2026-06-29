@@ -360,7 +360,7 @@ public class SessionActivity extends AppCompatActivity {
                         handler.post(() -> resumeFromActiveChallenge(activeChallenge));
                     } else {
                         handler.post(() -> {
-                            Toast.makeText(this, "Ada session aktif, tapi gagal dimuat. Coba buka tab Challenge lagi.", Toast.LENGTH_LONG).show();
+                            Toast.makeText(this, "An active session exists, but it could not be loaded. Open the Challenge tab again.", Toast.LENGTH_LONG).show();
                             finish();
                         });
                     }

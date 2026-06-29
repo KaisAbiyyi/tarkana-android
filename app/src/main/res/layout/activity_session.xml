@@ -712,7 +712,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:gravity="center"
-                android:text="One answer · Timer running · Review after round"
+                android:text="One answer  -  Timer running  -  Review after round"
                 android:textColor="@color/color_text_secondary"
                 android:textSize="11sp"
                 android:textStyle="bold" />

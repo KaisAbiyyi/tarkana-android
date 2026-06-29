@@ -3,29 +3,29 @@
   <!-- App -->
   <string name="app_name">TARKANA</string>
   <!-- Login -->
-  <string name="login_title">Masuk ke TARKANA</string>
-  <string name="login_subtitle">Lanjutkan ronde, rating, dan progres yang telah kamu bangun.</string>
+  <string name="login_title">Sign in to TARKANA</string>
+  <string name="login_subtitle">Continue your rounds, rating, and progress.</string>
   <string name="login_email_label">EMAIL</string>
-  <string name="login_password_label">KATA SANDI</string>
-  <string name="login_button">MASUK</string>
-  <string name="login_or">ATAU</string>
-  <string name="login_google">LANJUTKAN DENGAN GOOGLE</string>
-  <string name="login_no_account">Belum punya akun?</string>
-  <string name="login_create_account">Buat Akun</string>
-  <string name="register_button">DAFTAR</string>
-  <string name="login_login_prompt">Sudah punya akun? Masuk</string>
-  <string name="login_wait">TUNGGU...</string>
-  <string name="register_success_msg">Berhasil! Cek email jika perlu, lalu masuk.</string>
+  <string name="login_password_label">PASSWORD</string>
+  <string name="login_button">SIGN IN</string>
+  <string name="login_or">OR</string>
+  <string name="login_google">CONTINUE WITH GOOGLE</string>
+  <string name="login_no_account">Don\'t have an account?</string>
+  <string name="login_create_account">Create Account</string>
+  <string name="register_button">REGISTER</string>
+  <string name="login_login_prompt">Already have an account? Sign in</string>
+  <string name="login_wait">PLEASE WAIT...</string>
+  <string name="register_success_msg">Success! Check your email if needed, then sign in.</string>
   <string name="register_title">Create a TARKANA account</string>
   <string name="register_subtitle">Build your player identity, complete your first round, and begin growing your Logic Rating.</string>
   <string name="register_display_name_label">DISPLAY NAME</string>
   <!-- Login features -->
-  <string name="feature_rounds">Ronde singkat</string>
-  <string name="feature_saved">Hasil tersimpan</string>
-  <string name="feature_rating">Logic Rating berdasarkan performa</string>
-  <string name="feature_progress">Progres dapat ditinjau kembali</string>
+  <string name="feature_rounds">Short rounds</string>
+  <string name="feature_saved">Saved results</string>
+  <string name="feature_rating">Logic Rating based on performance</string>
+  <string name="feature_progress">Reviewable progress</string>
   <!-- Hero -->
-  <string name="hero_text">Mulai dari belum diperingkat, bangun Logic Rating.</string>
+  <string name="hero_text">Start unranked and build your Logic Rating.</string>
   <!-- Dashboard -->
   <string name="dashboard_title">DASHBOARD</string>
   <string name="dashboard_logic_rating">0</string>
@@ -35,7 +35,7 @@
   <string name="dashboard_best_score">BEST SCORE</string>
   <string name="dashboard_next_challenge">NEXT CHALLENGE</string>
   <string name="dashboard_keep_progress">Keep your progress going</string>
-  <string name="dashboard_challenge_info">10 questions Â· about 2 minutes</string>
+  <string name="dashboard_challenge_info">10 questions - about 2 minutes</string>
   <string name="dashboard_start_challenge">START CHALLENGE</string>
   <string name="dashboard_avg_accuracy">AVERAGE ACCURACY</string>
   <string name="dashboard_avg_time">AVERAGE TIME</string>
@@ -63,9 +63,9 @@
   <string name="challenge_quick_desc">A quick warm-up before moving forward.</string>
   <string name="challenge_standard_desc">A balanced pace for one complete round.</string>
   <string name="challenge_long_desc">An intensive round for longer focus.</string>
-  <string name="challenge_quick_info">5 questions Â· about 1 minutes</string>
-  <string name="challenge_standard_info">10 questions Â· about 2 minutes</string>
-  <string name="challenge_long_info">20 questions Â· about 4 minutes</string>
+  <string name="challenge_quick_info">5 questions - about 1 minute</string>
+  <string name="challenge_standard_info">10 questions - about 2 minutes</string>
+  <string name="challenge_long_info">20 questions - about 4 minutes</string>
   <string name="challenge_choose_mode">Choose mode</string>
   <string name="challenge_choose_mode_desc">Each mode changes the round content and reasoning focus.</string>
   <string name="challenge_mode_mixed">Mixed Mode</string>
@@ -92,7 +92,7 @@
   <string name="challenge_review_after">Review after round</string>
   <string name="challenge_verified_score">Verified score</string>
   <string name="challenge_verified_score_desc">Score, time, and round results are calculated and validated by the server.</string>
-  <string name="challenge_rank_info">Bronze Mind Â· Logic Rating 105</string>
+  <string name="challenge_rank_info">Bronze Mind - Logic Rating 105</string>
   <string name="challenge_ranked_desc">This ranked round affects your Logic Rating after validation.</string>
   <string name="challenge_choose_config">CHOOSE CONFIGURATION</string>
   <string name="challenge_choose_config_desc">Choose a session type and mode to prepare the round.</string>
@@ -120,7 +120,7 @@
   <string name="history_cta_desc">Play a new round to continue developing your Logic Rating.</string>
   <string name="history_play_next">PLAY NEXT ROUND</string>
   <!-- Leaderboard -->
-  <string name="leaderboard_scope">GLOBAL Â· ALL TIME</string>
+  <string name="leaderboard_scope">GLOBAL - ALL TIME</string>
   <string name="leaderboard_title">Leaderboard</string>
   <string name="leaderboard_desc">Rankings use verified results. Accuracy reflects lifetime performance across completed rounds.</string>
   <string name="leaderboard_top">Top reasoners</string>
@@ -172,7 +172,7 @@
   <string name="session_find_next">Find the next symbol</string>
   <string name="session_submit">SUBMIT ANSWER</string>
   <string name="session_choose_one">Choose one answer to continue.</string>
-  <string name="session_footer">One answer Â· Timer running Â· Review after round</string>
+  <string name="session_footer">One answer - Timer running - Review after round</string>
   <string name="session_option_a">A</string>
   <string name="session_option_b">B</string>
   <string name="session_option_c">C</string>
@@ -181,12 +181,12 @@
   <string name="profile_coming_soon">Coming soon</string>
   <string name="challenge_session_subtitle">Choose a round length you can finish now.</string>
   <string name="challenge_quick_title">Quick Session</string>
-  <string name="challenge_quick_detail">5 questions · about 1 minutes</string>
+  <string name="challenge_quick_detail">5 questions - about 1 minute</string>
   <string name="challenge_standard_title">Standard Round</string>
-  <string name="challenge_standard_detail">10 questions · about 2 minutes</string>
+  <string name="challenge_standard_detail">10 questions - about 2 minutes</string>
   <string name="challenge_extended_title">Long Session</string>
   <string name="challenge_extended_desc">An intensive round for longer focus.</string>
-  <string name="challenge_extended_detail">20 questions · about 4 minutes</string>
+  <string name="challenge_extended_detail">20 questions - about 4 minutes</string>
   <string name="section_02">Step 2</string>
   <string name="challenge_mode_title">Choose mode</string>
   <string name="challenge_mode_subtitle">Each mode changes the round content and reasoning focus.</string>
@@ -260,7 +260,7 @@
   <string name="history_date_header">Completed Round</string>
   <string name="history_cta_title">Ready to keep progressing?</string>
   <string name="history_cta_subtitle">Play a new round to continue developing your Logic Rating.</string>
-  <string name="leaderboard_label">Global · All Time</string>
+  <string name="leaderboard_label">Global - All Time</string>
   <string name="leaderboard_subtitle">Rankings use verified results. Accuracy reflects lifetime performance across completed rounds.</string>
   <string name="leaderboard_top_title">Top reasoners</string>
   <string name="leaderboard_your_rank">Your Position</string>

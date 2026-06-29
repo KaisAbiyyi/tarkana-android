@@ -190,11 +190,11 @@ public class ChallengeFragment extends Fragment {
         if (!isAdded() || activeSessionDialog != null && activeSessionDialog.isShowing()) return;
 
         activeSessionDialog = new AlertDialog.Builder(requireContext())
-                .setTitle("Sesi Belum Selesai")
-                .setMessage("Kamu punya challenge yang belum selesai. Lanjutkan atau buang sesi ini?")
+                .setTitle("Unfinished Session")
+                .setMessage("You have an unfinished challenge. Continue it or discard this session?")
                 .setCancelable(false)
-                .setPositiveButton("Lanjutkan", (dialog, which) -> resumePendingChallenge())
-                .setNegativeButton("Buang Sesi", (dialog, which) -> abandonActiveChallenge(pendingSessionId))
+                .setPositiveButton("Continue", (dialog, which) -> resumePendingChallenge())
+                .setNegativeButton("Discard Session", (dialog, which) -> abandonActiveChallenge(pendingSessionId))
                 .show();
         activeSessionDialog.setOnDismissListener(dialog -> activeSessionDialog = null);
     }
@@ -206,8 +206,8 @@ public class ChallengeFragment extends Fragment {
                 handler.post(() -> {
                     if (isAdded()) {
                         new AlertDialog.Builder(requireContext())
-                                .setTitle("Session Tidak Ditemukan")
-                                .setMessage("Session aktif tidak ditemukan di server. Kamu bisa mulai challenge baru.")
+                                .setTitle("Session Not Found")
+                                .setMessage("No active session was found on the server. You can start a new challenge.")
                                 .setPositiveButton("OK", null)
                                 .show();
                     }
@@ -241,18 +241,18 @@ public class ChallengeFragment extends Fragment {
         if (!isAdded() || activeSessionDialog != null && activeSessionDialog.isShowing()) return;
 
         boolean isComplete = activeChallenge.optBoolean("isComplete", false);
-        String title = isComplete ? "Challenge Siap Diselesaikan" : "Sesi Belum Selesai";
+        String title = isComplete ? "Challenge Ready to Finish" : "Unfinished Session";
         String message = isComplete
-                ? "Semua soal sudah dijawab, tapi hasil belum disimpan."
-                : "Kamu punya challenge yang belum selesai. Lanjutkan atau buang sesi ini?";
+                ? "All questions have been answered, but the result has not been saved yet."
+                : "You have an unfinished challenge. Continue it or discard this session?";
 
         activeSessionDialog = new AlertDialog.Builder(requireContext())
                 .setTitle(title)
                 .setMessage(message)
                 .setCancelable(false)
-                .setPositiveButton(isComplete ? "Lihat Hasil" : "Lanjutkan", (dialog, which) ->
+                .setPositiveButton(isComplete ? "View Result" : "Continue", (dialog, which) ->
                         launchResumeSession(activeChallenge))
-                .setNegativeButton("Buang Sesi", (dialog, which) ->
+                .setNegativeButton("Discard Session", (dialog, which) ->
                         abandonActiveChallenge(activeChallenge.optString("sessionId")))
                 .show();
         activeSessionDialog.setOnDismissListener(dialog -> activeSessionDialog = null);
@@ -414,8 +414,8 @@ public class ChallengeFragment extends Fragment {
             if (ready) {
                 String[] sessions = {"Quick", "Standard", "Long"};
                 String[] modes = {"Mixed Mode", "Number Patterns", "Symbol Patterns", "Mini Deduction", "Pattern Memory"};
-                String[] info = {"5Q · ~1 min", "10Q · ~2 min", "20Q · ~4 min"};
-                tvLoadoutPreview.setText("Ready: " + sessions[selectedSessionType] + " · " + modes[selectedMode] + " · " + info[selectedSessionType]);
+                String[] info = {"5Q - ~1 min", "10Q - ~2 min", "20Q - ~4 min"};
+                tvLoadoutPreview.setText("Ready: " + sessions[selectedSessionType] + " - " + modes[selectedMode] + " - " + info[selectedSessionType]);
             } else if (hasSession) {
                 String[] sessions = {"Quick", "Standard", "Long"};
                 tvLoadoutPreview.setText("Selected: " + sessions[selectedSessionType]);
@@ -432,7 +432,7 @@ public class ChallengeFragment extends Fragment {
             if (ready) {
                 String[] sessions = {"Quick", "Standard", "Long"};
                 String[] modes = {"Mixed Mode", "Number Patterns", "Symbol Patterns", "Mini Deduction", "Pattern Memory"};
-                tvStickySelection.setText(sessions[selectedSessionType] + " · " + modes[selectedMode]);
+                tvStickySelection.setText(sessions[selectedSessionType] + " - " + modes[selectedMode]);
             } else if (eitherSelected) {
                 tvStickySelection.setText("Choose 1 more option");
             } else {

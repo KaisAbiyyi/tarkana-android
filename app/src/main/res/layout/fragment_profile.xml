@@ -99,7 +99,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/spacing_sm"
                     android:layout_marginEnd="@dimen/spacing_sm"
-                    android:text="·"
+                    android:text=" - "
                     android:textColor="@color/color_text_secondary"
                     android:textSize="@dimen/text_headline"
                     android:textStyle="bold" />

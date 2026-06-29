@@ -37,7 +37,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         HistoryItem item = items.get(position);
 
         holder.tvMode.setText(item.getMode());
-        holder.tvSessionInfo.setText(item.getSessionType() + " · " + item.getQuestionCount() + " Questions");
+        holder.tvSessionInfo.setText(item.getSessionType() + "  -  " + item.getQuestionCount() + " Questions");
         holder.tvStatus.setText(item.getStatus());
         holder.tvDate.setText(item.getDate());
         holder.tvScoreValue.setText(String.valueOf(item.getScore()));
