@@ -78,8 +78,10 @@ public class SessionActivity extends AppCompatActivity {
     private TextView tvQuestionLabel, tvQuestionPrompt;
     private LinearLayout layoutSymbolSequence;
     private ImageView ivSeq1, ivSeq2, ivSeq3, ivSeq4, ivSeq5;
+    private LinearLayout layoutMemorizeSequence;
+    private ImageView ivMem1, ivMem2, ivMem3, ivMem4, ivMem5;
 
-    private View cardOptionA, cardOptionB, cardOptionC, cardOptionD;
+    private View cardQuestion, cardOptionA, cardOptionB, cardOptionC, cardOptionD;
     private TextView tvOptionAVal, tvOptionBVal, tvOptionCVal, tvOptionDVal;
     private ImageView ivOptionAVal, ivOptionBVal, ivOptionCVal, ivOptionDVal;
     private AppCompatButton btnSubmit;
@@ -88,7 +90,7 @@ public class SessionActivity extends AppCompatActivity {
 
     // Views â€“ memory phase
     private View cardPatternMemorize, cardPatternHidden;
-    private TextView tvMemorizeCountdown, tvMemorizeSequence;
+    private TextView tvMemorizeCountdown;
 
     // Views â€“ feedback
     private View layoutFeedbackCard;
@@ -167,6 +169,7 @@ public class SessionActivity extends AppCompatActivity {
         tvQuestionLabel = findViewById(R.id.tv_question_label);
         tvQuestionPrompt= findViewById(R.id.tv_question_prompt);
         tvQMarkBox      = findViewById(R.id.tv_question_mark_box);
+        cardQuestion    = findViewById(R.id.card_question);
 
         layoutSymbolSequence = findViewById(R.id.layout_symbol_sequence);
         ivSeq1 = findViewById(R.id.iv_seq_1);
@@ -174,6 +177,12 @@ public class SessionActivity extends AppCompatActivity {
         ivSeq3 = findViewById(R.id.iv_seq_3);
         ivSeq4 = findViewById(R.id.iv_seq_4);
         ivSeq5 = findViewById(R.id.iv_seq_5);
+        layoutMemorizeSequence = findViewById(R.id.layout_memorize_sequence);
+        ivMem1 = findViewById(R.id.iv_mem_1);
+        ivMem2 = findViewById(R.id.iv_mem_2);
+        ivMem3 = findViewById(R.id.iv_mem_3);
+        ivMem4 = findViewById(R.id.iv_mem_4);
+        ivMem5 = findViewById(R.id.iv_mem_5);
 
         cardOptionA = findViewById(R.id.card_option_a);
         cardOptionB = findViewById(R.id.card_option_b);
@@ -201,7 +210,6 @@ public class SessionActivity extends AppCompatActivity {
         cardPatternMemorize = findViewById(R.id.card_pattern_memorize);
         cardPatternHidden   = findViewById(R.id.card_pattern_hidden);
         tvMemorizeCountdown = findViewById(R.id.tv_memorize_countdown);
-        tvMemorizeSequence  = findViewById(R.id.tv_memorize_sequence);
 
         tvResultScore       = findViewById(R.id.tv_result_score);
         tvResultAccuracy    = findViewById(R.id.tv_result_accuracy);
@@ -434,6 +442,7 @@ public class SessionActivity extends AppCompatActivity {
         btnSubmit.setVisibility(View.VISIBLE);
         resetOptionBackgrounds();
         if (layoutFeedbackCard != null) layoutFeedbackCard.setVisibility(View.GONE);
+        if (cardQuestion != null) cardQuestion.setVisibility(View.VISIBLE);
         cancelTimers();
 
         String questionType = currentApiQuestion.optString("questionType", "number_sequence");
@@ -534,24 +543,23 @@ public class SessionActivity extends AppCompatActivity {
 
     private void renderMemoryQuestion(String prompt, JSONArray choices, JSONObject metadata, int timeLimitSecs) {
         if (tvQMarkBox != null) tvQMarkBox.setVisibility(View.GONE);
+        if (cardQuestion != null) cardQuestion.setVisibility(View.GONE);
         if (cardPatternHidden != null) cardPatternHidden.setVisibility(View.GONE);
         if (cardPatternMemorize != null) cardPatternMemorize.setVisibility(View.VISIBLE);
 
         tvQuestionPrompt.setText("Memorize the sequence.");
-        layoutSymbolSequence.setVisibility(View.VISIBLE);
+        layoutSymbolSequence.setVisibility(View.GONE);
 
         JSONArray memorize = extractMemorySequence(metadata);
         int revealSecs = metadata.optInt("revealSeconds", 4);
 
-        // Store memorize sequence for this question's review later
         memorizeSeqs[currentQuestionIndex] = memorize;
-        if (tvMemorizeSequence != null) {
-            tvMemorizeSequence.setText(formatMemorySequence(memorize));
-        }
 
-        ImageView[] seqViews = {ivSeq1, ivSeq2, ivSeq3, ivSeq4, ivSeq5};
+        ImageView[] seqViews = {ivMem1, ivMem2, ivMem3, ivMem4, ivMem5};
         boolean hasMemorize = memorize != null && memorize.length() > 0;
-        layoutSymbolSequence.setVisibility(hasMemorize ? View.VISIBLE : View.GONE);
+        if (layoutMemorizeSequence != null) {
+            layoutMemorizeSequence.setVisibility(hasMemorize ? View.VISIBLE : View.GONE);
+        }
         if (hasMemorize) {
             for (int i = 0; i < seqViews.length; i++) {
                 if (i < memorize.length()) {
@@ -621,6 +629,7 @@ public class SessionActivity extends AppCompatActivity {
     }
 
     private void enterMemoryAnswerPhase(String prompt, int timeLimitSecs) {
+        if (cardQuestion != null) cardQuestion.setVisibility(View.VISIBLE);
         layoutSymbolSequence.setVisibility(View.GONE);
         if (cardPatternMemorize != null) cardPatternMemorize.setVisibility(View.GONE);
         if (cardPatternHidden != null)   cardPatternHidden.setVisibility(View.VISIBLE);
@@ -1139,37 +1148,6 @@ public class SessionActivity extends AppCompatActivity {
         if (pattern != null && pattern.length() > 0) return pattern;
 
         return null;
-    }
-
-    private String formatMemorySequence(JSONArray sequence) {
-        if (sequence == null || sequence.length() == 0) return "No pattern received";
-
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < sequence.length(); i++) {
-            if (i > 0) builder.append(" > ");
-            builder.append(displaySymbolLabel(sequence.optString(i)));
-        }
-        return builder.toString();
-    }
-
-    private String displaySymbolLabel(String token) {
-        if (token == null) return "";
-        String normalized = token.trim().replace('_', '-').toLowerCase();
-        switch (normalized) {
-            case "circle": return "Circle";
-            case "square": return "Square";
-            case "triangle": return "Triangle";
-            case "diamond": return "Diamond";
-            case "star": return "Star";
-            case "hex": return "Hexagon";
-            case "pentagon": return "Pentagon";
-            case "octagon": return "Octagon";
-            case "triangle-right": return "Triangle Right";
-            case "triangle-down": return "Triangle Down";
-            case "triangle-left": return "Triangle Left";
-            case "triangle-up": return "Triangle Up";
-            default: return capitalize(token);
-        }
     }
 
     // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ Helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€

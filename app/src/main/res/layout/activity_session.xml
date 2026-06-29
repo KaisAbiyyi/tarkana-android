@@ -192,6 +192,7 @@
 
                 <!-- Question Card -->
                 <LinearLayout
+                    android:id="@+id/card_question"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_card_white"
@@ -335,17 +336,76 @@
                         android:textColor="@color/color_text_primary"
                         android:textSize="12sp" />
 
-                    <TextView
-                        android:id="@+id/tv_memorize_sequence"
+                    <LinearLayout
+                        android:id="@+id/layout_memorize_sequence"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:background="@drawable/bg_card_white"
-                        android:padding="10dp"
-                        android:text="Circle > Square > Star"
-                        android:textColor="@color/color_text_primary"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:padding="10dp">
+
+                        <ImageView
+                            android:id="@+id/iv_mem_1"
+                            android:layout_width="42dp"
+                            android:layout_height="42dp"
+                            android:background="@drawable/bg_card_white"
+                            android:contentDescription="memory sequence 1"
+                            android:paddingBottom="10dp"
+                            android:paddingLeft="8dp"
+                            android:paddingRight="10dp"
+                            android:paddingTop="8dp" />
+
+                        <ImageView
+                            android:id="@+id/iv_mem_2"
+                            android:layout_width="42dp"
+                            android:layout_height="42dp"
+                            android:layout_marginStart="8dp"
+                            android:background="@drawable/bg_card_white"
+                            android:contentDescription="memory sequence 2"
+                            android:paddingBottom="10dp"
+                            android:paddingLeft="8dp"
+                            android:paddingRight="10dp"
+                            android:paddingTop="8dp" />
+
+                        <ImageView
+                            android:id="@+id/iv_mem_3"
+                            android:layout_width="42dp"
+                            android:layout_height="42dp"
+                            android:layout_marginStart="8dp"
+                            android:background="@drawable/bg_card_white"
+                            android:contentDescription="memory sequence 3"
+                            android:paddingBottom="10dp"
+                            android:paddingLeft="8dp"
+                            android:paddingRight="10dp"
+                            android:paddingTop="8dp" />
+
+                        <ImageView
+                            android:id="@+id/iv_mem_4"
+                            android:layout_width="42dp"
+                            android:layout_height="42dp"
+                            android:layout_marginStart="8dp"
+                            android:background="@drawable/bg_card_white"
+                            android:contentDescription="memory sequence 4"
+                            android:paddingBottom="10dp"
+                            android:paddingLeft="8dp"
+                            android:paddingRight="10dp"
+                            android:paddingTop="8dp" />
+
+                        <ImageView
+                            android:id="@+id/iv_mem_5"
+                            android:layout_width="42dp"
+                            android:layout_height="42dp"
+                            android:layout_marginStart="8dp"
+                            android:background="@drawable/bg_card_white"
+                            android:contentDescription="memory sequence 5"
+                            android:paddingBottom="10dp"
+                            android:paddingLeft="8dp"
+                            android:paddingRight="10dp"
+                            android:paddingTop="8dp" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
