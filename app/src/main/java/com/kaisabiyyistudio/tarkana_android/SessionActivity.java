@@ -448,11 +448,14 @@ public class SessionActivity extends AppCompatActivity {
         JSONArray choices  = currentApiQuestion.optJSONArray("choices");
         String prompt      = currentApiQuestion.optString("prompt", "");
         JSONObject metadata= currentApiQuestion.optJSONObject("metadata");
+        if (metadata == null) {
+            metadata = new JSONObject();
+        }
 
         boolean isSymbol = questionType.equals("symbol_pattern");
         boolean isMemory = questionType.equals("memory_pattern");
 
-        if (isMemory && metadata != null) {
+        if (isMemory) {
             renderMemoryQuestion(prompt, choices, metadata, timeLimitSecs);
         } else if (isSymbol) {
             renderSymbolQuestion(prompt, choices, timeLimitSecs);
