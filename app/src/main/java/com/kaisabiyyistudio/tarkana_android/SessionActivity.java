@@ -540,7 +540,7 @@ public class SessionActivity extends AppCompatActivity {
         tvQuestionPrompt.setText("Memorize the sequence.");
         layoutSymbolSequence.setVisibility(View.VISIBLE);
 
-        JSONArray memorize = metadata.optJSONArray("memorize");
+        JSONArray memorize = extractMemorySequence(metadata);
         int revealSecs = metadata.optInt("revealSeconds", 4);
 
         // Store memorize sequence for this question's review later
@@ -549,9 +549,10 @@ public class SessionActivity extends AppCompatActivity {
             tvMemorizeSequence.setText(formatMemorySequence(memorize));
         }
 
-        // Populate sequence images
         ImageView[] seqViews = {ivSeq1, ivSeq2, ivSeq3, ivSeq4, ivSeq5};
-        if (memorize != null) {
+        boolean hasMemorize = memorize != null && memorize.length() > 0;
+        layoutSymbolSequence.setVisibility(hasMemorize ? View.VISIBLE : View.GONE);
+        if (hasMemorize) {
             for (int i = 0; i < seqViews.length; i++) {
                 if (i < memorize.length()) {
                     setSymbolImage(seqViews[i], memorize.optString(i));
@@ -559,6 +560,11 @@ public class SessionActivity extends AppCompatActivity {
                 } else {
                     seqViews[i].setVisibility(View.GONE);
                 }
+            }
+        } else {
+            for (ImageView seqView : seqViews) {
+                seqView.setImageDrawable(null);
+                seqView.setVisibility(View.GONE);
             }
         }
 
@@ -599,7 +605,7 @@ public class SessionActivity extends AppCompatActivity {
             }
         }
 
-        setBtnDisabled("Memorizingâ€¦");
+        setBtnDisabled("Memorizing...");
 
         if (tvMemorizeCountdown != null) {
             tvMemorizeCountdown.setText("Pattern visible: " + revealSecs + "s remaining");
@@ -1118,6 +1124,21 @@ public class SessionActivity extends AppCompatActivity {
         String l = s.toLowerCase();
         return l.equals("circle") || l.equals("star") || l.equals("diamond") || l.equals("square")
                 || l.contains("triangle") || l.contains("hex") || l.contains("pent") || l.contains("oct");
+    }
+
+    private JSONArray extractMemorySequence(JSONObject metadata) {
+        if (metadata == null) return null;
+
+        JSONArray memorize = metadata.optJSONArray("memorize");
+        if (memorize != null && memorize.length() > 0) return memorize;
+
+        JSONArray sequence = metadata.optJSONArray("sequence");
+        if (sequence != null && sequence.length() > 0) return sequence;
+
+        JSONArray pattern = metadata.optJSONArray("pattern");
+        if (pattern != null && pattern.length() > 0) return pattern;
+
+        return null;
     }
 
     private String formatMemorySequence(JSONArray sequence) {
