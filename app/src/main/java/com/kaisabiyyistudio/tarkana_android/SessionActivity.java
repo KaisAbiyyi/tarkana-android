@@ -543,11 +543,11 @@ public class SessionActivity extends AppCompatActivity {
 
     private void renderMemoryQuestion(String prompt, JSONArray choices, JSONObject metadata, int timeLimitSecs) {
         if (tvQMarkBox != null) tvQMarkBox.setVisibility(View.GONE);
-        if (cardQuestion != null) cardQuestion.setVisibility(View.GONE);
+        if (cardQuestion != null) cardQuestion.setVisibility(View.VISIBLE);
         if (cardPatternHidden != null) cardPatternHidden.setVisibility(View.GONE);
         if (cardPatternMemorize != null) cardPatternMemorize.setVisibility(View.VISIBLE);
 
-        tvQuestionPrompt.setText("Memorize the sequence.");
+        tvQuestionPrompt.setText(prompt);
         layoutSymbolSequence.setVisibility(View.GONE);
 
         JSONArray memorize = extractMemorySequence(metadata);
@@ -586,18 +586,14 @@ public class SessionActivity extends AppCompatActivity {
                 && isSymbolToken(choices.optString(0));
 
         if (isSymbolChoice) {
-            tvOptionAVal.setVisibility(View.VISIBLE); ivOptionAVal.setVisibility(View.VISIBLE);
-            tvOptionBVal.setVisibility(View.VISIBLE); ivOptionBVal.setVisibility(View.VISIBLE);
-            tvOptionCVal.setVisibility(View.VISIBLE); ivOptionCVal.setVisibility(View.VISIBLE);
-            tvOptionDVal.setVisibility(View.VISIBLE); ivOptionDVal.setVisibility(View.VISIBLE);
+            tvOptionAVal.setVisibility(View.GONE); ivOptionAVal.setVisibility(View.VISIBLE);
+            tvOptionBVal.setVisibility(View.GONE); ivOptionBVal.setVisibility(View.VISIBLE);
+            tvOptionCVal.setVisibility(View.GONE); ivOptionCVal.setVisibility(View.VISIBLE);
+            tvOptionDVal.setVisibility(View.GONE); ivOptionDVal.setVisibility(View.VISIBLE);
             if (choices != null && choices.length() >= 4) {
-                tvOptionAVal.setText(capitalize(choices.optString(0)));
                 setSymbolImage(ivOptionAVal, choices.optString(0));
-                tvOptionBVal.setText(capitalize(choices.optString(1)));
                 setSymbolImage(ivOptionBVal, choices.optString(1));
-                tvOptionCVal.setText(capitalize(choices.optString(2)));
                 setSymbolImage(ivOptionCVal, choices.optString(2));
-                tvOptionDVal.setText(capitalize(choices.optString(3)));
                 setSymbolImage(ivOptionDVal, choices.optString(3));
             }
         } else {
