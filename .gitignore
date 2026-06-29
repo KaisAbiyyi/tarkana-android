@@ -14,4 +14,6 @@
 .cxx
 local.properties
 .agents/
+AGENTS.md
+CLAUDE.md
 dist-release/
