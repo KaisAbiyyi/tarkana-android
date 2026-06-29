@@ -140,26 +140,24 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
                         resetButton(btnLogin);
                     });
-                } else {
-                    JSONObject res = new JSONObject(response);
-                    String token = res.getString("access_token");
-                    String refreshToken = res.optString("refresh_token", "");
-                    MasterKey masterKey = new MasterKey.Builder(this)
-                            .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-                            .build();
-                    SharedPreferences prefs = EncryptedSharedPreferences.create(
-                            this, "auth_prefs", masterKey,
-                            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-                            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-                    );
-                    prefs.edit()
-                        .putString("access_token", token)
-                        .putString("refresh_token", refreshToken)
-                        .apply();
-                    handler.post(() -> {
-                        startActivity(new Intent(this, MainActivity.class));
-                        finish();
-                    });
+				} else {
+					JSONObject res = new JSONObject(response);
+					String token = res.getString("access_token");
+					String refreshToken = res.optString("refresh_token", "");
+					if (!AuthSession.save(this, token, refreshToken)) {
+						handler.post(() -> {
+							Toast.makeText(this, "Failed to save session. Please try again.", Toast.LENGTH_LONG).show();
+							resetButton(btnLogin);
+						});
+						return;
+					}
+					String savedToken = AuthSession.accessToken(this);
+					Log.d("LoginActivity", "Session saved. accessTokenReadable=" + (savedToken != null) +
+							", refreshTokenPresent=" + !refreshToken.isEmpty());
+					handler.post(() -> {
+						startActivity(new Intent(this, MainActivity.class));
+						finish();
+					});
                 }
             } catch (Exception e) {
                 handler.post(() -> {

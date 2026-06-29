@@ -16,6 +16,8 @@ import java.util.Scanner;
 
 final class AuthSession {
     private static final String TAG = "AuthSession";
+    private static final int CONNECT_TIMEOUT_MS = 10000;
+    private static final int READ_TIMEOUT_MS = 20000;
 
     private AuthSession() {}
 
@@ -39,6 +41,19 @@ final class AuthSession {
         }
     }
 
+	static boolean save(Context context, String accessToken, String refreshToken) {
+		try {
+			return prefs(context)
+					.edit()
+					.putString("access_token", accessToken)
+					.putString("refresh_token", refreshToken)
+					.commit();
+		} catch (Exception e) {
+			Log.e(TAG, "save", e);
+			return false;
+		}
+	}
+
     static String refreshAccessToken(Context context) {
         try {
             SharedPreferences prefs = prefs(context);
@@ -50,6 +65,8 @@ final class AuthSession {
             ).openConnection();
             conn.setRequestMethod("POST");
             conn.setUseCaches(false);
+            conn.setConnectTimeout(CONNECT_TIMEOUT_MS);
+            conn.setReadTimeout(READ_TIMEOUT_MS);
             conn.setDoOutput(true);
             conn.setRequestProperty("apikey", BuildConfig.SUPABASE_KEY);
             conn.setRequestProperty("Content-Type", "application/json");
@@ -68,18 +85,14 @@ final class AuthSession {
             conn.disconnect();
 
             if (code != 200) {
-                clear(context);
                 Log.e(TAG, "refresh failed " + code + ": " + response);
                 return null;
             }
 
-            JSONObject json = new JSONObject(response);
-            String accessToken = json.getString("access_token");
-            prefs.edit()
-                    .putString("access_token", accessToken)
-                    .putString("refresh_token", json.optString("refresh_token", refreshToken))
-                    .apply();
-            return accessToken;
+			JSONObject json = new JSONObject(response);
+			String accessToken = json.getString("access_token");
+			if (!save(context, accessToken, json.optString("refresh_token", refreshToken))) return null;
+			return accessToken;
         } catch (Exception e) {
             Log.e(TAG, "refreshAccessToken", e);
             return null;

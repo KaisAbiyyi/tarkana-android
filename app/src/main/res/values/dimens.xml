@@ -47,6 +47,7 @@
     <dimen name="icon_size_md">24dp</dimen>
     <dimen name="icon_size_lg">32dp</dimen>
     <dimen name="icon_size_xl">40dp</dimen>
+    <dimen name="logo_splash_size">176dp</dimen>
 
     <!-- Progress -->
     <dimen name="progress_height">8dp</dimen>

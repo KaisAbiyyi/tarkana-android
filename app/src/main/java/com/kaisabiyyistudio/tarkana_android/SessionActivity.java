@@ -1,6 +1,5 @@
 package com.kaisabiyyistudio.tarkana_android;
 
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -19,22 +18,17 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
-import androidx.security.crypto.EncryptedSharedPreferences;
-import androidx.security.crypto.MasterKey;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class SessionActivity extends AppCompatActivity {
 
     private static final String TAG = "SessionActivity";
+    static final String PREF_PENDING_SESSION_ID = "pending_challenge_session_id";
 
     // Symbol drawable mapping
     private static final int COLORED_CIRCLE   = R.drawable.ic_shape_circle_colored;
@@ -58,10 +52,10 @@ public class SessionActivity extends AppCompatActivity {
     private int currentQuestionIndex = 0;    // local 0-based tracker
     private JSONObject currentApiQuestion;    // full JSON from API
 
-    // Per-question tracking (review list)
+    // Per-question tracking. Correct answers are intentionally not carried in gameplay DTOs.
     private String[] userAnswers;
-    private String[] correctAnswers;
-    private String[] explanations;
+    private String[] resultCorrectAnswers;
+    private String[] resultExplanations;
     private String[] questionTypes;
     private boolean[] wasCorrect;
     private int[] scoreEarned;
@@ -73,7 +67,7 @@ public class SessionActivity extends AppCompatActivity {
     private int localScore = 0;
     private int localStreak = 0;
 
-    // Views – gameplay
+    // Views â€“ gameplay
     private View layoutGameplay, layoutFinishing, layoutResultReview;
     private View layoutLoading;
     private View btnBack;
@@ -92,15 +86,15 @@ public class SessionActivity extends AppCompatActivity {
     private TextView tvHelperText;
     private View tvQMarkBox;
 
-    // Views – memory phase
+    // Views â€“ memory phase
     private View cardPatternMemorize, cardPatternHidden;
     private TextView tvMemorizeCountdown;
 
-    // Views – feedback
+    // Views â€“ feedback
     private View layoutFeedbackCard;
     private TextView tvFeedbackTitle, tvFeedbackSubtitle, tvFeedbackPoints;
 
-    // Views – result
+    // Views â€“ result
     private TextView tvResultScore, tvResultAccuracy, tvResultAvgTime;
     private TextView tvResultRatingChange, tvResultMasteryText;
     private TextView tvResultCorrectBadge, tvResultWrongBadge;
@@ -111,8 +105,8 @@ public class SessionActivity extends AppCompatActivity {
 
     private CountDownTimer timer;
     private CountDownTimer memorizeTimer;
-    private CountDownTimer autoAdvanceTimer;
     private int secondsRemaining = 30;
+    private static final long FEEDBACK_DELAY_MS = 850L;
 
     // Result data from finish-challenge
     private JSONObject sessionResult;
@@ -140,12 +134,6 @@ public class SessionActivity extends AppCompatActivity {
             String text = btnSubmit.getText().toString();
             if (text.startsWith("Submit Answer")) {
                 callSubmitAnswer();
-            } else if (text.startsWith("Next Question")) {
-                if (autoAdvanceTimer != null) autoAdvanceTimer.cancel();
-                showNextQuestion();
-            } else if (text.startsWith("Finish Round")) {
-                if (autoAdvanceTimer != null) autoAdvanceTimer.cancel();
-                callFinishChallenge();
             }
         });
 
@@ -154,10 +142,14 @@ public class SessionActivity extends AppCompatActivity {
         if (btnResultRetry != null) btnResultRetry.setOnClickListener(v -> restartSession());
         if (btnResultLeaderboard != null) btnResultLeaderboard.setOnClickListener(v -> finish());
 
-        callStartChallenge();
+        if (getIntent().getBooleanExtra("resumeSession", false)) {
+            resumeExistingChallenge();
+        } else {
+            callStartChallenge();
+        }
     }
 
-    // ─────────────── View Binding ───────────────
+    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ View Binding â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     private void bindViews() {
         layoutLoading     = null; // optional overlay, handle gracefully
@@ -254,7 +246,59 @@ public class SessionActivity extends AppCompatActivity {
         }
     }
 
-    // ─────────────── API: start-challenge ───────────────
+    private void resumeExistingChallenge() {
+        sessionId = getIntent().getStringExtra("sessionId");
+        boolean resumeComplete = getIntent().getBooleanExtra("resumeComplete", false);
+
+        if (sessionId == null || sessionId.isEmpty()) {
+            finish();
+            return;
+        }
+
+        if (resumeComplete) {
+            callFinishChallenge();
+            return;
+        }
+
+        String questionJson = getIntent().getStringExtra("currentQuestion");
+        if (questionJson == null || questionJson.isEmpty()) {
+            finish();
+            return;
+        }
+
+        try {
+            currentApiQuestion = new JSONObject(questionJson);
+            totalQuestions = Math.max(
+                    getIntent().getIntExtra("totalQuestions", 0),
+                    currentApiQuestion.optInt("orderIndex", 0) + 1
+            );
+            currentQuestionIndex = currentApiQuestion.optInt("orderIndex", 0);
+            selectedMode = currentApiQuestion.optString("questionType", selectedMode);
+            allocateSessionArrays();
+            setTitle();
+
+            layoutGameplay.setVisibility(View.VISIBLE);
+            layoutFinishing.setVisibility(View.GONE);
+            layoutResultReview.setVisibility(View.GONE);
+            renderQuestion();
+        } catch (Exception e) {
+            Log.e(TAG, "resumeExistingChallenge", e);
+            finish();
+        }
+    }
+
+    private void allocateSessionArrays() {
+        userAnswers  = new String[totalQuestions];
+        resultCorrectAnswers = new String[totalQuestions];
+        resultExplanations = new String[totalQuestions];
+        questionTypes= new String[totalQuestions];
+        wasCorrect   = new boolean[totalQuestions];
+        scoreEarned  = new int[totalQuestions];
+        timeSpent    = new int[totalQuestions];
+        memorizeSeqs = new JSONArray[totalQuestions];
+    }
+
+    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ API: start-challenge â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     private void callStartChallenge() {
         // Show loading state
@@ -264,13 +308,10 @@ public class SessionActivity extends AppCompatActivity {
         btnSubmit.setEnabled(false);
         btnSubmit.setBackgroundResource(R.drawable.bg_button_disabled);
         btnSubmit.setTextColor(Color.GRAY);
-        btnSubmit.setText("Loading…");
+        btnSubmit.setText("Loadingâ€¦");
 
         executor.execute(() -> {
             try {
-                String token = getToken();
-                if (token == null) { handler.post(this::finish); return; }
-
                 JSONObject body = new JSONObject();
                 body.put("challengeType", challengeType);
                 if (selectedMode != null) {
@@ -285,32 +326,18 @@ public class SessionActivity extends AppCompatActivity {
                     }
                 }
 
-                URL url = new URL(BuildConfig.SUPABASE_URL + "/functions/v1/start-challenge");
-                HttpURLConnection conn = openPostConn(url, token);
-                try (OutputStream os = conn.getOutputStream()) {
-                    os.write(body.toString().getBytes());
-                    os.flush();
-                }
-
-                int code = conn.getResponseCode();
-                String resp = readStream(code == 200 ? conn.getInputStream() : conn.getErrorStream());
-                conn.disconnect();
+                ApiClient.ApiResponse response = ApiClient.postFunction(this, "/start-challenge", body);
+                int code = response.code;
+                String resp = response.body;
 
                 if (code == 200) {
-                    JSONObject json = new JSONObject(resp);
+                    JSONObject json = response.json();
                     sessionId      = json.getString("sessionId");
+                    rememberPendingSession(sessionId);
                     totalQuestions = json.getInt("totalQuestions");
                     JSONObject q   = json.getJSONObject("currentQuestion");
 
-                    // Allocate tracking arrays
-                    userAnswers  = new String[totalQuestions];
-                    correctAnswers = new String[totalQuestions];
-                    explanations = new String[totalQuestions];
-                    questionTypes= new String[totalQuestions];
-                    wasCorrect   = new boolean[totalQuestions];
-                    scoreEarned  = new int[totalQuestions];
-                    timeSpent    = new int[totalQuestions];
-                    memorizeSeqs = new JSONArray[totalQuestions];
+                    allocateSessionArrays();
 
                     currentApiQuestion = q;
                     currentQuestionIndex = 0;
@@ -318,23 +345,13 @@ public class SessionActivity extends AppCompatActivity {
                         layoutGameplay.setVisibility(View.VISIBLE);
                         renderQuestion();
                     });
-                } else if (code == 401) {
-                    // Try refresh first
-                    MasterKey mk2 = new MasterKey.Builder(this)
-                            .setKeyScheme(MasterKey.KeyScheme.AES256_GCM).build();
-                    SharedPreferences prefs2 = EncryptedSharedPreferences.create(
-                            this, "auth_prefs", mk2,
-                            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-                            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM);
-                    String newToken = refreshToken(prefs2);
-                    if (newToken != null) {
-                        // Token refreshed — retry once
-                        handler.post(this::callStartChallenge);
+                } else if (code == 409) {
+                    JSONObject activeChallenge = fetchActiveChallenge(false);
+                    if (activeChallenge != null) {
+                        handler.post(() -> resumeFromActiveChallenge(activeChallenge));
                     } else {
-                        // No refresh token available — session may be expired, show error but stay on app
-                        Log.e(TAG, "start-challenge 401, no refresh token available. resp=" + resp);
                         handler.post(() -> {
-                            Toast.makeText(this, "Session expired. Please log out and log in again.", Toast.LENGTH_LONG).show();
+                            Toast.makeText(this, "Ada session aktif, tapi gagal dimuat. Coba buka tab Challenge lagi.", Toast.LENGTH_LONG).show();
                             finish();
                         });
                     }
@@ -345,6 +362,12 @@ public class SessionActivity extends AppCompatActivity {
                         finish();
                     });
                 }
+            } catch (ApiClient.AuthException e) {
+                Log.e(TAG, "callStartChallenge auth", e);
+                handler.post(() -> {
+                    Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+                    finish();
+                });
             } catch (Exception e) {
                 Log.e(TAG, "callStartChallenge", e);
                 handler.post(this::finish);
@@ -352,11 +375,62 @@ public class SessionActivity extends AppCompatActivity {
         });
     }
 
-    // ─────────────── Render Current Question ───────────────
+    private JSONObject fetchActiveChallenge(boolean isRetry) {
+        try {
+            ApiClient.ApiResponse response = ApiClient.getFunction(this, "/get-active-challenge");
+            int code = response.code;
+            String resp = response.body;
+
+            if (code != 200) {
+                Log.e(TAG, "fetchActiveChallenge failed " + code + ": " + resp);
+                return null;
+            }
+
+            JSONObject json = response.json();
+            return json.optBoolean("hasActive", false) ? json : null;
+        } catch (Exception e) {
+            Log.e(TAG, "fetchActiveChallenge", e);
+            return null;
+        }
+    }
+
+    private void resumeFromActiveChallenge(JSONObject activeChallenge) {
+        boolean isComplete = activeChallenge.optBoolean("isComplete", false);
+        sessionId = activeChallenge.optString("sessionId", sessionId);
+        rememberPendingSession(sessionId);
+
+        if (isComplete) {
+            callFinishChallenge();
+            return;
+        }
+
+        JSONObject currentQuestion = activeChallenge.optJSONObject("currentQuestion");
+        if (currentQuestion == null) {
+            finish();
+            return;
+        }
+
+        currentApiQuestion = currentQuestion;
+        totalQuestions = Math.max(
+                activeChallenge.optInt("totalQuestions", 0),
+                currentApiQuestion.optInt("orderIndex", 0) + 1
+        );
+        currentQuestionIndex = currentApiQuestion.optInt("orderIndex", 0);
+        selectedMode = currentApiQuestion.optString("questionType", selectedMode);
+        allocateSessionArrays();
+        setTitle();
+        layoutGameplay.setVisibility(View.VISIBLE);
+        layoutFinishing.setVisibility(View.GONE);
+        layoutResultReview.setVisibility(View.GONE);
+        renderQuestion();
+    }
+
+    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ Render Current Question â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     private void renderQuestion() {
         isSubmitted = false;
         currentSelection = -1;
+        btnSubmit.setVisibility(View.VISIBLE);
         resetOptionBackgrounds();
         if (layoutFeedbackCard != null) layoutFeedbackCard.setVisibility(View.GONE);
         cancelTimers();
@@ -518,7 +592,7 @@ public class SessionActivity extends AppCompatActivity {
             }
         }
 
-        setBtnDisabled("Memorizing…");
+        setBtnDisabled("Memorizingâ€¦");
 
         if (tvMemorizeCountdown != null) {
             tvMemorizeCountdown.setText("Pattern visible: " + revealSecs + "s remaining");
@@ -549,7 +623,7 @@ public class SessionActivity extends AppCompatActivity {
         startTimer(timeLimitSecs);
     }
 
-    // ─────────────── API: submit-answer ───────────────
+    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ API: submit-answer â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     private void callSubmitAnswer() {
         if (isSubmitted) return;
@@ -558,48 +632,35 @@ public class SessionActivity extends AppCompatActivity {
 
         if (timer != null) timer.cancel();
 
-        setBtnDisabled("Submitting…");
+        setBtnDisabled("Submittingâ€¦");
 
         String selectedAnswer = getChoiceValue(currentSelection);
         String questionId = currentApiQuestion.optString("id");
 
         executor.execute(() -> {
             try {
-                String token = getToken();
-                if (token == null) return;
-
                 JSONObject body = new JSONObject();
                 body.put("sessionId", sessionId);
                 body.put("sessionQuestionId", questionId);
                 body.put("selectedAnswer", selectedAnswer);
 
-                URL url = new URL(BuildConfig.SUPABASE_URL + "/functions/v1/submit-answer");
-                HttpURLConnection conn = openPostConn(url, token);
-                try (OutputStream os = conn.getOutputStream()) {
-                    os.write(body.toString().getBytes());
-                    os.flush();
-                }
-
-                int code = conn.getResponseCode();
-                String resp = readStream(code == 200 ? conn.getInputStream() : conn.getErrorStream());
-                conn.disconnect();
+                ApiClient.ApiResponse response = ApiClient.postFunction(this, "/submit-answer", body);
+                int code = response.code;
+                String resp = response.body;
 
                 if (code == 200) {
-                    JSONObject json = new JSONObject(resp);
+                    JSONObject json = response.json();
                     boolean isCorrect    = json.optBoolean("isCorrect", false);
                     int earned           = json.optInt("scoreEarned", 0);
                     boolean isComplete   = json.optBoolean("isComplete", false);
                     JSONObject nextQ     = json.optJSONObject("nextQuestion");
 
-                    // Store result for review
-                    String correctAns = currentApiQuestion.optString("correctAnswer", "");
+                    // Store only client-safe gameplay state. The server returns answer keys in
+                    // final result review, never during active challenge play.
                     JSONArray choices  = currentApiQuestion.optJSONArray("choices");
-                    String expl        = currentApiQuestion.optString("explanation", "");
                     String qType       = currentApiQuestion.optString("questionType", "");
 
                     userAnswers[currentQuestionIndex]   = selectedAnswer;
-                    correctAnswers[currentQuestionIndex]= correctAns;
-                    explanations[currentQuestionIndex]  = expl;
                     questionTypes[currentQuestionIndex] = qType;
                     wasCorrect[currentQuestionIndex]    = isCorrect;
                     scoreEarned[currentQuestionIndex]   = earned;
@@ -629,14 +690,7 @@ public class SessionActivity extends AppCompatActivity {
                                     JSONObject nextQuestion, JSONArray choices) {
         int padding = dp(14);
 
-        // Highlight the correct answer card
-        String correctAnswer = currentApiQuestion.optString("correctAnswer", "");
-        int correctIdx = findChoiceIndex(choices, correctAnswer);
-        View correctCard = getOptionCard(correctIdx);
-        if (correctCard != null) {
-            correctCard.setBackgroundResource(R.drawable.bg_card_green_bordered);
-            correctCard.setPadding(padding, padding, padding, padding);
-        }
+        // Do not reveal the answer key during gameplay. The backend is the source of truth.
         if (!isCorrect) {
             View wrongCard = getOptionCard(currentSelection);
             if (wrongCard != null) {
@@ -656,7 +710,7 @@ public class SessionActivity extends AppCompatActivity {
                 tvFeedbackPoints.setText("+" + earned + " Score");
                 tvFeedbackPoints.setVisibility(View.VISIBLE);
             } else {
-                tvFeedbackSubtitle.setText("The correct answer was: " + correctAnswer);
+                tvFeedbackSubtitle.setText("Review the full explanation after the round.");
                 tvFeedbackPoints.setVisibility(View.GONE);
             }
         }
@@ -664,54 +718,21 @@ public class SessionActivity extends AppCompatActivity {
         tvScoreText.setText(String.valueOf(localScore));
         tvStreakText.setText(String.valueOf(localStreak));
 
-        // Auto-advance
-        final String baseBtnText = isComplete ? "Finish Round" : "Next Question";
-        setBtnEnabled(baseBtnText + " (5s)");
-
-        autoAdvanceTimer = new CountDownTimer(5000, 1000) {
-            @Override public void onTick(long ms) {
-                int sec = (int) Math.ceil(ms / 1000.0);
-                btnSubmit.setText(baseBtnText + " (" + sec + "s)");
-            }
-            @Override public void onFinish() {
-                btnSubmit.setText(baseBtnText);
-                if (isComplete) {
-                    callFinishChallenge();
-                } else {
-                    currentApiQuestion = nextQuestion;
-                    currentQuestionIndex++;
-                    renderQuestion();
-                }
-            }
-        }.start();
-
-        // Wire manual btn press
-        btnSubmit.setOnClickListener(v -> {
-            if (autoAdvanceTimer != null) autoAdvanceTimer.cancel();
-            btnSubmit.setText(baseBtnText);
+        btnSubmit.setVisibility(View.GONE);
+        setBtnDisabled(isComplete ? "Finishing Round" : "Next Question");
+        handler.postDelayed(() -> {
+            if (isFinishing() || isDestroyed()) return;
             if (isComplete) {
                 callFinishChallenge();
             } else {
                 currentApiQuestion = nextQuestion;
                 currentQuestionIndex++;
                 renderQuestion();
-                // Restore normal btn click listener
-                btnSubmit.setOnClickListener(bv -> {
-                    String t = btnSubmit.getText().toString();
-                    if (t.startsWith("Submit Answer")) callSubmitAnswer();
-                    else if (t.startsWith("Next Question")) { if (autoAdvanceTimer != null) autoAdvanceTimer.cancel(); showNextQuestion(); }
-                    else if (t.startsWith("Finish Round"))  { if (autoAdvanceTimer != null) autoAdvanceTimer.cancel(); callFinishChallenge(); }
-                });
             }
-        });
+        }, FEEDBACK_DELAY_MS);
     }
 
-    private void showNextQuestion() {
-        // This path is hit when user manually clicks 'Next Question'
-        // nextQuestion is wired through the closure in showAnswerFeedback, so this is a fallback
-    }
-
-    // ─────────────── API: finish-challenge ───────────────
+    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ API: finish-challenge â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     private void callFinishChallenge() {
         cancelTimers();
@@ -720,27 +741,18 @@ public class SessionActivity extends AppCompatActivity {
 
         executor.execute(() -> {
             try {
-                String token = getToken();
-                if (token == null) return;
-
                 JSONObject body = new JSONObject();
                 body.put("sessionId", sessionId);
                 body.put("tabSwitchCount", 0);
                 body.put("requestAnomalyFlags", new JSONArray());
 
-                URL url = new URL(BuildConfig.SUPABASE_URL + "/functions/v1/finish-challenge");
-                HttpURLConnection conn = openPostConn(url, token);
-                try (OutputStream os = conn.getOutputStream()) {
-                    os.write(body.toString().getBytes());
-                    os.flush();
-                }
-
-                int code = conn.getResponseCode();
-                String resp = readStream(code == 200 ? conn.getInputStream() : conn.getErrorStream());
-                conn.disconnect();
+                ApiClient.ApiResponse response = ApiClient.postFunction(this, "/finish-challenge", body);
+                int code = response.code;
+                String resp = response.body;
 
                 if (code == 200) {
-                    sessionResult = new JSONObject(resp);
+                    sessionResult = response.json();
+                    clearPendingSession();
                     handler.postDelayed(this::showResultReview, 1500);
                 } else {
                     Log.e(TAG, "finish-challenge error " + code + ": " + resp);
@@ -753,7 +765,7 @@ public class SessionActivity extends AppCompatActivity {
         });
     }
 
-    // ─────────────── Result Screen ───────────────
+    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ Result Screen â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     private void showResultReview() {
         layoutGameplay.setVisibility(View.GONE);
@@ -768,6 +780,7 @@ public class SessionActivity extends AppCompatActivity {
         String rankAfter = "BRONZE MIND";
 
         if (sessionResult != null) {
+            hydrateResultReviewFromServer();
             totalScore   = sessionResult.optInt("totalScore", localScore);
             accuracy     = sessionResult.optDouble("accuracy", 0.0);
             correctCount = sessionResult.optInt("correctAnswers", 0);
@@ -826,12 +839,50 @@ public class SessionActivity extends AppCompatActivity {
         }
     }
 
+    private void hydrateResultReviewFromServer() {
+        if (sessionResult == null) return;
+        JSONArray review = sessionResult.optJSONArray("review");
+        if (review == null) return;
+
+        for (int i = 0; i < review.length() && i < totalQuestions; i++) {
+            JSONObject item = review.optJSONObject(i);
+            if (item == null) continue;
+
+            int orderIndex = item.optInt("orderIndex", i);
+            if (orderIndex < 0 || orderIndex >= totalQuestions) continue;
+
+            if (resultCorrectAnswers != null) {
+                resultCorrectAnswers[orderIndex] = item.optString("correctAnswer", "-");
+            }
+            if (resultExplanations != null) {
+                resultExplanations[orderIndex] = item.optString("explanation", "");
+            }
+            if (userAnswers != null && userAnswers[orderIndex] == null) {
+                userAnswers[orderIndex] = item.optString("selectedAnswer", "-");
+            }
+            if (questionTypes != null && questionTypes[orderIndex] == null) {
+                questionTypes[orderIndex] = item.optString("questionType", "");
+            }
+            if (wasCorrect != null) {
+                wasCorrect[orderIndex] = item.optBoolean("isCorrect", false);
+            }
+            if (scoreEarned != null) {
+                scoreEarned[orderIndex] = item.optInt("scoreEarned", 0);
+            }
+            if (timeSpent != null) {
+                timeSpent[orderIndex] = item.optInt("timeSpentSeconds", 0);
+            }
+        }
+    }
+
     private void buildReviewCard(int i) {
         boolean correct = wasCorrect[i];
         String qType    = questionTypes[i] != null ? questionTypes[i] : "";
         String userAns  = userAnswers[i]   != null ? userAnswers[i]   : "-";
-        String corrAns  = correctAnswers[i]!= null ? correctAnswers[i]: "-";
-        String expl     = explanations[i]  != null ? explanations[i]  : "";
+        String corrAns  = resultCorrectAnswers != null && resultCorrectAnswers[i] != null
+                ? resultCorrectAnswers[i] : "-";
+        String expl     = resultExplanations != null && resultExplanations[i] != null
+                ? resultExplanations[i] : "";
 
         int padding = dp(14);
 
@@ -924,7 +975,7 @@ public class SessionActivity extends AppCompatActivity {
         layoutReviewCardsContainer.addView(card);
     }
 
-    // ─────────────── Timer ───────────────
+    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ Timer â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     private void startTimer(int seconds) {
         cancelTimers();
@@ -947,27 +998,20 @@ public class SessionActivity extends AppCompatActivity {
     private void cancelTimers() {
         if (timer != null)             { timer.cancel();            timer = null; }
         if (memorizeTimer != null)     { memorizeTimer.cancel();    memorizeTimer = null; }
-        if (autoAdvanceTimer != null)  { autoAdvanceTimer.cancel(); autoAdvanceTimer = null; }
     }
 
-    // ─────────────── Abandon ───────────────
+    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ Abandon â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     private void abandonAndFinish() {
         cancelTimers();
         if (sessionId == null) { finish(); return; }
         executor.execute(() -> {
             try {
-                String token = getToken();
-                if (token == null) return;
                 JSONObject body = new JSONObject();
                 body.put("sessionId", sessionId);
-                URL url = new URL(BuildConfig.SUPABASE_URL + "/functions/v1/abandon-challenge");
-                HttpURLConnection conn = openPostConn(url, token);
-                try (OutputStream os = conn.getOutputStream()) {
-                    os.write(body.toString().getBytes()); os.flush();
-                }
-                conn.getResponseCode();
-                conn.disconnect();
+                ApiClient.ApiResponse response = ApiClient.postFunction(this, "/abandon-challenge", body);
+                response.requireSuccess();
+                clearPendingSession();
             } catch (Exception ignored) {}
             handler.post(this::finish);
         });
@@ -979,6 +1023,8 @@ public class SessionActivity extends AppCompatActivity {
         localStreak = 0;
         sessionResult = null;
         userAnswers = null;
+        resultCorrectAnswers = null;
+        resultExplanations = null;
         layoutGameplay.setVisibility(View.GONE);
         layoutFinishing.setVisibility(View.GONE);
         layoutResultReview.setVisibility(View.GONE);
@@ -987,7 +1033,7 @@ public class SessionActivity extends AppCompatActivity {
         callStartChallenge();
     }
 
-    // ─────────────── Option Selection ───────────────
+    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ Option Selection â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     private void selectOption(int index) {
         if (isSubmitted) return;
@@ -1036,7 +1082,7 @@ public class SessionActivity extends AppCompatActivity {
         return -1;
     }
 
-    // ─────────────── Symbol Mapping ───────────────
+    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ Symbol Mapping â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     private void setSymbolImage(ImageView iv, String token) {
         if (iv == null || token == null) return;
@@ -1067,84 +1113,21 @@ public class SessionActivity extends AppCompatActivity {
                 || l.contains("triangle") || l.contains("hex") || l.contains("pent") || l.contains("oct");
     }
 
-    // ─────────────── Helpers ───────────────
+    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ Helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
-    private String getToken() {
+    private void rememberPendingSession(String id) {
         try {
-            MasterKey mk = new MasterKey.Builder(this)
-                    .setKeyScheme(MasterKey.KeyScheme.AES256_GCM).build();
-            SharedPreferences prefs = EncryptedSharedPreferences.create(
-                    this, "auth_prefs", mk,
-                    EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-                    EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM);
-            String token = prefs.getString("access_token", null);
-            if (token != null) return token;
-            // Try refresh
-            return refreshToken(prefs);
+            AuthSession.prefs(this).edit().putString(PREF_PENDING_SESSION_ID, id).apply();
         } catch (Exception e) {
-            Log.e(TAG, "getToken", e);
-            return null;
+            Log.e(TAG, "rememberPendingSession", e);
         }
     }
 
-    /** Calls /auth/v1/token?grant_type=refresh_token and updates stored tokens. */
-    private String refreshToken(SharedPreferences prefs) {
+    private void clearPendingSession() {
         try {
-            String rt = prefs.getString("refresh_token", null);
-            if (rt == null || rt.isEmpty()) return null;
-
-            URL url = new URL(BuildConfig.SUPABASE_URL + "/auth/v1/token?grant_type=refresh_token");
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("POST");
-            conn.setUseCaches(false);
-            conn.setDoOutput(true);
-            conn.setRequestProperty("apikey", BuildConfig.SUPABASE_KEY);
-            conn.setRequestProperty("Content-Type", "application/json");
-            JSONObject body = new JSONObject();
-            body.put("refresh_token", rt);
-            try (OutputStream os = conn.getOutputStream()) {
-                os.write(body.toString().getBytes()); os.flush();
-            }
-            int code = conn.getResponseCode();
-            String resp = readStream(code < 400 ? conn.getInputStream() : conn.getErrorStream());
-            conn.disconnect();
-            if (code == 200) {
-                JSONObject json = new JSONObject(resp);
-                String newAccess  = json.getString("access_token");
-                String newRefresh = json.optString("refresh_token", rt);
-                prefs.edit()
-                        .putString("access_token", newAccess)
-                        .putString("refresh_token", newRefresh)
-                        .apply();
-                Log.d(TAG, "Token refreshed successfully");
-                return newAccess;
-            } else {
-                Log.e(TAG, "Token refresh failed " + code + ": " + resp);
-                // Clear stored creds so next launch goes to login
-                prefs.edit().remove("access_token").remove("refresh_token").apply();
-                return null;
-            }
+            AuthSession.prefs(this).edit().remove(PREF_PENDING_SESSION_ID).apply();
         } catch (Exception e) {
-            Log.e(TAG, "refreshToken", e);
-            return null;
-        }
-    }
-
-    private HttpURLConnection openPostConn(URL url, String token) throws Exception {
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("POST");
-        conn.setUseCaches(false);
-        conn.setDoOutput(true);
-        conn.setRequestProperty("Authorization", "Bearer " + token);
-        conn.setRequestProperty("apikey", BuildConfig.SUPABASE_KEY);
-        conn.setRequestProperty("Content-Type", "application/json");
-        return conn;
-    }
-
-    private String readStream(java.io.InputStream stream) {
-        if (stream == null) return "";
-        try (Scanner s = new Scanner(stream).useDelimiter("\\A")) {
-            return s.hasNext() ? s.next() : "";
+            Log.e(TAG, "clearPendingSession", e);
         }
     }
 
@@ -1219,11 +1202,12 @@ public class SessionActivity extends AppCompatActivity {
         return col;
     }
 
-    // ─────────────── Lifecycle ───────────────
+    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ Lifecycle â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     @Override
     protected void onDestroy() {
         cancelTimers();
+        handler.removeCallbacksAndMessages(null);
         executor.shutdownNow();
         super.onDestroy();
     }

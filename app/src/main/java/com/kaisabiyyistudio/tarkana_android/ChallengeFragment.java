@@ -2,6 +2,9 @@ package com.kaisabiyyistudio.tarkana_android;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,13 +14,24 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 
+import org.json.JSONObject;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 public class ChallengeFragment extends Fragment {
+    private static final String TAG = "ChallengeFragment";
 
     private int selectedSessionType = -1; // 0=quick, 1=standard, 2=long
     private int selectedMode = -1; // 0=mixed, 1=number, 2=symbol, 3=deduction, 4=memory
+    private final ExecutorService executor = Executors.newSingleThreadExecutor();
+    private final Handler handler = new Handler(Looper.getMainLooper());
+    private AlertDialog activeSessionDialog;
+    private boolean checkingActiveChallenge = false;
 
     private View cardQuick, cardStandard, cardExtended;
     private View cardMixed, cardNumber, cardSymbol, cardDeduction, cardMemory;
@@ -131,8 +145,152 @@ public class ChallengeFragment extends Fragment {
 
         // Initialize display
         updateSummary();
+        view.post(() -> checkActiveChallenge(false));
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        checkActiveChallenge(false);
+    }
+
+    private void checkActiveChallenge(boolean isRetry) {
+        if (checkingActiveChallenge) return;
+        checkingActiveChallenge = true;
+        executor.execute(() -> {
+            android.content.Context context = getContext();
+            String pendingSessionId = context != null ? pendingSessionId(context) : null;
+            try {
+                if (context == null) return;
+                ApiClient.ApiResponse response = ApiClient.getFunction(context, "/get-active-challenge");
+                response.requireSuccess();
+                JSONObject json = response.json();
+                if (!json.optBoolean("hasActive", false)) {
+                    clearPendingSession(context);
+                    return;
+                }
+                handler.post(() -> showActiveChallengeDialog(json));
+            } catch (ApiClient.AuthException e) {
+                Log.e(TAG, "checkActiveChallenge auth", e);
+            } catch (Exception e) {
+                if (ApiClient.isCancellation(e)) return;
+                Log.e(TAG, "checkActiveChallenge", e);
+                if (!isRetry && pendingSessionId != null && !pendingSessionId.isEmpty()) {
+                    handler.post(() -> showPendingSessionDialog(pendingSessionId));
+                }
+            } finally {
+                checkingActiveChallenge = false;
+            }
+        });
+    }
+
+    private void showPendingSessionDialog(String pendingSessionId) {
+        if (!isAdded() || activeSessionDialog != null && activeSessionDialog.isShowing()) return;
+
+        activeSessionDialog = new AlertDialog.Builder(requireContext())
+                .setTitle("Sesi Belum Selesai")
+                .setMessage("Kamu punya challenge yang belum selesai. Lanjutkan atau buang sesi ini?")
+                .setCancelable(false)
+                .setPositiveButton("Lanjutkan", (dialog, which) -> resumePendingChallenge())
+                .setNegativeButton("Buang Sesi", (dialog, which) -> abandonActiveChallenge(pendingSessionId))
+                .show();
+        activeSessionDialog.setOnDismissListener(dialog -> activeSessionDialog = null);
+    }
+
+    private void resumePendingChallenge() {
+        executor.execute(() -> {
+            JSONObject activeChallenge = fetchActiveChallenge(false);
+            if (activeChallenge == null) {
+                handler.post(() -> {
+                    if (isAdded()) {
+                        new AlertDialog.Builder(requireContext())
+                                .setTitle("Session Tidak Ditemukan")
+                                .setMessage("Session aktif tidak ditemukan di server. Kamu bisa mulai challenge baru.")
+                                .setPositiveButton("OK", null)
+                                .show();
+                    }
+                });
+                clearPendingSession();
+                return;
+            }
+            handler.post(() -> launchResumeSession(activeChallenge));
+        });
+    }
+
+    private JSONObject fetchActiveChallenge(boolean isRetry) {
+        try {
+            android.content.Context context = getContext();
+            if (context == null) return null;
+            ApiClient.ApiResponse response = ApiClient.getFunction(context, "/get-active-challenge");
+            response.requireSuccess();
+            JSONObject json = response.json();
+            return json.optBoolean("hasActive", false) ? json : null;
+        } catch (ApiClient.AuthException e) {
+            Log.e(TAG, "fetchActiveChallenge auth", e);
+            return null;
+        } catch (Exception e) {
+            if (ApiClient.isCancellation(e)) return null;
+            Log.e(TAG, "fetchActiveChallenge", e);
+            return null;
+        }
+    }
+
+    private void showActiveChallengeDialog(JSONObject activeChallenge) {
+        if (!isAdded() || activeSessionDialog != null && activeSessionDialog.isShowing()) return;
+
+        boolean isComplete = activeChallenge.optBoolean("isComplete", false);
+        String title = isComplete ? "Challenge Siap Diselesaikan" : "Sesi Belum Selesai";
+        String message = isComplete
+                ? "Semua soal sudah dijawab, tapi hasil belum disimpan."
+                : "Kamu punya challenge yang belum selesai. Lanjutkan atau buang sesi ini?";
+
+        activeSessionDialog = new AlertDialog.Builder(requireContext())
+                .setTitle(title)
+                .setMessage(message)
+                .setCancelable(false)
+                .setPositiveButton(isComplete ? "Lihat Hasil" : "Lanjutkan", (dialog, which) ->
+                        launchResumeSession(activeChallenge))
+                .setNegativeButton("Buang Sesi", (dialog, which) ->
+                        abandonActiveChallenge(activeChallenge.optString("sessionId")))
+                .show();
+        activeSessionDialog.setOnDismissListener(dialog -> activeSessionDialog = null);
+    }
+
+    private void launchResumeSession(JSONObject activeChallenge) {
+        if (!isAdded()) return;
+        Intent intent = new Intent(getActivity(), SessionActivity.class);
+        boolean isComplete = activeChallenge.optBoolean("isComplete", false);
+        intent.putExtra("resumeSession", true);
+        intent.putExtra("resumeComplete", isComplete);
+        intent.putExtra("sessionId", activeChallenge.optString("sessionId"));
+        intent.putExtra("totalQuestions", activeChallenge.optInt("totalQuestions", 0));
+        JSONObject currentQuestion = activeChallenge.optJSONObject("currentQuestion");
+        if (currentQuestion != null) {
+            intent.putExtra("currentQuestion", currentQuestion.toString());
+        }
+        startActivity(intent);
+    }
+
+    private void abandonActiveChallenge(String sessionId) {
+        if (sessionId == null || sessionId.isEmpty()) return;
+        executor.execute(() -> {
+            try {
+                android.content.Context context = getContext();
+                if (context == null) return;
+                JSONObject body = new JSONObject();
+                body.put("sessionId", sessionId);
+                ApiClient.ApiResponse response = ApiClient.postFunction(context, "/abandon-challenge", body);
+                response.requireSuccess();
+                clearPendingSession(context);
+            } catch (ApiClient.AuthException e) {
+                Log.e(TAG, "abandonActiveChallenge auth", e);
+            } catch (Exception e) {
+                if (ApiClient.isCancellation(e)) return;
+                Log.e(TAG, "abandonActiveChallenge", e);
+            }
+        });
     }
 
     private void selectSessionType(int type) {
@@ -307,5 +465,62 @@ public class ChallengeFragment extends Fragment {
                 btnChooseConfig.setTextColor(getResources().getColor(R.color.color_text_secondary));
             }
         }
+    }
+
+    private String pendingSessionId() {
+        try {
+            return AuthSession.prefs(requireContext())
+                    .getString(SessionActivity.PREF_PENDING_SESSION_ID, null);
+        } catch (Exception e) {
+            Log.e(TAG, "pendingSessionId", e);
+            return null;
+        }
+    }
+
+    private String pendingSessionId(android.content.Context context) {
+        try {
+            return AuthSession.prefs(context)
+                    .getString(SessionActivity.PREF_PENDING_SESSION_ID, null);
+        } catch (Exception e) {
+            Log.e(TAG, "pendingSessionId", e);
+            return null;
+        }
+    }
+
+    private void clearPendingSession() {
+        try {
+            AuthSession.prefs(requireContext())
+                    .edit()
+                    .remove(SessionActivity.PREF_PENDING_SESSION_ID)
+                    .apply();
+        } catch (Exception e) {
+            Log.e(TAG, "clearPendingSession", e);
+        }
+    }
+
+    private void clearPendingSession(android.content.Context context) {
+        try {
+            AuthSession.prefs(context)
+                    .edit()
+                    .remove(SessionActivity.PREF_PENDING_SESSION_ID)
+                    .apply();
+        } catch (Exception e) {
+            Log.e(TAG, "clearPendingSession", e);
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (activeSessionDialog != null) {
+            activeSessionDialog.dismiss();
+            activeSessionDialog = null;
+        }
+        super.onDestroyView();
+    }
+
+    @Override
+    public void onDestroy() {
+        executor.shutdownNow();
+        super.onDestroy();
     }
 }

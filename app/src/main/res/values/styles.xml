@@ -8,44 +8,47 @@
     <style name="TextAppearance.Tarkana.Display" parent="TextAppearance.Material3.DisplaySmall">
         <item name="android:textSize">@dimen/text_display</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:fontFamily">sans-serif-black</item>
+        <item name="android:fontFamily">@font/bricolage_grotesque</item>
         <item name="android:textColor">@color/color_text_primary</item>
     </style>
 
     <style name="TextAppearance.Tarkana.Headline" parent="TextAppearance.Material3.HeadlineSmall">
         <item name="android:textSize">@dimen/text_headline</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:fontFamily">sans-serif-black</item>
+        <item name="android:fontFamily">@font/bricolage_grotesque</item>
         <item name="android:textColor">@color/color_text_primary</item>
     </style>
 
     <style name="TextAppearance.Tarkana.Title" parent="TextAppearance.Material3.TitleMedium">
         <item name="android:textSize">@dimen/text_title</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:fontFamily">sans-serif-black</item>
+        <item name="android:fontFamily">@font/bricolage_grotesque</item>
         <item name="android:textColor">@color/color_text_primary</item>
     </style>
 
     <style name="TextAppearance.Tarkana.Subtitle" parent="TextAppearance.Material3.TitleSmall">
         <item name="android:textSize">@dimen/text_subtitle</item>
         <item name="android:textColor">@color/color_text_primary</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:fontFamily">@font/ibm_plex_sans</item>
     </style>
 
     <style name="TextAppearance.Tarkana.Body" parent="TextAppearance.Material3.BodyMedium">
         <item name="android:textSize">@dimen/text_body</item>
         <item name="android:textColor">@color/color_text_primary</item>
+        <item name="android:fontFamily">@font/ibm_plex_sans</item>
     </style>
 
     <style name="TextAppearance.Tarkana.Caption" parent="TextAppearance.Material3.BodySmall">
         <item name="android:textSize">@dimen/text_caption</item>
         <item name="android:textColor">@color/color_text_secondary</item>
+        <item name="android:fontFamily">@font/ibm_plex_sans</item>
     </style>
 
     <style name="TextAppearance.Tarkana.Label" parent="TextAppearance.Material3.LabelSmall">
         <item name="android:textSize">@dimen/text_label</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/color_text_secondary</item>
+        <item name="android:fontFamily">@font/ibm_plex_sans</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:letterSpacing">0.08</item>
     </style>
@@ -61,7 +64,7 @@
         <item name="android:insetLeft">0dp</item>
         <item name="android:insetRight">0dp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:fontFamily">sans-serif-black</item>
+        <item name="android:fontFamily">@font/bricolage_grotesque</item>
         <item name="android:textSize">@dimen/text_body</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:letterSpacing">0.04</item>
@@ -93,6 +96,7 @@
         <item name="android:textColor">@color/color_text_primary</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/text_body</item>
+        <item name="android:fontFamily">@font/bricolage_grotesque</item>
         <item name="backgroundTint">@color/color_transparent</item>
     </style>
 
@@ -128,6 +132,7 @@
         <item name="android:paddingRight">@dimen/spacing_md</item>
         <item name="android:textSize">@dimen/text_caption</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/ibm_plex_sans</item>
         <item name="android:textColor">@color/color_text_primary</item>
         <item name="android:gravity">center</item>
     </style>
@@ -140,6 +145,7 @@
         <item name="android:background">@drawable/bg_chip_teal</item>
         <item name="android:textColor">@color/color_text_primary</item>
         <item name="android:textSize">@dimen/text_label</item>
+        <item name="android:fontFamily">@font/ibm_plex_sans</item>
     </style>
 
     <!-- ════════════════════════════════════════ -->
@@ -153,6 +159,7 @@
         <item name="android:paddingRight">@dimen/spacing_base</item>
         <item name="android:textSize">@dimen/text_body</item>
         <item name="android:textColor">@color/color_text_primary</item>
+        <item name="android:fontFamily">@font/ibm_plex_sans</item>
         <item name="android:textColorHint">@color/color_text_secondary</item>
     </style>
 
@@ -168,6 +175,7 @@
         <item name="android:paddingBottom">@dimen/spacing_xs</item>
         <item name="android:textSize">@dimen/text_label</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/ibm_plex_sans</item>
         <item name="android:gravity">center</item>
         <item name="android:textAllCaps">true</item>
     </style>
