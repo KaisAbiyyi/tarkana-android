@@ -1,10 +1,42 @@
 # Tarkana Android
 
-Tarkana Android is the native Android client for the Tarkana ranked logic challenge app. The app lets users sign in, start logic challenge sessions, answer questions, review progress, view history, check leaderboard standings, and manage their profile from an Android device.
+<div align="center">
 
-This repository contains only the Android application. The canonical web application, backend contract, database schema, and Supabase Edge Functions are maintained in the Tarkana website repository:
+<table>
+  <tr>
+    <td align="center" bgcolor="#16CBB2">
+      <strong>Native Android client for Tarkana ranked logic challenges.</strong>
+    </td>
+  </tr>
+</table>
+
+<br>
+
+<a href="https://github.com/KaisAbiyyi/tarkana-android/releases"><img alt="Download Tarkana Android Beta" src="https://img.shields.io/badge/DOWNLOAD%20BETA%20APK-FFD21E?style=for-the-badge&labelColor=17120D&color=FFD21E"></a>
+<a href="https://github.com/KaisAbiyyi/tarkana-android/stargazers"><img alt="Star Tarkana Android" src="https://img.shields.io/badge/STAR%20THE%20MOBILE%20APP-16CBB2?style=for-the-badge&labelColor=17120D&color=16CBB2"></a>
+<a href="https://github.com/KaisAbiyyi/tarkana"><img alt="Open Tarkana Web" src="https://img.shields.io/badge/OPEN%20WEB%20REPO-FF5C5C?style=for-the-badge&labelColor=17120D&color=FF5C5C"></a>
+
+</div>
+
+## What Is This?
+
+Tarkana Android is the native Java Android app for Tarkana. It lets players sign in, start timed logic sessions, answer ranked challenges, resume unfinished sessions, review results, browse history, check leaderboards, and manage their profile from a phone.
+
+The canonical web application, backend contract, database schema, challenge generation, scoring, and Supabase Edge Functions live in the web repository:
 
 https://github.com/KaisAbiyyi/tarkana
+
+## Beta Release
+
+Current beta version:
+
+```text
+0.1.0-beta.1
+```
+
+APK releases are published through GitHub Releases:
+
+https://github.com/KaisAbiyyi/tarkana-android/releases
 
 ## Tech Stack
 
@@ -14,7 +46,6 @@ https://github.com/KaisAbiyyi/tarkana
 - AppCompat
 - Material Components
 - ConstraintLayout
-- RecyclerView-style adapters
 - XML layouts and drawable resources
 - AndroidX Security Crypto
 - SwipeRefreshLayout
@@ -25,35 +56,44 @@ https://github.com/KaisAbiyyi/tarkana
 
 ```text
 app/src/main/java/com/kaisabiyyistudio/tarkana_android/
-  ApiClient.java          HTTP client for Supabase Edge Functions
-  AuthSession.java        Local auth/session token handling
-  LoginActivity.java      Login screen
-  RegisterActivity.java   Registration screen
-  SplashActivity.java     Initial launch screen
-  MainActivity.java       Main app shell and bottom navigation
-  ChallengeFragment.java  Challenge mode selection
-  SessionActivity.java    Active challenge session gameplay
-  DashboardFragment.java  Dashboard overview
-  HistoryFragment.java    Session history
+  ApiClient.java           HTTP client for Supabase Edge Functions
+  AuthSession.java         Local auth/session token handling
+  LoginActivity.java       Login screen
+  RegisterActivity.java    Registration screen
+  SplashActivity.java      Initial launch screen
+  MainActivity.java        Main app shell and bottom navigation
+  ChallengeFragment.java   Challenge mode selection and active-session recovery
+  SessionActivity.java     Active challenge gameplay
+  DashboardFragment.java   Dashboard overview
+  HistoryFragment.java     Session history
   LeaderboardFragment.java Leaderboard screen
-  ProfileFragment.java    User profile screen
+  ProfileFragment.java     User profile screen
 
 app/src/main/res/
-  layout/                 Android XML layouts
-  drawable/               Icons, cards, backgrounds, and UI shapes
-  font/                   App typography
-  values/                 Colors, dimensions, strings, styles, themes
+  layout/                  Android XML layouts
+  drawable/                Icons, cards, backgrounds, and UI shapes
+  font/                    App typography
+  values/                  Colors, dimensions, strings, styles, themes
 ```
 
-## Backend Relationship
+## Backend Contract
 
-The Android app calls deployed Supabase Edge Functions using HTTPS. The Edge Functions are not owned by this Android repository. They are kept in the website repository so challenge generation, answer validation, scoring, rating, and session rules stay canonical in one place.
+This Android app does not own challenge generation, answer validation, scoring, rating, or session rules. Those stay server-side in the Tarkana web/backend repository so the APK does not duplicate business logic or expose answer rules.
 
-Reference backend repository:
+Core Edge Functions used by the app:
 
-https://github.com/KaisAbiyyi/tarkana
-
-The Android project should not duplicate challenge generation, answer validation, scoring, or rating logic locally. Keeping that logic server-side helps avoid stale mobile logic and reduces the chance of exposing answer rules from the APK.
+```text
+start-challenge
+submit-answer
+get-active-challenge
+finish-challenge
+abandon-challenge
+get-dashboard
+get-history
+get-leaderboard
+get-profile
+update-profile
+```
 
 ## Local Configuration
 
@@ -64,12 +104,7 @@ supabaseUrl=https://your-project.supabase.co
 supabaseKey=your-anon-key
 ```
 
-These values are injected into `BuildConfig` by `app/build.gradle.kts`:
-
-```kotlin
-buildConfigField("String", "SUPABASE_URL", ...)
-buildConfigField("String", "SUPABASE_KEY", ...)
-```
+These values are injected into `BuildConfig` by `app/build.gradle.kts`.
 
 Do not commit real local credentials. `local.properties` is ignored by Git.
 
@@ -81,7 +116,7 @@ Use the included Gradle wrapper:
 .\gradlew.bat assembleDebug
 ```
 
-The debug APK will be generated under:
+The debug APK is generated under:
 
 ```text
 app/build/outputs/apk/debug/
@@ -95,20 +130,50 @@ Run local unit tests:
 .\gradlew.bat testDebugUnitTest
 ```
 
-Run an Android debug build:
+Build an installable beta APK:
 
 ```powershell
 .\gradlew.bat assembleDebug
 ```
 
+## Release Naming
+
+Use aligned beta tags with the web repository:
+
+```text
+android-v0.1.0-beta.1
+```
+
+The uploaded APK asset should use this shape:
+
+```text
+tarkana-android-0.1.0-beta.1.apk
+```
+
+## Related Repositories
+
+<table>
+  <tr>
+    <th>Repository</th>
+    <th>Role</th>
+    <th>Action</th>
+  </tr>
+  <tr>
+    <td><a href="https://github.com/KaisAbiyyi/tarkana-android">tarkana-android</a></td>
+    <td>Native Android app</td>
+    <td><a href="https://github.com/KaisAbiyyi/tarkana-android/stargazers">Star the mobile app</a></td>
+  </tr>
+  <tr>
+    <td><a href="https://github.com/KaisAbiyyi/tarkana">tarkana</a></td>
+    <td>Web app, backend contract, Edge Functions</td>
+    <td><a href="https://github.com/KaisAbiyyi/tarkana/stargazers">Star the web app</a></td>
+  </tr>
+</table>
+
 ## Development Notes
 
-- Keep UI code in Android Activities, Fragments, XML layouts, adapters, and resource files.
-- Keep server rules in the Tarkana website/backend repository.
+- Keep UI work in Activities, Fragments, XML layouts, adapters, and resource files.
+- Keep challenge rules and scoring in the Tarkana web/backend repository.
 - Use `ApiClient` for authenticated Edge Function requests.
 - Use `AuthSession` for local token/session handling.
 - Keep `.agents/` local-only; it is ignored and should not be pushed.
-
-## Related Repository
-
-- Tarkana website and backend: https://github.com/KaisAbiyyi/tarkana
