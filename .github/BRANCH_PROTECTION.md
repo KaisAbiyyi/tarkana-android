@@ -30,7 +30,7 @@ Direct pushes to `main` are strictly prohibited. All native Android changes must
 
 ### Required Status Checks
 All required checks must pass prior to merge:
-1. **Android CI / Build (`Lint, Test & Assemble`)**
+1. **Lint, Test & Assemble** (Workflow: `Android CI`, `.github/workflows/android-ci.yml`)
    - Android Lint (`./gradlew lintDebug`)
    - Unit Tests (`./gradlew testDebugUnitTest`)
    - Debug Build (`./gradlew assembleDebug`)
@@ -39,12 +39,12 @@ All required checks must pass prior to merge:
 
 ## 3. Automation Setup (GitHub CLI)
 
-To apply or verify these branch rules via GitHub CLI:
+To apply or verify these branch rules via GitHub CLI using the tracked configuration:
 
 ```bash
 gh api \
   --method POST \
   -H "Accept: application/vnd.github+json" \
   /repos/KaisAbiyyi/tarkana-android/rulesets \
-  --input ruleset-config.json
+  --input .github/ruleset-config.json
 ```
