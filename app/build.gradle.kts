@@ -16,11 +16,11 @@ android {
         applicationId = "com.kaisabiyyistudio.tarkana_android"
         minSdk = 24
         targetSdk = 36
-        versionCode = 3
-        versionName = "0.1.0-beta.2"
+        versionCode = 4
+        versionName = "0.1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        
+
         val properties = Properties()
         val localProperties = project.rootProject.file("local.properties")
         if (localProperties.exists()) {
@@ -28,21 +28,54 @@ android {
         }
         buildConfigField("String", "SUPABASE_URL", "\"${properties.getProperty("supabaseUrl", "https://your-project.supabase.co")}\"")
         buildConfigField("String", "SUPABASE_KEY", "\"${properties.getProperty("supabaseKey", "your-anon-key")}\"")
+
+        val appLinksHost = properties.getProperty("appLinksHost", System.getenv("TARKANA_APP_LINKS_HOST") ?: "tarkana.vercel.app")
+        buildConfigField("String", "APP_LINKS_HOST", "\"$appLinksHost\"")
+        manifestPlaceholders["appLinksHost"] = appLinksHost
+    }
+
+    val releaseStoreFile = System.getenv("TARKANA_RELEASE_STORE_FILE")
+    val releaseStorePassword = System.getenv("TARKANA_RELEASE_STORE_PASSWORD")
+    val releaseKeyAlias = System.getenv("TARKANA_RELEASE_KEY_ALIAS")
+    val releaseKeyPassword = System.getenv("TARKANA_RELEASE_KEY_PASSWORD")
+    val hasReleaseSigning = !releaseStoreFile.isNullOrBlank() &&
+            file(releaseStoreFile).exists() &&
+            !releaseStorePassword.isNullOrBlank() &&
+            !releaseKeyAlias.isNullOrBlank() &&
+            !releaseKeyPassword.isNullOrBlank()
+
+    signingConfigs {
+        if (hasReleaseSigning) {
+            create("release") {
+                storeFile = file(releaseStoreFile!!)
+                storePassword = releaseStorePassword
+                keyAlias = releaseKeyAlias
+                keyPassword = releaseKeyPassword
+            }
+        }
     }
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            if (hasReleaseSigning) {
+                signingConfig = signingConfigs.getByName("release")
+            }
+            // Strict policy: Never fall back to debug signing for release builds.
+            // If signing variables are not present, an unsigned release artifact is built for PR validation.
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
     buildFeatures {
         buildConfig = true
     }
@@ -59,4 +92,5 @@ dependencies {
     implementation("androidx.security:security-crypto:1.1.0-alpha06")
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     implementation("com.facebook.shimmer:shimmer:0.5.0")
+    implementation("androidx.browser:browser:1.8.0")
 }
