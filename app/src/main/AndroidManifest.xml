@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".TarkanaApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -33,6 +34,36 @@
         <activity
             android:name=".SessionActivity"
             android:exported="false" />
+        <activity
+            android:name=".DeepLinkRouterActivity"
+            android:exported="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="https"
+                    android:host="${appLinksHost}"
+                    android:pathPrefix="/share/" />
+                <data
+                    android:scheme="https"
+                    android:host="${appLinksHost}"
+                    android:pathPrefix="/duel/" />
+            </intent-filter>
+            <!-- Optional secondary custom scheme fallback -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="tarkana"
+                    android:host="share" />
+                <data
+                    android:scheme="tarkana"
+                    android:host="duel" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
