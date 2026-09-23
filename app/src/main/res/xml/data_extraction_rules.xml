@@ -1,19 +1,21 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-   Sample data extraction rules file; uncomment and customize as necessary.
-   See https://developer.android.com/about/versions/12/backup-restore#xml-changes
-   for details.
--->
+<?xml version="1.0" encoding="utf-8"?>
 <data-extraction-rules>
     <cloud-backup>
-        <!-- TODO: Use <include> and <exclude> to control what is backed up.
-        <include .../>
-        <exclude .../>
-        -->
+        <!-- Exclude encrypted SharedPreferences to prevent AEAD decryption errors across devices/restores -->
+        <exclude domain="sharedpref" path="auth_prefs.xml" />
+        <exclude domain="sharedpref" path="__androidx_security_crypto_encrypted_prefs_key_keyset__.xml" />
+        <exclude domain="sharedpref" path="__androidx_security_crypto_encrypted_file_pref__.xml" />
+
+        <!-- Exclude local-only crash telemetry reports -->
+        <exclude domain="file" path="crash_reports" />
     </cloud-backup>
-    <!--
     <device-transfer>
-        <include .../>
-        <exclude .../>
+        <!-- Exclude hardware-bound encrypted credentials from direct device migration -->
+        <exclude domain="sharedpref" path="auth_prefs.xml" />
+        <exclude domain="sharedpref" path="__androidx_security_crypto_encrypted_prefs_key_keyset__.xml" />
+        <exclude domain="sharedpref" path="__androidx_security_crypto_encrypted_file_pref__.xml" />
+
+        <!-- Exclude local-only crash telemetry reports -->
+        <exclude domain="file" path="crash_reports" />
     </device-transfer>
-    -->
 </data-extraction-rules>

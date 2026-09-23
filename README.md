@@ -26,15 +26,16 @@ The canonical web application, backend contract, database schema, challenge gene
 
 https://github.com/KaisAbiyyi/tarkana
 
-## Beta Release
+## Release Version
 
-Current beta version:
+Current version:
 
 ```text
-0.1.0-beta.2
+versionName = 0.1.0
+versionCode = 4
 ```
 
-APK releases are published through GitHub Releases:
+Releases and artifacts are published through GitHub Releases:
 
 https://github.com/KaisAbiyyi/tarkana-android/releases
 
@@ -136,19 +137,18 @@ Build an installable beta APK:
 .\gradlew.bat assembleDebug
 ```
 
-## Release Naming
+## Release Naming & Tag Convention
 
-Use aligned beta tags with the web repository:
-
-```text
-android-v0.1.0-beta.2
-```
-
-The uploaded APK asset should use this shape:
+All Android releases strictly use the unified `android-v*` tag convention:
 
 ```text
-tarkana-android-0.1.0-beta.2.apk
+android-v0.1.0
 ```
+
+Release artifacts:
+- Android App Bundle (Google Play): `app-release.aab`
+- Universal APK: `tarkana-android-0.1.0.apk`
+- ProGuard / R8 Mapping: `mapping.txt`
 
 ## Related Repositories
 
