@@ -23,7 +23,9 @@ import java.util.concurrent.Executors;
  * Release crash reporting for Tarkana Android.
  * - Chains to Android default uncaught exception handler
  * - Strips sensitive credentials, tokens, and authorization headers
- * - Persists crash report to local storage for queued transmission on next launch
+ * - Persists crash report to local app-private storage (capped at 5 reports)
+ * - Crash reports are strictly local-only in P1.7/P1.7.1 and are NOT uploaded to any server
+ * - Prunes local reports older than 7 days on application launch
  * - Does not abuse the health endpoint
  */
 public final class CrashReporter {
@@ -55,8 +57,8 @@ public final class CrashReporter {
             }
         });
 
-        // Trigger non-blocking check for queued crashes on launch
-        EXECUTOR.execute(() -> uploadQueuedReports(appContext));
+        // Trigger non-blocking maintenance of local crash report storage on launch
+        EXECUTOR.execute(() -> processLocalReports(appContext));
     }
 
     public static String sanitize(String input) {
@@ -128,7 +130,7 @@ public final class CrashReporter {
         }
     }
 
-    private static void uploadQueuedReports(Context context) {
+    private static void processLocalReports(Context context) {
         try {
             File dir = new File(context.getFilesDir(), CRASH_DIR);
             if (!dir.exists()) return;
@@ -136,18 +138,18 @@ public final class CrashReporter {
             File[] reports = dir.listFiles();
             if (reports == null || reports.length == 0) return;
 
-            Log.i(TAG, "Found " + reports.length + " queued crash reports to process on launch.");
-            // In P1.7, queued reports are inspected and pruned after diagnostic logging.
-            // Future milestones can pipe to a dedicated sanitized /api/telemetry/crash endpoint.
+            Log.i(TAG, "Inspecting " + reports.length + " local crash reports in private storage.");
+            // Crash reports are strictly stored locally in private storage for offline diagnostics.
+            // Reports are not uploaded to any remote server or endpoint in P1.7/P1.7.1.
             for (File report : reports) {
-                // Prune old reports after logging
+                // Prune expired local reports older than 7 days
                 if (System.currentTimeMillis() - report.lastModified() > 7 * 24 * 60 * 60 * 1000) {
                     //noinspection ResultOfMethodCallIgnored
                     report.delete();
                 }
             }
         } catch (Exception e) {
-            Log.w(TAG, "Failed to inspect queued crash reports", e);
+            Log.w(TAG, "Failed to process local crash reports", e);
         }
     }
 }
